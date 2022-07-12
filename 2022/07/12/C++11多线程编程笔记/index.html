@@ -1,0 +1,805 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/hexo_img/icon.jpg">
+  <link rel="icon" href="/hexo_img/icon.jpg">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#0D3562">
+  <meta name="author" content="ZYUE">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="线程创建、启动、结束 线程类的参数是一个可调用对象，如函数(可以是类中的成员函数)、函数指针、仿函数、lambda表达式、bind创建的对象； jion() 是阻塞主线程并等待子线程执行完，当子线程执行完毕，join()就执行完毕，主线程继续往下执行，join意为汇合，子线程和主线程回合； detach() 是线程分离，主线程不再与子线程汇合，不再等待子线程，detach后，子线程和主线程失去关联">
+<meta property="og:type" content="article">
+<meta property="og:title" content="C++11多线程编程笔记">
+<meta property="og:url" content="http://example.com/2022/07/12/C++11%E5%A4%9A%E7%BA%BF%E7%A8%8B%E7%BC%96%E7%A8%8B%E7%AC%94%E8%AE%B0/index.html">
+<meta property="og:site_name" content="参天小树">
+<meta property="og:description" content="线程创建、启动、结束 线程类的参数是一个可调用对象，如函数(可以是类中的成员函数)、函数指针、仿函数、lambda表达式、bind创建的对象； jion() 是阻塞主线程并等待子线程执行完，当子线程执行完毕，join()就执行完毕，主线程继续往下执行，join意为汇合，子线程和主线程回合； detach() 是线程分离，主线程不再与子线程汇合，不再等待子线程，detach后，子线程和主线程失去关联">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/post_img/5.jpg">
+<meta property="article:published_time" content="2022-07-12T08:18:07.000Z">
+<meta property="article:modified_time" content="2022-07-12T13:41:52.384Z">
+<meta property="article:author" content="ZYUE">
+<meta property="article:tag" content="C++11多线程">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="http://example.com/post_img/5.jpg">
+  
+  
+  
+  <title>C++11多线程编程笔记 - 参天小树</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.2","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"follow_dnt":false,"baidu":"c03149260ee4667c7ea092624ddee2b5","google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+  
+    <!-- Baidu Analytics -->
+    <script async>
+      if (!Fluid.ctx.dnt) {
+        var _hmt = _hmt || [];
+        (function() {
+          var hm = document.createElement("script");
+          hm.src = "https://hm.baidu.com/hm.js?c03149260ee4667c7ea092624ddee2b5";
+          var s = document.getElementsByTagName("script")[0];
+          s.parentNode.insertBefore(hm, s);
+        })();
+      }
+    </script>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+
+  
+<meta name="generator" content="Hexo 6.2.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong> </strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/hexo_img/bk2.jpg') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="C++11多线程编程笔记"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-author" aria-hidden="true"></i>
+        ZYUE
+      </span>
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2022-07-12 16:18" pubdate>
+          2022年7月12日 下午
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          10k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          86 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">C++11多线程编程笔记</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h2 id="线程创建、启动、结束"><a href="#线程创建、启动、结束" class="headerlink" title="线程创建、启动、结束"></a>线程创建、启动、结束</h2><ul>
+<li>线程类的参数是一个可调用对象，如函数(可以是类中的成员函数)、函数指针、仿函数、lambda表达式、bind创建的对象；</li>
+<li><code>jion()</code> 是阻塞主线程并等待子线程执行完，当子线程执行完毕，join()就执行完毕，主线程继续往下执行，join意为汇合，子线程和主线程回合；</li>
+<li><code>detach()</code> 是线程分离，主线程不再与子线程汇合，不再等待子线程，detach后，子线程和主线程失去关联，驻留在后台，由C++运行时库接管；</li>
+<li><code>joinable()</code>判断是否可以成功使用join()或者detach()，返回true就可以调用，如果返回false，证明调用过join()或者detach()；</li>
+</ul>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;thread&gt;</span></span><br><span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> std;<br><br><span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">childFunc</span><span class="hljs-params">()</span> </span>&#123;<br>    <span class="hljs-comment">//子线程代码逻辑</span><br>    <span class="hljs-keyword">return</span>;<br>&#125;<br><br><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span> </span>&#123;<br>    <span class="hljs-comment">//创建子线程，线程执行起点是childFunc，然后执行线程</span><br>    <span class="hljs-function">thread <span class="hljs-title">childThread</span><span class="hljs-params">(childFunc)</span></span>;<br><br>    <span class="hljs-comment">//阻塞主线程并等待子线程执行完毕</span><br>    childThread.<span class="hljs-built_in">join</span>();<br><br>    <span class="hljs-comment">//线程分离，由C++运行时库回收子线程</span><br>    <span class="hljs-comment">//childThread.detach();</span><br><br>    <span class="hljs-keyword">if</span> (childThread.<span class="hljs-built_in">joinable</span>()) &#123;<br>        <span class="hljs-comment">//可以调用可以调用join()或者detach()</span><br>    &#125; <span class="hljs-keyword">else</span> &#123;<br>        <span class="hljs-comment">//不能调用可以调用join()或者detach()</span><br>    &#125;<br><br>    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<blockquote>
+<p>TODO: 补充如何给子线程传参：类中的成员函数、函数指针、仿函数、lambda表达式、bind创建的对象</p>
+</blockquote>
+<h2 id="mutex互斥量"><a href="#mutex互斥量" class="headerlink" title="mutex互斥量"></a>mutex互斥量</h2><ul>
+<li>互斥量是个类对象，我也称为互斥锁；</li>
+<li>多个线程尝试用lock()成员函数来加锁，只有一个线程能锁定成功；</li>
+<li>如果没有锁成功，那么流程将卡在lock()这里不断尝试去加锁；</li>
+<li>成员函数lock()和unlock()要成对使用；</li>
+<li>使用互斥量少了达不到效果，多了影响效率；</li>
+</ul>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;mutex&gt;</span></span><br><span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> std;<br><br><span class="hljs-comment">// 定义</span><br>mutex mux;<br><br><span class="hljs-comment">// 一般使用步骤</span><br><span class="hljs-number">1.</span>加锁	mux.<span class="hljs-built_in">lock</span>();<br><span class="hljs-number">2.</span>操作共享数据<br><span class="hljs-number">3.</span>解锁	mux.<span class="hljs-built_in">unlock</span>();<br></code></pre></td></tr></table></figure>
+
+<h2 id="std-lock-函数模板"><a href="#std-lock-函数模板" class="headerlink" title="std::lock()函数模板"></a>std::lock()函数模板</h2><ul>
+<li><code>std::lock(mutex1,mutex2...); </code>一次锁定多个互斥量（一般这种情况很少），用于处理多个互斥量；</li>
+<li>如果互斥量中某一个没锁住，它就等待所有互斥量都锁住，才能继续执行；</li>
+<li>如果有一个没锁住，就会把已经锁住的释放掉；</li>
+<li>要么互斥量都锁住，要么都没锁住，防止死锁；</li>
+</ul>
+<h2 id="lock-guard类模板"><a href="#lock-guard类模板" class="headerlink" title="lock_guard类模板"></a>lock_guard类模板</h2><ul>
+<li>可以取代使用<code>mux</code>互斥量的lock()和unlock()成员函数；</li>
+<li>lock_guard构造函数执行了mutex::lock()，在作用域结束时，调用析构函数，执行mutex::unlock()；</li>
+<li>所有使用时注意<strong>作用域</strong>范围；</li>
+<li>若使用第二个参数<code>std::adopt_lock</code>，则表示这个互斥量已经lock()，构造时不需要再lock()；</li>
+</ul>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-function">lock_guard&lt;mutex&gt; <span class="hljs-title">guard</span><span class="hljs-params">(mux)</span></span>;<br><span class="hljs-comment">// 或</span><br><span class="hljs-function">lock_guard&lt;mutex&gt; <span class="hljs-title">guard</span><span class="hljs-params">(mux,adopt_lock)</span></span>;<br></code></pre></td></tr></table></figure>
+
+<h2 id="unique-lock类模板"><a href="#unique-lock类模板" class="headerlink" title="unique_lock类模板"></a>unique_lock类模板</h2><ul>
+<li>类似lock_guard，但有更多用法；</li>
+<li><strong>无需自己unlock()</strong>;</li>
+<li>其第二个参数有：<br>   1. <code>adopt_lock</code>; 同lock_guard中的，前提是已经lock()；<br>   2. <code>try_to_lock</code>; 尝试用去锁定，如果没有锁定成功，会立即返回，不会阻塞在那里，前提是没有lock()；<br>   3. <code>defer_lock</code>; 初始化一个没有加锁的互斥量mutex，以便后序调用其它方法，前提是没有lock()；</li>
+</ul>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-function">unique_lock&lt;mutex&gt; <span class="hljs-title">uniLock</span><span class="hljs-params">(mux)</span></span>; <span class="hljs-comment">// 相当于把mux和uniLock绑定在了一起，uniLock拥有mux的所有权</span><br><span class="hljs-comment">// 或</span><br><span class="hljs-function">unique_lock&lt;mutex&gt; <span class="hljs-title">uniLock</span><span class="hljs-params">(myMutex, defer_lock)</span></span>;<br><br>uniLock.<span class="hljs-built_in">lock</span>();   <span class="hljs-comment">// 加锁</span><br>uniLock.<span class="hljs-built_in">unlock</span>(); <span class="hljs-comment">// 解锁</span><br><br><span class="hljs-comment">// 尝试给互斥量加锁，如果拿不到锁，返回false，否则返回true</span><br>uniLock.<span class="hljs-built_in">try_lock</span>(); <br><br><span class="hljs-comment">// 解除绑定，返回它所管理的mutex对象的指针，并释放所有权，所有权由ptx接管</span><br>mutex* ptx = uniLock.<span class="hljs-built_in">release</span>();<br><br><span class="hljs-comment">// uniLock可以把自己对mux的所有权转移，但是不能复制</span><br><span class="hljs-function">unique_lock&lt;mutex&gt; <span class="hljs-title">uniLock2</span><span class="hljs-params">(std::move(uniLock))</span></span>;<br></code></pre></td></tr></table></figure>
+
+<h2 id="单例类与共享数据"><a href="#单例类与共享数据" class="headerlink" title="单例类与共享数据"></a>单例类与共享数据</h2><p><strong>单例设计模式：</strong> </p>
+<p>定义：单例模式保证一个类仅有一个实例，并提供一个访问它的全局访问点，该实例被所有程序模块共享。</p>
+<p>实现思路：私有化它的构造函数，以防止外界创建单例类的对象；使用类的私有静态指针变量指向类的唯一实例，并用一个公有的静态方法获取该实例。</p>
+<h3 id="懒汉模式"><a href="#懒汉模式" class="headerlink" title="懒汉模式"></a>懒汉模式</h3><p>用到的时候再创建，需要锁；</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;mutex&gt;</span></span><br><span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> std;<br>mutex myMutex;<br><span class="hljs-keyword">class</span> <span class="hljs-title class_">Singleton</span> &#123;<br><span class="hljs-keyword">public</span>:<br>    <span class="hljs-function"><span class="hljs-type">static</span> Singleton* <span class="hljs-title">getInstance</span><span class="hljs-params">()</span> </span>&#123;<br>        <span class="hljs-comment">//双重判断 提高效率</span><br>        <span class="hljs-keyword">if</span> (instance == <span class="hljs-literal">NULL</span>) &#123;<br>            <span class="hljs-function">lock_guard&lt;mutex&gt; <span class="hljs-title">myLockGua</span><span class="hljs-params">(myMutex)</span></span>;<br>            <span class="hljs-keyword">if</span> (instance == <span class="hljs-literal">NULL</span>) &#123;<br>                instance = <span class="hljs-keyword">new</span> Singleton;<br>            &#125;<br>        &#125;<br>        <span class="hljs-keyword">return</span> instance;<br>    &#125;<br>    <br><span class="hljs-keyword">private</span>:<br>    <span class="hljs-built_in">Singleton</span>() &#123;&#125;<br>    <span class="hljs-type">static</span> Singleton* instance;<br>&#125;;<br>Singleton* Singleton::instance = <span class="hljs-literal">NULL</span>;<br></code></pre></td></tr></table></figure>
+
+<h3 id="饿汉模式"><a href="#饿汉模式" class="headerlink" title="饿汉模式"></a>饿汉模式</h3><p>一开始就创建，所以不需要锁；</p>
+<blockquote>
+<p>饿汉模式的问题在于非静态对象（函数外的static对象）在不同编译单元中的初始化顺序是未定义的。如果在初始化完成之前调用 getInstance() 方法会返回一个未定义的实例。</p>
+</blockquote>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;mutex&gt;</span></span><br><span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> std;<br>mutex myMutex;<br><span class="hljs-keyword">class</span> <span class="hljs-title class_">Singleton2</span> &#123;<br><span class="hljs-keyword">public</span>:<br>    <span class="hljs-function"><span class="hljs-type">static</span> Singleton2* <span class="hljs-title">getInstance</span><span class="hljs-params">()</span> </span>&#123; <span class="hljs-keyword">return</span> instance; &#125;<br>    <br><span class="hljs-keyword">private</span>:<br>    <span class="hljs-built_in">Singleton2</span>() &#123;&#125;<br>    <span class="hljs-type">static</span> Singleton2* instance;<br>&#125;;<br>Singleton2* Singleton2::instance = <span class="hljs-keyword">new</span> Singleton2;<br></code></pre></td></tr></table></figure>
+
+<h3 id="使用call-once函数模板"><a href="#使用call-once函数模板" class="headerlink" title="使用call_once函数模板"></a>使用<strong>call_once</strong>函数模板</h3><p>参数：第一个参数为标记，第二个参数是一个函数名；<br>功能：能够保证函数只被调用一次，具备互斥量的能力，而且比互斥量消耗的资源更少，更高效。</p>
+<blockquote>
+<p>标记为std::once_flag，call_once()就是通过标记来决定函数是否执行，调用成功后，就把标记设置为一种已调用状态；</p>
+</blockquote>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;mutex&gt;</span></span><br><span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> std;<br><br>once_flag g_flag;<br><span class="hljs-keyword">class</span> <span class="hljs-title class_">Singleton</span> &#123;<br><span class="hljs-keyword">public</span>:<br>    <span class="hljs-comment">//call_once保证其只被调用一次</span><br>    <span class="hljs-function"><span class="hljs-type">static</span> <span class="hljs-type">void</span> <span class="hljs-title">CreateInstance</span><span class="hljs-params">()</span> </span>&#123; instance = <span class="hljs-keyword">new</span> Singleton; &#125;<br><br>    <span class="hljs-comment">//两个线程同时执行到这里，其中一个线程要等另外一个线程执行完毕</span><br>    <span class="hljs-function"><span class="hljs-type">static</span> Singleton *<span class="hljs-title">getInstance</span><span class="hljs-params">()</span> </span>&#123;<br>        <span class="hljs-built_in">call_once</span>(g_flag, CreateInstance);<br>        <span class="hljs-keyword">return</span> instance;<br>    &#125;<br><br><span class="hljs-keyword">private</span>:<br>    <span class="hljs-built_in">Singleton</span>() &#123;&#125;<br>    <span class="hljs-type">static</span> Singleton *instance;<br>&#125;;<br>Singleton *Singleton::instance = <span class="hljs-literal">NULL</span>;<br></code></pre></td></tr></table></figure>
+
+<h3 id="借助局部静态对象实现"><a href="#借助局部静态对象实现" class="headerlink" title="借助局部静态对象实现"></a>借助局部静态对象实现</h3><blockquote>
+<p>《Effective C++》（Item 04）中提出一种更优雅的单例模式实现，使用函数内的局部静态对象，这种方法在C++11及之后不用加锁和解锁操作。</p>
+</blockquote>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-keyword">class</span> <span class="hljs-title class_">single</span> &#123;<br><span class="hljs-keyword">private</span>:<br>    <span class="hljs-built_in">single</span>() &#123;&#125;<br>    ~<span class="hljs-built_in">single</span>() &#123;&#125;<br><br><span class="hljs-keyword">public</span>:<br>    <span class="hljs-function"><span class="hljs-type">static</span> single* <span class="hljs-title">getinstance</span><span class="hljs-params">()</span></span>;<br>&#125;;<br><br><span class="hljs-function">single* <span class="hljs-title">single::getinstance</span><span class="hljs-params">()</span> </span>&#123;<br>    <span class="hljs-type">static</span> single obj;<br>    <span class="hljs-keyword">return</span> &amp;obj;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h2 id="条件变量"><a href="#条件变量" class="headerlink" title="条件变量"></a>条件变量</h2><ul>
+<li><code>std::condition_variable</code>实际上是一个和条件相关的类，就是等待一个条件达成；</li>
+<li>条件变量的作用是阻塞线程，然后等待通知将其唤醒；</li>
+<li>可以通过判断某个函数是否符合某种条件来决定是阻塞线程等待通知还是唤醒线程，由此实现线程间的同步；</li>
+<li>condition_variable的等待函数有三个，分别是wait()——等待、wait_for()——等待一段时间、wait_until()——等待至某一时刻；</li>
+<li>另外针对每个函数condition_variable还提供了有条件等待和无条件等待两种方式；</li>
+<li>如果阻塞，则阻塞到其他某个线程调用<code>notify_one()</code>或<code>notify_all</code>成员函数为止，就被唤醒；</li>
+<li>只要执行到wait后面就一定加锁成功；</li>
+</ul>
+<h3 id="无条件等待"><a href="#无条件等待" class="headerlink" title="无条件等待"></a>无条件等待</h3><ol>
+<li><code>void wait(unique_lock&amp; lck)</code>会无条件的阻塞当前线程然后等待通知，前提是此时对象lck已经成功获取了锁；</li>
+<li>等待(休眠)时会调用lck.unlock()释放锁，使其它线程可以获取锁。一旦得到通知(由其他线程显式地通知)，函数就会释放阻塞并调用lck.lock()，使lck保持与调用函数时相同的状态，然后函数返回；</li>
+<li>wati()函数因为没有条件判断，因此有时候会产生<strong>虚假唤醒</strong>，而有条件的等待可以很好的解决这一问题；</li>
+<li>效果跟有条件等待的第二个参数返回false一样；</li>
+<li>无条件等待被唤醒后wait()不断尝试获取互斥量锁，如果获取不到那么流程就卡在wait()这里等待加锁，当获取到了，wait()就继续执行；</li>
+</ol>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;condition_variable&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;mutex&gt;</span></span><br><span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> std;<br><br>std::mutex                   mux;<br><span class="hljs-function">std::unique_lock&lt;std::mutex&gt; <span class="hljs-title">uniLock</span><span class="hljs-params">(mux)</span></span>;<br>std::condition_variable      condition;<br><br>condition.<span class="hljs-built_in">wait</span>(uniLock);<br></code></pre></td></tr></table></figure>
+
+
+
+<h3 id="有条件等待"><a href="#有条件等待" class="headerlink" title="有条件等待"></a>有条件等待</h3><ol>
+<li><code>void wait (unique_lock&amp; lck, Predicate pred)</code>为有条件的等待；</li>
+<li>pred是一个可调用的对象或函数，它不接受任何参数，并返回一个可以作为bool的值；</li>
+<li>当pred为false时wait()函数才会使线程等待(休眠)，在收到其他线程通知时只有当pred返回true时才会被唤醒；</li>
+<li>有条件等待被唤醒后，就判断第二个参数(例如lambda表达式)的值：<ul>
+<li>如果为false，那wait又对互斥量解锁，然后又休眠，等待再次被notify唤醒；</li>
+<li>如果为true，则wait返回，流程可以继续执行（<strong>此时互斥量已被锁住</strong>）；</li>
+</ul>
+</li>
+</ol>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;condition_variable&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;mutex&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;thread&gt;</span></span><br><br>std::mutex                   mux;<br><span class="hljs-function">std::unique_lock&lt;std::mutex&gt; <span class="hljs-title">uniLock</span><span class="hljs-params">(mux)</span></span>;<br>std::condition_variable      condition;<br><br>condition.<span class="hljs-built_in">wait</span>(uniLock, [<span class="hljs-keyword">this</span>] &#123;<br>    <span class="hljs-comment">// 等待消息队列不为空</span><br>    <span class="hljs-keyword">if</span> (!msgRecvQueue.<span class="hljs-built_in">empty</span>()) <span class="hljs-keyword">return</span> <span class="hljs-literal">true</span>;<br>    <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;<br>&#125;);<br><span class="hljs-comment">// 如果第二个参数的lambda表达式返回值是false，那么wait()将解锁互斥量，并阻塞;</span><br><span class="hljs-comment">// 如果第二个参数的lambda表达式返回值是true，那么wait()直接返回并继续执行;</span><br></code></pre></td></tr></table></figure>
+
+<h2 id="future类模板"><a href="#future类模板" class="headerlink" title="future类模板"></a>future类模板</h2><ul>
+<li><code>std::future</code>的<code>get()</code>成员函数是<strong>转移</strong>数据，不能多次get；</li>
+<li><code>std::future_status</code> status &#x3D; result.<strong>wait_for</strong>(std::chrono::seconds(几秒)) 可以卡住当前流程，等待std::async()的异步任务运行一段时间，然后返回其状态std::future_status，如果std::async()的参数是std::launch::deferred（延迟执行），则不会卡住主流程；</li>
+<li>std::future_status是枚举类型，表示异步任务的执行状态，取值有std::future_status::timeout、std::future_status::ready、std::future_status::deferred；</li>
+</ul>
+<h3 id="async函数模板"><a href="#async函数模板" class="headerlink" title="async函数模板"></a>async函数模板</h3><ul>
+<li><code>std::async</code>是一个函数模板，用来启动一个异步任务（启动一个异步任务，就是自动创建一个线程，并开始执行对应的线程入口函数）；</li>
+<li>启动一个异步任务之后，async返回一个<code>std::future</code>对象，这个对象是个类模板，这个std::future对象中就含有线程入口函数所返回的结果，可以调用future对象的成员函数get()来获取结果；</li>
+<li>std::future提供了一种访问异步操作结果的机制，可以理解为理解future中保存着一个值，这个值是在将来的某个时刻能够拿到；</li>
+<li>std::future对象的<code>get()</code>成员函数会等待线程执行结束并返回结果，拿不到结果它就会一直等待；</li>
+<li>std::future对象的<code>wait()</code>成员函数，用于等待线程返回，本身并不返回结果，这个效果和 std::thread 的join()更像；</li>
+</ul>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;future&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;iostream&gt;</span></span><br><span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> std;<br><span class="hljs-keyword">class</span> <span class="hljs-title class_">A</span> &#123;<br><span class="hljs-keyword">public</span>:<br>    <span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">mythread</span><span class="hljs-params">(<span class="hljs-type">int</span> mypar)</span> </span>&#123;<br>        cout &lt;&lt; mypar &lt;&lt; endl;<br>        <span class="hljs-keyword">return</span> mypar;<br>    &#125;<br>&#125;;<br><br><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">mythread</span><span class="hljs-params">(<span class="hljs-type">int</span> mypar)</span> </span>&#123;<br>	cout &lt;&lt; mypar &lt;&lt; endl;<br>	cout &lt;&lt; <span class="hljs-string">&quot;mythread() start&quot;</span> &lt;&lt; <span class="hljs-string">&quot;threadid = &quot;</span> &lt;&lt; std::this_thread::<span class="hljs-built_in">get_id</span>() &lt;&lt; endl;<br>	std::<span class="hljs-function">chrono::milliseconds <span class="hljs-title">dura</span><span class="hljs-params">(<span class="hljs-number">5000</span>)</span></span>;<br>	std::this_thread::<span class="hljs-built_in">sleep_for</span>(dura);<br>	cout &lt;&lt; <span class="hljs-string">&quot;mythread() end&quot;</span> &lt;&lt; <span class="hljs-string">&quot;threadid = &quot;</span> &lt;&lt; std::this_thread::<span class="hljs-built_in">get_id</span>() &lt;&lt; endl;<br>	<span class="hljs-keyword">return</span> <span class="hljs-number">5</span>;<br>&#125;<br><br><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span> </span>&#123;<br>    A a;<br>    <span class="hljs-type">int</span> tmp = <span class="hljs-number">12</span>;<br><br>    <span class="hljs-comment">//普通函数作为异步任务参数</span><br>    std::future&lt;<span class="hljs-type">int</span>&gt; result1 = std::<span class="hljs-built_in">async</span>(mythread);<br>    cout &lt;&lt; result1.<span class="hljs-built_in">get</span>() &lt;&lt; endl;  <span class="hljs-comment">//卡在这里等待mythread()执行完毕，拿到结果</span><br><br>    <span class="hljs-comment">//类成员函数作为异步任务参数</span><br>    <span class="hljs-comment">//第二个参数是对象引用才能保证线程里执行的是同一个对象</span><br>    std::future&lt;<span class="hljs-type">int</span>&gt; result2 = std::<span class="hljs-built_in">async</span>(&amp;A::mythread, &amp;a, tmp);<br>    cout &lt;&lt; result2.<span class="hljs-built_in">get</span>() &lt;&lt; endl;<br><br>    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>参数<code>std::lunch::deferred</code>表示线程入口函数的调用会被延迟，一直到std::future的wait()或者get()函数被调用时（由主线程调用）才会执行，如果wait()或者get()没有被调用，则根本就不会创建新线程执行；</li>
+</ul>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs c++">std::future&lt;<span class="hljs-type">int</span>&gt; result1 = std::<span class="hljs-built_in">async</span>(std::launch::deferred ,mythread);<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>参数<code>std::launch::async</code>，在调用async函数的时候就开始创建新线程;</li>
+</ul>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs c++">std::future&lt;<span class="hljs-type">int</span>&gt; result1 = std::<span class="hljs-built_in">async</span>(std::launch::async ,mythread);<br></code></pre></td></tr></table></figure>
+
+<h3 id="packaged-task类模板"><a href="#packaged-task类模板" class="headerlink" title="packaged_task类模板"></a>packaged_task类模板</h3><ul>
+<li><code>std::packaged_task</code>的模板参数是各种<strong>可调用对象</strong>，通过packaged_task把各种可调用对象包装起来，方便将来作为线程入口函数来调用；</li>
+<li>packaged_task包装起来的可调用对象还可以直接调用，从这个角度来讲，packaged_task对象也是一个可调用对象；</li>
+<li>通过调用<code>get_future()</code>成员函数得到future对象；</li>
+</ul>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;thread&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;iostream&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;future&gt;</span></span><br><span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> std;<br> <br><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">mythread</span><span class="hljs-params">(<span class="hljs-type">int</span> mypar)</span> </span>&#123;<br>	<span class="hljs-comment">// ......</span><br>	<span class="hljs-keyword">return</span> <span class="hljs-number">5</span>;<br>&#125;<br> <br><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span> </span>&#123;<br>	cout &lt;&lt; <span class="hljs-string">&quot;main&quot;</span> &lt;&lt; <span class="hljs-string">&quot;threadid = &quot;</span> &lt;&lt; std::this_thread::<span class="hljs-built_in">get_id</span>() &lt;&lt; endl;<br>	<span class="hljs-comment">// 我们把函数mythread通过packaged_task包装起来</span><br>    <span class="hljs-comment">// 参数是一个int，返回值类型是int</span><br>    <span class="hljs-function">std::packaged_task&lt;<span class="hljs-title">int</span><span class="hljs-params">(<span class="hljs-type">int</span>)</span>&gt; <span class="hljs-title">mypt</span><span class="hljs-params">(mythread)</span></span>;<br>    <span class="hljs-comment">// t1是线程</span><br>	<span class="hljs-function">std::thread <span class="hljs-title">t1</span><span class="hljs-params">(std::ref(mypt), <span class="hljs-number">1</span>)</span></span>;<br>	t1.<span class="hljs-built_in">join</span>();<br>    <span class="hljs-comment">// 用std::future对象接收线程入口函数的返回结果</span><br>	std::future&lt;<span class="hljs-type">int</span>&gt; result = mypt.<span class="hljs-built_in">get_future</span>(); <br>	cout &lt;&lt; result.<span class="hljs-built_in">get</span>() &lt;&lt; endl;<br>   <br>	<span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br><br><span class="hljs-comment">// 可调用对象可由函数换成lambda表达式</span><br><span class="hljs-function">std::packaged_task&lt;<span class="hljs-title">int</span><span class="hljs-params">(<span class="hljs-type">int</span>)</span>&gt; <span class="hljs-title">mypt</span><span class="hljs-params">([](<span class="hljs-type">int</span> mypar) &#123;</span></span><br><span class="hljs-params"><span class="hljs-function">    cout &lt;&lt; mypar &lt;&lt; endl;</span></span><br><span class="hljs-params"><span class="hljs-function">    <span class="hljs-comment">// ......</span></span></span><br><span class="hljs-params"><span class="hljs-function">    <span class="hljs-keyword">return</span> <span class="hljs-number">5</span>;</span></span><br><span class="hljs-params"><span class="hljs-function">&#125;)</span></span>; <br></code></pre></td></tr></table></figure>
+
+<h3 id="promise类模板"><a href="#promise类模板" class="headerlink" title="promise类模板"></a>promise类模板</h3><ul>
+<li>我们能够在某个线程中给它赋值，然后我们可以在其他线程中，把这个值取出来；</li>
+<li>即通过<code>std::promise</code>保存一个值，在将来某个时刻把一个future绑定到这个promise上，来得到绑定的值;</li>
+<li>通过调用<code>get_future()</code>成员函数得到future对象；</li>
+</ul>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;thread&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;iostream&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;future&gt;</span></span><br><span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> std;<br> <br><span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">mythread</span><span class="hljs-params">(std::promise&lt;<span class="hljs-type">int</span>&gt; &amp;tmp, <span class="hljs-type">int</span> clac)</span> </span>&#123;<br>	cout &lt;&lt; <span class="hljs-string">&quot;mythread() start&quot;</span> &lt;&lt; <span class="hljs-string">&quot;threadid = &quot;</span> &lt;&lt; std::this_thread::<span class="hljs-built_in">get_id</span>() &lt;&lt; endl;<br>	std::<span class="hljs-function">chrono::milliseconds <span class="hljs-title">dura</span><span class="hljs-params">(<span class="hljs-number">5000</span>)</span></span>;<br>	std::this_thread::<span class="hljs-built_in">sleep_for</span>(dura);<br>	cout &lt;&lt; <span class="hljs-string">&quot;mythread() end&quot;</span> &lt;&lt; <span class="hljs-string">&quot;threadid = &quot;</span> &lt;&lt; std::this_thread::<span class="hljs-built_in">get_id</span>() &lt;&lt; endl;<br>	<span class="hljs-type">int</span> result = clac;<br>	tmp.<span class="hljs-built_in">set_value</span>(result); <span class="hljs-comment">//结果保存到了tmp这个对象中</span><br>	<span class="hljs-keyword">return</span>;<br>&#125;<br> <br>vector&lt;std::packaged_task&lt;<span class="hljs-type">int</span>(<span class="hljs-type">int</span>)&gt;&gt; task_vec;<br> <br><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span> </span>&#123;<br>	std::promise&lt;<span class="hljs-type">int</span>&gt; myprom;<br>	<span class="hljs-function">std::thread <span class="hljs-title">t1</span><span class="hljs-params">(mythread, std::ref(myprom), <span class="hljs-number">180</span>)</span></span>;<br>	t1.<span class="hljs-built_in">join</span>(); <span class="hljs-comment">//在这里线程已经执行完了</span><br>	std::future&lt;<span class="hljs-type">int</span>&gt; fu1 = myprom.<span class="hljs-built_in">get_future</span>(); <span class="hljs-comment">//promise和future绑定，用于获取线程返回值</span><br>	<span class="hljs-keyword">auto</span> result = fu1.<span class="hljs-built_in">get</span>();<br>	cout &lt;&lt; <span class="hljs-string">&quot;result = &quot;</span> &lt;&lt; result &lt;&lt; endl;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<blockquote>
+<p>使用thread时，必须 join() 或者 detach() 否则程序会报异常</p>
+</blockquote>
+<h2 id="shared-future类模板"><a href="#shared-future类模板" class="headerlink" title="shared_future类模板"></a>shared_future类模板</h2><p>std::shared_future 的 get() 成员函数是<strong>复制</strong>数据；</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs c++">std::future&lt;<span class="hljs-type">int</span>&gt; result = mypt.<span class="hljs-built_in">get_future</span>();<br><br> <span class="hljs-comment">//判断future中的值是不是一个有效值</span><br><span class="hljs-type">bool</span> ifcanget = result.<span class="hljs-built_in">valid</span>();<br><br><span class="hljs-comment">//执行完毕后result_s里有值，而result里空了</span><br><span class="hljs-function">std::shared_future&lt;<span class="hljs-type">int</span>&gt; <span class="hljs-title">result_s</span><span class="hljs-params">(result.share())</span></span>; <br><br><span class="hljs-comment">//或通过get_future返回值直接构造一个shared_future对象</span><br><span class="hljs-function">std::shared_future&lt;<span class="hljs-type">int</span>&gt; <span class="hljs-title">result_s</span><span class="hljs-params">(mypt.get_future())</span></span>;<br><br><span class="hljs-comment">// 可以多次get，因为是赋值</span><br><span class="hljs-keyword">auto</span> myresult1 = result_s.<span class="hljs-built_in">get</span>();<br><span class="hljs-keyword">auto</span> myresult2 = result_s.<span class="hljs-built_in">get</span>();<br></code></pre></td></tr></table></figure>
+
+<h2 id="atomic类模板"><a href="#atomic类模板" class="headerlink" title="atomic类模板"></a>atomic类模板</h2><ul>
+<li>在多线程中，如果想要执行<strong>不会被打断的程序执行片段</strong>，一般需要使用互斥量；</li>
+<li>可以把<code>std::atomic</code><strong>原子操作</strong>理解成一种：不需要用到互斥量加锁的多线程并发编程方式；</li>
+<li>从效率上来说，原子操作要比互斥量的方式效率要高；</li>
+<li>互斥量的加锁一般是针对一个代码段，而原子操作针对的一般都是<strong>一个变量</strong>；</li>
+<li>std::atomic是用来封装某个类型的值，原子操作一般用于计数或者统计；</li>
+<li>原子操作实质上是不允许在进行原子对象操作时进行CPU的上下文切换；</li>
+</ul>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;atomic&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;iostream&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;thread&gt;</span></span><br><span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> std;<br>std::atomic&lt;<span class="hljs-type">int</span>&gt; g_count = <span class="hljs-number">0</span>;  <span class="hljs-comment">//封装了一个类型为int的 对象（值）</span><br><br><span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">mythread1</span><span class="hljs-params">()</span> </span>&#123;<br>    <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">0</span>; i &lt; <span class="hljs-number">1000000</span>; i++) &#123;<br>        g_count++;<br>    &#125;<br>&#125;<br><br><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span> </span>&#123;<br>    <span class="hljs-function">std::thread <span class="hljs-title">t1</span><span class="hljs-params">(mythread1)</span></span>;<br>    <span class="hljs-function">std::thread <span class="hljs-title">t2</span><span class="hljs-params">(mythread1)</span></span>;<br>    t1.<span class="hljs-built_in">join</span>();<br>    t2.<span class="hljs-built_in">join</span>();<br>    cout &lt;&lt; g_count &lt;&lt; endl;  <span class="hljs-comment">//得到2000000</span><br>    <span class="hljs-built_in">system</span>(<span class="hljs-string">&quot;pause&quot;</span>);<br>    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/C/" class="category-chain-item">C++</a>
+  
+  
+    <span>></span>
+    
+  <a href="/categories/C/C-11/" class="category-chain-item">C++11</a>
+  
+  
+
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/C-11%E5%A4%9A%E7%BA%BF%E7%A8%8B/">#C++11多线程</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>C++11多线程编程笔记</div>
+      <div>http://example.com/2022/07/12/C++11多线程编程笔记/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>ZYUE</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2022年7月12日</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>更新于</div>
+          <div>2022年7月12日</div>
+        </div>
+      
+      <div class="license-meta-item">
+        <div>许可协议</div>
+        <div>
+          
+            
+            
+              <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+              <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                <i class="iconfont icon-by"></i>
+              </span>
+              </a>
+            
+          
+        </div>
+      </div>
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2022/07/02/LRU%E7%AE%97%E6%B3%95/" title="LRU算法">
+                        <span class="hidden-mobile">LRU算法</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a>
+<a target="_blank" rel="noopener" href="https://developer.hitokoto.cn/" id="hitokoto_text"><span style="color:#134769;"  id="hitokoto"></span></a> <script src="https://v1.hitokoto.cn/?encode=js&select=%23hitokoto" defer></script> 
+    </div>
+  
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      headingSelector : CONFIG.toc.headingSelector || 'h1,h2,h3,h4,h5,h6',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      collapseDepth   : CONFIG.toc.collapseDepth || 0,
+      scrollSmooth    : true,
+      headingsOffset  : -boardTop
+    });
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.10/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"log":false,"pluginJsPath":"lib/","pluginModelPath":"assets/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
+</html>
