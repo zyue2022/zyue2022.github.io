@@ -16,25 +16,28 @@
   <meta name="author" content="ZYUE">
   <meta name="keywords" content="">
   
-    <meta name="description" content="command mode  首先进入的就是命令模式。  模式切换 i 切换到输入模式，以输入字符； : 切换到底线命令模式，以在最后一行输入命令；  移动光标 方向键 移动光标； h&#x2F;j&#x2F;k&#x2F;l 光标左、下、上、右移动一个字符，30j表示下移光标30行； pg up&#x2F;dn 上下翻页； ctrl + b&#x2F;f 上下翻页； ctrl + u&#x2F;d">
+    <meta name="description" content="安装12345678sudo apt update# 通过以下命令安装编译器和调试器sudo apt install build-essential gdb# 查看版本号gcc --versiong++ --versiongdb --version  gcc&#x2F;g++基本用法1234gcc filename -o outputfileName# gdb支持gcc filename -g -">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Linux下Vim编辑器的使用">
-<meta property="og:url" content="http://example.com/2022/07/23/Linux%E4%B8%8BVim%E7%BC%96%E8%BE%91%E5%99%A8%E7%9A%84%E4%BD%BF%E7%94%A8/index.html">
+<meta property="og:title" content="GNU编译工具使用">
+<meta property="og:url" content="http://example.com/2022/07/23/GNU%E7%BC%96%E8%AF%91%E5%B7%A5%E5%85%B7%E4%BD%BF%E7%94%A8/index.html">
 <meta property="og:site_name" content="参天小树">
-<meta property="og:description" content="command mode  首先进入的就是命令模式。  模式切换 i 切换到输入模式，以输入字符； : 切换到底线命令模式，以在最后一行输入命令；  移动光标 方向键 移动光标； h&#x2F;j&#x2F;k&#x2F;l 光标左、下、上、右移动一个字符，30j表示下移光标30行； pg up&#x2F;dn 上下翻页； ctrl + b&#x2F;f 上下翻页； ctrl + u&#x2F;d">
+<meta property="og:description" content="安装12345678sudo apt update# 通过以下命令安装编译器和调试器sudo apt install build-essential gdb# 查看版本号gcc --versiong++ --versiongdb --version  gcc&#x2F;g++基本用法1234gcc filename -o outputfileName# gdb支持gcc filename -g -">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="http://example.com/post_img/10.jpg">
-<meta property="article:published_time" content="2022-07-23T07:27:10.000Z">
-<meta property="article:modified_time" content="2022-07-23T07:28:12.430Z">
+<meta property="og:image" content="http://example.com/post_img/11.jpg">
+<meta property="article:published_time" content="2022-07-23T08:01:21.000Z">
+<meta property="article:modified_time" content="2022-07-23T08:39:42.977Z">
 <meta property="article:author" content="ZYUE">
 <meta property="article:tag" content="Linux">
-<meta property="article:tag" content="Vim">
+<meta property="article:tag" content="GNU">
+<meta property="article:tag" content="GCC">
+<meta property="article:tag" content="G++">
+<meta property="article:tag" content="GDB">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="http://example.com/post_img/10.jpg">
+<meta name="twitter:image" content="http://example.com/post_img/11.jpg">
   
   
   
-  <title>Linux下Vim编辑器的使用 - 参天小树</title>
+  <title>GNU编译工具使用 - 参天小树</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -227,7 +230,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="Linux下Vim编辑器的使用"></span>
+            <span id="subtitle" data-typed-text="GNU编译工具使用"></span>
           
         </div>
 
@@ -243,7 +246,7 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2022-07-23 15:27" pubdate>
+        <time datetime="2022-07-23 16:01" pubdate>
           2022年7月23日 下午
         </time>
       </span>
@@ -255,7 +258,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          765 字
+          2.2k 字
         
       </span>
     
@@ -266,7 +269,7 @@
         
         
         
-          7 分钟
+          19 分钟
         
       </span>
     
@@ -304,62 +307,66 @@
         <div id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">Linux下Vim编辑器的使用</h1>
+            <h1 style="display: none">GNU编译工具使用</h1>
             
             
               <div class="markdown-body">
                 
-                <h2 id="command-mode"><a href="#command-mode" class="headerlink" title="command mode"></a>command mode</h2><blockquote>
-<p> 首先进入的就是命令模式。</p>
+                <h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs bash">sudo apt update<br><span class="hljs-comment"># 通过以下命令安装编译器和调试器</span><br>sudo apt install build-essential gdb<br><br><span class="hljs-comment"># 查看版本号</span><br>gcc --version<br>g++ --version<br>gdb --version<br></code></pre></td></tr></table></figure>
+
+<h2 id="gcc-x2F-g-基本用法"><a href="#gcc-x2F-g-基本用法" class="headerlink" title="gcc&#x2F;g++基本用法"></a>gcc&#x2F;g++基本用法</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs bash">gcc filename -o outputfileName<br><br><span class="hljs-comment"># gdb支持</span><br>gcc filename -g -o outputfileName<br></code></pre></td></tr></table></figure>
+
+<h2 id="编译过程"><a href="#编译过程" class="headerlink" title="编译过程"></a>编译过程</h2><h3 id="预处理"><a href="#预处理" class="headerlink" title="预处理"></a>预处理</h3><blockquote>
+<p>生成**.i**文件</p>
 </blockquote>
-<h3 id="模式切换"><a href="#模式切换" class="headerlink" title="模式切换"></a>模式切换</h3><ul>
-<li><strong>i</strong> 切换到输入模式，以输入字符；</li>
-<li><strong>:</strong> 切换到底线命令模式，以在最后一行输入命令；</li>
-</ul>
-<h3 id="移动光标"><a href="#移动光标" class="headerlink" title="移动光标"></a>移动光标</h3><ul>
-<li><strong>方向键</strong> 移动光标；</li>
-<li><strong>h&#x2F;j&#x2F;k&#x2F;l</strong> 光标左、下、上、右移动一个字符，30j表示下移光标30行；</li>
-<li><strong>pg up&#x2F;dn</strong> 上下翻页；</li>
-<li><strong>ctrl + b&#x2F;f</strong> 上下翻页；</li>
-<li><strong>ctrl + u&#x2F;d</strong> 上下翻半页；</li>
-<li><strong>n + space</strong> 光标向右移动n个字符；</li>
-<li><strong>H&#x2F;M&#x2F;L</strong> 光标移动到整个屏幕的最上方、中间、最下方那一行的第一个字符；</li>
-<li><strong>G&#x2F;gg</strong> 光标移动到最后一行、第一行；</li>
-</ul>
-<h3 id="查找"><a href="#查找" class="headerlink" title="查找"></a>查找</h3><ul>
-<li><strong>&#x2F;word</strong> 向光标之下搜索word这个字符串，按<strong>n&#x2F;N</strong>后依次找到出现的目标字符串；</li>
-<li><strong>?word</strong> 向光标之上搜索word这个字符串，按<strong>n&#x2F;N</strong>后依次找到出现的目标字符串；</li>
-</ul>
-<h3 id="编辑"><a href="#编辑" class="headerlink" title="编辑"></a>编辑</h3><ul>
-<li><strong>x</strong> 删除当前光标所在字符，<strong>X</strong> 删除当前光标前一个字符；</li>
-<li><strong>dd</strong> 剪切光标所在的一行，<strong>ndd</strong> 剪切光标所在的向下n行；</li>
-<li><strong>yy</strong> 复制光标所在的一行，<strong>nyy</strong> 复制光标所在的向下n行；</li>
-<li><strong>p&#x2F;P</strong> 在光标下&#x2F;上一行粘贴；</li>
-<li><strong>u</strong> 复原前一个操作；</li>
-</ul>
-<h2 id="insert-mode"><a href="#insert-mode" class="headerlink" title="insert mode"></a>insert mode</h2><ul>
-<li><strong>enter</strong> 回车键，换行；</li>
-<li><strong>backspace</strong> 退格键，删除光标前一个字符；</li>
-<li><strong>delete</strong> 删除键，删除光标后一个字符；</li>
-<li><strong>方向键</strong> 移动光标；</li>
-<li><strong>home&#x2F;end</strong> 移动光标到行首行尾；</li>
-<li><strong>pg up&#x2F;dn</strong> 上下翻页；</li>
-<li><strong>esc</strong> 退出输入模式，切换到命令模式；</li>
-</ul>
-<h2 id="lastline-mode"><a href="#lastline-mode" class="headerlink" title="lastline mode"></a>lastline mode</h2><blockquote>
-<p>命令在输入回车键后运行。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># -E 选项指示编译器仅对输入文件进行预处理</span><br>g++ -E test.cpp -o test.i<br></code></pre></td></tr></table></figure>
+
+<h3 id="编译"><a href="#编译" class="headerlink" title="编译"></a>编译</h3><blockquote>
+<p>生成**.s**文件</p>
 </blockquote>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># -S 编译选项告诉 g++ 在为 C++ 代码产生了汇编语言文件后停止编译</span><br><span class="hljs-comment"># g++ 产生的汇编语言文件的缺省扩展名是 .s </span><br>g++ -S test.i -o test.s<br></code></pre></td></tr></table></figure>
+
+<h3 id="汇编"><a href="#汇编" class="headerlink" title="汇编"></a>汇编</h3><blockquote>
+<p>生成**.o**文件</p>
+</blockquote>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># -c 选项告诉 g++ 仅把源代码编译为机器语言的目标代码</span><br><span class="hljs-comment"># 缺省时 g++ 建立的目标代码文件有一个 .o 的扩展名。</span><br>g++ -c test.s -o test.o<br></code></pre></td></tr></table></figure>
+
+<h3 id="链接"><a href="#链接" class="headerlink" title="链接"></a>链接</h3><blockquote>
+<p>生成<strong>可执行</strong>文件</p>
+</blockquote>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># -o 编译选项来为将产生的可执行文件用指定的文件名</span><br>g++ test.o -o <span class="hljs-built_in">test</span><br></code></pre></td></tr></table></figure>
+
+<h2 id="重要参数"><a href="#重要参数" class="headerlink" title="重要参数"></a>重要参数</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs bash">-E 预处理指定的源文件，不进行编译<br>-S 编译指定的源文件，但是不进行汇编<br>-c 编译、汇编指定的源文件，但是不进行链接<br>[file2] -o [file1] 将文件 file2 编译成可执行文件 file1，指定输出文件名<br>-I directory 指定 include 包含文件的搜索目录<br>-g 在编译的时候，生成调试信息，该程序可以被调试器调试<br>-D 在程序编译的时候，指定一个宏<br>-w 不生成任何警告信息<br>-Wall 生成所有警告信息<br>-O[n] n的取值范围：0~3，编译器的优化选项的4个级别，-O0表示没有优化，-O1为缺省值，-O3优化级别最高<br>-l 在程序编译的时候，指定使用的库<br>-L 指定编译的时候，搜索的库的路径<br>-fPIC/fpic 生成与位置无关的代码<br>-shared 生成共享目标文件，通常用在建立共享库时<br>-std 指定C方言，如:-std=c++11<br></code></pre></td></tr></table></figure>
+
+<h2 id="静态库与动态库"><a href="#静态库与动态库" class="headerlink" title="静态库与动态库"></a>静态库与动态库</h2><ul>
+<li>库文件是计算机上的一类文件，可以简单的把库文件看成一种代码仓库，它提供给使用者一些可以直接拿来用的变量、函数或类。</li>
+<li>库是特殊的一种程序，只是库不能单独运行。</li>
+<li>库文件有两种，静态库和动态库（共享库），区别是：静态库在程序的链接阶段被<strong>复制</strong>到了程序中；动态库在链接阶段没有被复制到程序中，而是程序在运行时由系统动态加载到<strong>内存</strong>中供程序调用。</li>
+<li>库的好处：代码保密、方便部署和分发。</li>
+</ul>
+<h3 id="静态库"><a href="#静态库" class="headerlink" title="静态库"></a>静态库</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs bash">命名规则：<br>◆ Linux : libxxx.a<br>lib : 前缀（固定）<br>xxx : 库的名字，自己起<br>.a  : 后缀（固定）<br>◆ Windows : libxxx.lib<br><br>制作：<br><span class="hljs-comment"># gcc 获得.o 文件</span><br><span class="hljs-comment"># 将.o 文件打包，使用 ar 工具（archive）</span><br>ar rcs libxxx.a xxx.o xxx.o<br></code></pre></td></tr></table></figure>
+
+<h3 id="动态库"><a href="#动态库" class="headerlink" title="动态库"></a>动态库</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs bash">命名规则：<br>◆ Linux : libxxx.so<br>lib : 前缀（固定）<br>xxx : 库的名字，自己起<br>.so : 后缀（固定）<br>在Linux下是一个可执行文件<br>◆ Windows : libxxx.dll<br><br>制作：<br><span class="hljs-comment"># gcc 得到 .o 文件，得到和位置无关的代码</span><br>gcc -c –fpic/-fPIC a.c b.c<br><span class="hljs-comment"># gcc 得到动态库</span><br>gcc -shared a.o b.o -o libcalc.so<br></code></pre></td></tr></table></figure>
+
+<h2 id="gdb调试"><a href="#gdb调试" class="headerlink" title="gdb调试"></a>gdb调试</h2><p>功能：</p>
 <ul>
-<li><strong>esc</strong> 退出底线模式，切换到命令模式；</li>
-<li><strong>q</strong> 退出程序；</li>
-<li><strong>q!</strong> 强制退出程序并且不保存；</li>
-<li><strong>w</strong> 保存文件；</li>
-<li><strong>w!</strong> 强制保存文件；</li>
-<li><strong>wq</strong> 保存文件后离开；</li>
-<li><strong>wq!</strong> 强制保存文件后离开；</li>
-<li><strong>w filename</strong> 将编辑过的文件另存为filename这个文件；</li>
-<li><strong>set nu</strong> 显示行号；</li>
-<li><strong>set nonu</strong> 取消显示行号；</li>
+<li>设置断点(断点可以是条件表达式)</li>
+<li>使程序在指定的代码行上暂停执行，便于观察</li>
+<li>单步执行程序，便于调试</li>
+<li>查看程序中变量值的变化</li>
+<li>动态改变程序的执行环境</li>
+<li>分析崩溃程序产生的core文件</li>
+</ul>
+<blockquote>
+<p>指令可以简写，是第一个字符</p>
+</blockquote>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># 启动</span><br>gdb outputfileName<br><br><span class="hljs-comment"># 退出</span><br>quit<br><br><span class="hljs-comment"># GDB 使用帮助</span><br><span class="hljs-built_in">help</span><br><br><span class="hljs-comment"># 查看当前文件代码</span><br>list/l （从默认位置显示）<br>list/l 行号 （从指定的行显示）<br>list/l 函数名（从指定的函数显示）<br><br><span class="hljs-comment"># 设置断点</span><br>b/break 行号<br>b/break 函数名<br>b/break 文件名:行号<br>b/break 文件名:函数<br><span class="hljs-comment"># 删除断点</span><br>d/del/delete 断点编号<br><span class="hljs-comment"># 设置断点无效</span><br>dis/disable 断点编号<br><span class="hljs-comment"># 设置断点生效</span><br>ena/enable 断点编号<br><span class="hljs-comment"># 设置条件断点（一般用在循环的位置）</span><br>b/break 10 <span class="hljs-keyword">if</span> i==5<br><br><span class="hljs-comment"># 运行</span><br>start（程序停在第一行）<br>run（遇到断点才停）<br><br><span class="hljs-comment"># 暂停后继续，到下一个断点停</span><br>c/continue<br><br><span class="hljs-comment"># 通过命令&#x27;next&#x27; 和&#x27;step&#x27; 逐行运行程序。</span><br><span class="hljs-comment"># Next 将控件严格保持在当前范围内</span><br>n/next <span class="hljs-comment"># 向下执行一行代码（不会进入函数体）</span><br><br><span class="hljs-comment"># 向下单步调试（遇到函数进入函数体）</span><br>s/step<br>finish（跳出函数体）<br><br><span class="hljs-comment"># 变量操作</span><br>p/print 变量名（打印变量值）<br>ptype 变量名（打印变量类型）<br><br><span class="hljs-comment"># 修改变量</span><br><span class="hljs-built_in">set</span> &lt;var&gt; = &lt;value&gt;<br><br><span class="hljs-comment"># 设置观察点，每当发生更改时，程序都会暂停并为您提供更改的详细信息。</span><br><span class="hljs-comment"># 只能在变量处于范围内时为其设置观察点</span><br>watch &lt;var&gt;<br><br></code></pre></td></tr></table></figure>
+
+<h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><ul>
+<li><p><a target="_blank" rel="noopener" href="https://b23.tv/tWqKrC">https://b23.tv/tWqKrC</a></p>
+</li>
+<li><p>牛客网C++教学视频</p>
+</li>
 </ul>
 
                 
@@ -379,8 +386,15 @@
     
       <span class="category-chain">
         
-  <a href="/categories/Linux/" class="category-chain-item">Linux</a>
+  <a href="/categories/C-C/" class="category-chain-item">C/C++</a>
   
+  
+    <span>></span>
+    
+  <a href="/categories/C-C/Linux/" class="category-chain-item">Linux</a>
+  
+  
+
   
 
       </span>
@@ -396,7 +410,13 @@
       
         <a href="/tags/Linux/">#Linux</a>
       
-        <a href="/tags/Vim/">#Vim</a>
+        <a href="/tags/GNU/">#GNU</a>
+      
+        <a href="/tags/GCC/">#GCC</a>
+      
+        <a href="/tags/G/">#G++</a>
+      
+        <a href="/tags/GDB/">#GDB</a>
       
     </div>
   
@@ -408,8 +428,8 @@
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>Linux下Vim编辑器的使用</div>
-      <div>http://example.com/2022/07/23/Linux下Vim编辑器的使用/</div>
+      <div>GNU编译工具使用</div>
+      <div>http://example.com/2022/07/23/GNU编译工具使用/</div>
     </div>
     <div class="license-meta">
       
@@ -456,18 +476,12 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2022/07/23/GNU%E7%BC%96%E8%AF%91%E5%B7%A5%E5%85%B7%E4%BD%BF%E7%94%A8/" title="GNU编译工具使用">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">GNU编译工具使用</span>
-                        <span class="visible-mobile">上一篇</span>
-                      </a>
-                    
                   </article>
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2022/07/23/Git%E4%BD%BF%E7%94%A8%E5%92%8C%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/" title="Git使用和常用命令">
-                        <span class="hidden-mobile">Git使用和常用命令</span>
+                      <a href="/2022/07/23/Linux%E4%B8%8BVim%E7%BC%96%E8%BE%91%E5%99%A8%E7%9A%84%E4%BD%BF%E7%94%A8/" title="Linux下Vim编辑器的使用">
+                        <span class="hidden-mobile">Linux下Vim编辑器的使用</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
