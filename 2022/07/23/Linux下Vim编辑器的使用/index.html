@@ -16,25 +16,25 @@
   <meta name="author" content="ZYUE">
   <meta name="keywords" content="">
   
-    <meta name="description" content="第一次下载123456apt-get install gitgit config --global user.name &quot;zyue&quot;        # your namegit config --global user.email &quot;3506656950@qq.com&quot;    # your emailgit config --global core.edit">
+    <meta name="description" content="command mode  首先进入的就是命令模式。  模式切换 i 切换到输入模式，以输入字符； : 切换到底线命令模式，以在最后一行输入命令；  移动光标 方向键 移动光标； h&#x2F;j&#x2F;k&#x2F;l 光标左、下、上、右移动一个字符，30j表示下移光标30行； pg up&#x2F;dn 上下翻页； ctrl + b&#x2F;f 上下翻页； ctrl + u&#x2F;d">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Git使用和常用命令">
-<meta property="og:url" content="http://example.com/2022/07/23/Git%E4%BD%BF%E7%94%A8%E5%92%8C%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/index.html">
+<meta property="og:title" content="Linux下Vim编辑器的使用">
+<meta property="og:url" content="http://example.com/2022/07/23/Linux%E4%B8%8BVim%E7%BC%96%E8%BE%91%E5%99%A8%E7%9A%84%E4%BD%BF%E7%94%A8/index.html">
 <meta property="og:site_name" content="参天小树">
-<meta property="og:description" content="第一次下载123456apt-get install gitgit config --global user.name &quot;zyue&quot;        # your namegit config --global user.email &quot;3506656950@qq.com&quot;    # your emailgit config --global core.edit">
+<meta property="og:description" content="command mode  首先进入的就是命令模式。  模式切换 i 切换到输入模式，以输入字符； : 切换到底线命令模式，以在最后一行输入命令；  移动光标 方向键 移动光标； h&#x2F;j&#x2F;k&#x2F;l 光标左、下、上、右移动一个字符，30j表示下移光标30行； pg up&#x2F;dn 上下翻页； ctrl + b&#x2F;f 上下翻页； ctrl + u&#x2F;d">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="http://example.com/post_img/09.jpg">
-<meta property="article:published_time" content="2022-07-23T07:25:24.000Z">
-<meta property="article:modified_time" content="2022-07-23T07:26:06.980Z">
+<meta property="og:image" content="http://example.com/post_img/10.jpg">
+<meta property="article:published_time" content="2022-07-23T07:27:10.000Z">
+<meta property="article:modified_time" content="2022-07-23T07:28:12.430Z">
 <meta property="article:author" content="ZYUE">
-<meta property="article:tag" content="Git">
-<meta property="article:tag" content="Github">
+<meta property="article:tag" content="Linux">
+<meta property="article:tag" content="Vim">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="http://example.com/post_img/09.jpg">
+<meta name="twitter:image" content="http://example.com/post_img/10.jpg">
   
   
   
-  <title>Git使用和常用命令 - 参天小树</title>
+  <title>Linux下Vim编辑器的使用 - 参天小树</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -227,7 +227,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="Git使用和常用命令"></span>
+            <span id="subtitle" data-typed-text="Linux下Vim编辑器的使用"></span>
           
         </div>
 
@@ -243,7 +243,7 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2022-07-23 15:25" pubdate>
+        <time datetime="2022-07-23 15:27" pubdate>
           2022年7月23日 下午
         </time>
       </span>
@@ -255,7 +255,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          1.3k 字
+          765 字
         
       </span>
     
@@ -266,7 +266,7 @@
         
         
         
-          11 分钟
+          7 分钟
         
       </span>
     
@@ -304,28 +304,63 @@
         <div id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">Git使用和常用命令</h1>
+            <h1 style="display: none">Linux下Vim编辑器的使用</h1>
             
             
               <div class="markdown-body">
                 
-                <h3 id="第一次下载"><a href="#第一次下载" class="headerlink" title="第一次下载"></a>第一次下载</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs bash">apt-get install git<br><br>git config --global user.name <span class="hljs-string">&quot;zyue&quot;</span>        <span class="hljs-comment"># your name</span><br>git config --global user.email <span class="hljs-string">&quot;3506656950@qq.com&quot;</span>    <span class="hljs-comment"># your email</span><br>git config --global core.editor vim            <span class="hljs-comment"># your favourite editor</span><br>git config --global color.ui <span class="hljs-literal">true</span><br></code></pre></td></tr></table></figure>
-
-<h3 id="初始化"><a href="#初始化" class="headerlink" title="初始化"></a>初始化</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">git init<br></code></pre></td></tr></table></figure>
-
-<h3 id="添加文件到git仓库"><a href="#添加文件到git仓库" class="headerlink" title="添加文件到git仓库"></a>添加文件到git仓库</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># 第一步</span><br>git add filename<br><span class="hljs-comment"># 全部文件</span><br>git add .<br><br><span class="hljs-comment"># 第二步</span><br>git commit -m <span class="hljs-string">&quot;此次提交说明&quot;</span><br><br><span class="hljs-comment"># add把要提交的修改放在暂存区，commit一次性把暂存区的所有修改提交到分支</span><br></code></pre></td></tr></table></figure>
-
-<h3 id="仓库状态"><a href="#仓库状态" class="headerlink" title="仓库状态"></a>仓库状态</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># 当前仓库状态</span><br>git status <br><br><span class="hljs-comment"># 比较同一个文件在不同版本中的区别</span><br>git diff filename<br></code></pre></td></tr></table></figure>
-
-<h3 id="查看所有存档"><a href="#查看所有存档" class="headerlink" title="查看所有存档"></a>查看所有存档</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs bash">git <span class="hljs-built_in">log</span> <br><br><span class="hljs-comment"># 输出的 HEAD 表示当前版本</span><br><span class="hljs-comment"># 输出的 HEAD^ 表示上一个版本</span><br><span class="hljs-comment"># 输出的 HEAD^^ 表示上上个版本</span><br><span class="hljs-comment"># 输出的 HEAD~N 表示上N个版本</span><br><br><span class="hljs-comment"># 简化输出</span><br>git <span class="hljs-built_in">log</span> --pretty=oneline<br></code></pre></td></tr></table></figure>
-
-<h3 id="回退版本"><a href="#回退版本" class="headerlink" title="回退版本"></a>回退版本</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs bash">git reset --hard HEAD^<br><span class="hljs-comment"># 或</span><br>git reset --hard 版本号前几位<br><br><span class="hljs-comment"># 注意shell关闭后就回不到将来了</span><br></code></pre></td></tr></table></figure>
-
-<h3 id="查看历史命令"><a href="#查看历史命令" class="headerlink" title="查看历史命令"></a>查看历史命令</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">git reflog<br></code></pre></td></tr></table></figure>
-
-<h3 id="远程github"><a href="#远程github" class="headerlink" title="远程github"></a>远程github</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># 创建ssh key</span><br>ssh-keygen -t rsa -C <span class="hljs-string">&quot;邮箱账号&quot;</span><br><span class="hljs-comment"># id_rsa.pub是公钥，用于添加远程账户</span><br><br><span class="hljs-comment"># ssh比https方便</span><br>git remote add origin git@github.com:H-ZYUE/learn_Ubuntu2104.git <span class="hljs-comment"># 关联仓库</span><br>git branch -m main <span class="hljs-comment"># 改名当前分支为main，master也可以</span><br>git push -u origin main <span class="hljs-comment"># 第一次加 -u，推送到远程仓库</span><br><br><span class="hljs-comment"># 后续上传</span><br>git push origin main<br><br>git remote <span class="hljs-built_in">rm</span> origin <span class="hljs-comment">#删除原来关联</span><br>git remote -v <span class="hljs-comment">#查看已有关联</span><br><br><span class="hljs-comment"># 从github克隆</span><br>git <span class="hljs-built_in">clone</span> 仓库名字<br></code></pre></td></tr></table></figure>
-
-<h3 id="分支"><a href="#分支" class="headerlink" title="分支"></a>分支</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># 创建并切换分支，dev是分支名</span><br><span class="hljs-comment"># git checkout -b dev</span><br><br><span class="hljs-comment"># -b表示创建并切换，上述等同于如下</span><br><span class="hljs-comment"># git branch dev</span><br><span class="hljs-comment"># git checkout dev </span><br><br><span class="hljs-comment"># 创建并切换到创建的分支</span><br>git switch -c branchName<br><br><span class="hljs-comment"># 切换到已有分支</span><br>git switch branchName<br><br><span class="hljs-comment"># 查看分支，*指示当前分支</span><br>git branch<br><br><span class="hljs-comment"># 当在dev分支完成工作后可以合并分支</span><br><span class="hljs-comment"># 合并指定分支到当前分支</span><br>git merge dev <span class="hljs-comment"># 此时在master分支下</span><br><br><span class="hljs-comment"># 合并完可以删除不需要的分支</span><br>git branch -d dev<br><br><span class="hljs-comment"># 通常使用分支完成某个任务，成功完成任务后合并其到master分支，再删除不需要的分支</span><br></code></pre></td></tr></table></figure>
+                <h2 id="command-mode"><a href="#command-mode" class="headerlink" title="command mode"></a>command mode</h2><blockquote>
+<p> 首先进入的就是命令模式。</p>
+</blockquote>
+<h3 id="模式切换"><a href="#模式切换" class="headerlink" title="模式切换"></a>模式切换</h3><ul>
+<li><strong>i</strong> 切换到输入模式，以输入字符；</li>
+<li><strong>:</strong> 切换到底线命令模式，以在最后一行输入命令；</li>
+</ul>
+<h3 id="移动光标"><a href="#移动光标" class="headerlink" title="移动光标"></a>移动光标</h3><ul>
+<li><strong>方向键</strong> 移动光标；</li>
+<li><strong>h&#x2F;j&#x2F;k&#x2F;l</strong> 光标左、下、上、右移动一个字符，30j表示下移光标30行；</li>
+<li><strong>pg up&#x2F;dn</strong> 上下翻页；</li>
+<li><strong>ctrl + b&#x2F;f</strong> 上下翻页；</li>
+<li><strong>ctrl + u&#x2F;d</strong> 上下翻半页；</li>
+<li><strong>n + space</strong> 光标向右移动n个字符；</li>
+<li><strong>H&#x2F;M&#x2F;L</strong> 光标移动到整个屏幕的最上方、中间、最下方那一行的第一个字符；</li>
+<li><strong>G&#x2F;gg</strong> 光标移动到最后一行、第一行；</li>
+</ul>
+<h3 id="查找"><a href="#查找" class="headerlink" title="查找"></a>查找</h3><ul>
+<li><strong>&#x2F;word</strong> 向光标之下搜索word这个字符串，按<strong>n&#x2F;N</strong>后依次找到出现的目标字符串；</li>
+<li><strong>?word</strong> 向光标之上搜索word这个字符串，按<strong>n&#x2F;N</strong>后依次找到出现的目标字符串；</li>
+</ul>
+<h3 id="编辑"><a href="#编辑" class="headerlink" title="编辑"></a>编辑</h3><ul>
+<li><strong>x</strong> 删除当前光标所在字符，<strong>X</strong> 删除当前光标前一个字符；</li>
+<li><strong>dd</strong> 剪切光标所在的一行，<strong>ndd</strong> 剪切光标所在的向下n行；</li>
+<li><strong>yy</strong> 复制光标所在的一行，<strong>nyy</strong> 复制光标所在的向下n行；</li>
+<li><strong>p&#x2F;P</strong> 在光标下&#x2F;上一行粘贴；</li>
+<li><strong>u</strong> 复原前一个操作；</li>
+</ul>
+<h2 id="insert-mode"><a href="#insert-mode" class="headerlink" title="insert mode"></a>insert mode</h2><ul>
+<li><strong>enter</strong> 回车键，换行；</li>
+<li><strong>backspace</strong> 退格键，删除光标前一个字符；</li>
+<li><strong>delete</strong> 删除键，删除光标后一个字符；</li>
+<li><strong>方向键</strong> 移动光标；</li>
+<li><strong>home&#x2F;end</strong> 移动光标到行首行尾；</li>
+<li><strong>pg up&#x2F;dn</strong> 上下翻页；</li>
+<li><strong>esc</strong> 退出输入模式，切换到命令模式；</li>
+</ul>
+<h2 id="lastline-mode"><a href="#lastline-mode" class="headerlink" title="lastline mode"></a>lastline mode</h2><blockquote>
+<p>命令在输入回车键后运行。</p>
+</blockquote>
+<ul>
+<li><strong>esc</strong> 退出底线模式，切换到命令模式；</li>
+<li><strong>q</strong> 退出程序；</li>
+<li><strong>q!</strong> 强制退出程序并且不保存；</li>
+<li><strong>w</strong> 保存文件；</li>
+<li><strong>w!</strong> 强制保存文件；</li>
+<li><strong>wq</strong> 保存文件后离开；</li>
+<li><strong>wq!</strong> 强制保存文件后离开；</li>
+<li><strong>w filename</strong> 将编辑过的文件另存为filename这个文件；</li>
+<li><strong>set nu</strong> 显示行号；</li>
+<li><strong>set nonu</strong> 取消显示行号；</li>
+</ul>
 
                 
               </div>
@@ -344,7 +379,7 @@
     
       <span class="category-chain">
         
-  <a href="/categories/%E5%91%BD%E4%BB%A4/" class="category-chain-item">命令</a>
+  <a href="/categories/Linux/" class="category-chain-item">Linux</a>
   
   
 
@@ -359,9 +394,9 @@
     <div class="post-meta">
       <i class="iconfont icon-tags"></i>
       
-        <a href="/tags/Git/">#Git</a>
+        <a href="/tags/Linux/">#Linux</a>
       
-        <a href="/tags/Github/">#Github</a>
+        <a href="/tags/Vim/">#Vim</a>
       
     </div>
   
@@ -373,8 +408,8 @@
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>Git使用和常用命令</div>
-      <div>http://example.com/2022/07/23/Git使用和常用命令/</div>
+      <div>Linux下Vim编辑器的使用</div>
+      <div>http://example.com/2022/07/23/Linux下Vim编辑器的使用/</div>
     </div>
     <div class="license-meta">
       
@@ -421,18 +456,12 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2022/07/23/Linux%E4%B8%8BVim%E7%BC%96%E8%BE%91%E5%99%A8%E7%9A%84%E4%BD%BF%E7%94%A8/" title="Linux下Vim编辑器的使用">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">Linux下Vim编辑器的使用</span>
-                        <span class="visible-mobile">上一篇</span>
-                      </a>
-                    
                   </article>
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2022/07/23/Linux%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4%E7%AC%94%E8%AE%B0/" title="Linux常用命令笔记">
-                        <span class="hidden-mobile">Linux常用命令笔记</span>
+                      <a href="/2022/07/23/Git%E4%BD%BF%E7%94%A8%E5%92%8C%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/" title="Git使用和常用命令">
+                        <span class="hidden-mobile">Git使用和常用命令</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
