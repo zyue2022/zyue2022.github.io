@@ -25,7 +25,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="http://example.com/post_img/11.jpg">
 <meta property="article:published_time" content="2022-07-23T08:01:21.000Z">
-<meta property="article:modified_time" content="2022-07-23T08:39:42.977Z">
+<meta property="article:modified_time" content="2022-07-23T08:44:00.668Z">
 <meta property="article:author" content="ZYUE">
 <meta property="article:tag" content="Linux">
 <meta property="article:tag" content="GNU">
@@ -312,27 +312,27 @@
             
               <div class="markdown-body">
                 
-                <h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs bash">sudo apt update<br><span class="hljs-comment"># 通过以下命令安装编译器和调试器</span><br>sudo apt install build-essential gdb<br><br><span class="hljs-comment"># 查看版本号</span><br>gcc --version<br>g++ --version<br>gdb --version<br></code></pre></td></tr></table></figure>
+                <h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h2><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs c++">sudo apt update<br># 通过以下命令安装编译器和调试器<br>sudo apt install build-essential gdb<br><br># 查看版本号<br>gcc --version<br>g++ --version<br>gdb --version<br></code></pre></td></tr></table></figure>
 
-<h2 id="gcc-x2F-g-基本用法"><a href="#gcc-x2F-g-基本用法" class="headerlink" title="gcc&#x2F;g++基本用法"></a>gcc&#x2F;g++基本用法</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs bash">gcc filename -o outputfileName<br><br><span class="hljs-comment"># gdb支持</span><br>gcc filename -g -o outputfileName<br></code></pre></td></tr></table></figure>
+<h2 id="gcc-x2F-g-基本用法"><a href="#gcc-x2F-g-基本用法" class="headerlink" title="gcc&#x2F;g++基本用法"></a>gcc&#x2F;g++基本用法</h2><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs c++">gcc filename -o outputfileName<br><br><span class="hljs-meta"># gdb支持</span><br>gcc filename -g -o outputfileName<br></code></pre></td></tr></table></figure>
 
 <h2 id="编译过程"><a href="#编译过程" class="headerlink" title="编译过程"></a>编译过程</h2><h3 id="预处理"><a href="#预处理" class="headerlink" title="预处理"></a>预处理</h3><blockquote>
-<p>生成**.i**文件</p>
+<p>生成**.i** 文件</p>
 </blockquote>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># -E 选项指示编译器仅对输入文件进行预处理</span><br>g++ -E test.cpp -o test.i<br></code></pre></td></tr></table></figure>
 
 <h3 id="编译"><a href="#编译" class="headerlink" title="编译"></a>编译</h3><blockquote>
-<p>生成**.s**文件</p>
+<p>生成**.s** 文件</p>
 </blockquote>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># -S 编译选项告诉 g++ 在为 C++ 代码产生了汇编语言文件后停止编译</span><br><span class="hljs-comment"># g++ 产生的汇编语言文件的缺省扩展名是 .s </span><br>g++ -S test.i -o test.s<br></code></pre></td></tr></table></figure>
 
 <h3 id="汇编"><a href="#汇编" class="headerlink" title="汇编"></a>汇编</h3><blockquote>
-<p>生成**.o**文件</p>
+<p>生成**.o** 文件</p>
 </blockquote>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># -c 选项告诉 g++ 仅把源代码编译为机器语言的目标代码</span><br><span class="hljs-comment"># 缺省时 g++ 建立的目标代码文件有一个 .o 的扩展名。</span><br>g++ -c test.s -o test.o<br></code></pre></td></tr></table></figure>
 
 <h3 id="链接"><a href="#链接" class="headerlink" title="链接"></a>链接</h3><blockquote>
-<p>生成<strong>可执行</strong>文件</p>
+<p>生成<strong>可执行</strong> 文件</p>
 </blockquote>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># -o 编译选项来为将产生的可执行文件用指定的文件名</span><br>g++ test.o -o <span class="hljs-built_in">test</span><br></code></pre></td></tr></table></figure>
 
