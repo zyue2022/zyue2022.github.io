@@ -4,6 +4,33 @@
   
   
   <entry>
+    <title>Makefile使用</title>
+    <link href="/2022/07/23/Makefile%E4%BD%BF%E7%94%A8/"/>
+    <url>/2022/07/23/Makefile%E4%BD%BF%E7%94%A8/</url>
+    
+    <content type="html"><![CDATA[<h2 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h2><ul><li>当一个工程里面的源文件非常多时，手动敲命令就比较麻烦，就可以使用makefile；</li><li>Makefile 文件定义了一系列的规则来指定哪些文件需要先编译，哪些文件需要后编译，哪些文件需要重新编译，甚至于进行更复杂的功能操作，因为 Makefile 文件就像一个 Shell 脚本一样，也可以执行操作系统的命令；</li><li>Makefile 带来的好处就是“自动化编译” ，一旦写好，只需要一个 make 命令，整个工程完全自动编译；</li><li><strong>make</strong> 是一个命令工具，是一个解释 Makefile 文件中指令的命令工具；</li></ul><h2 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h2><h3 id="文件命名"><a href="#文件命名" class="headerlink" title="文件命名"></a>文件命名</h3><p>makefile 或者 Makefile</p><h3 id="Makefile-规则"><a href="#Makefile-规则" class="headerlink" title="Makefile 规则"></a>Makefile 规则</h3><ul><li><p>一个 Makefile 文件中可以有一个或者多个规则</p></li><li><ul><li>目标 … : 依赖 …</li><li>命令（Shell 命令）</li><li>…</li></ul></li><li><p>目标：最终要生成的文件（伪目标除外）</p></li><li><p>依赖：生成目标所需要的文件或是目标</p></li><li><p>命令：通过执行命令对依赖操作生成目标（命令前必须 Tab 缩进）</p></li><li><p>Makefile 中的其它规则一般都是为第一条规则服务的</p></li><li><p>自定义变量</p></li><li><ul><li>定义：变量名&#x3D;变量值，例如 var&#x3D;hello</li><li>使用：获取变量的值，即<code> $(var)</code></li></ul></li><li><p>预定义变量</p></li><li><ul><li>AR : 归档维护程序的名称，默认值为 ar</li><li>CC : C 编译器的名称，默认值为 cc</li><li>CXX : C++ 编译器的名称，默认值为 g++</li><li>……</li></ul></li></ul><h2 id="简单举例"><a href="#简单举例" class="headerlink" title="简单举例"></a>简单举例</h2><figure class="highlight makefile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs makefile">CXX = g++<br>CFLAGS = -std=c++17 -O2 -g -Wall<br><br>TARGET = serverApp<br>OBJS = ../code/buffer/*.cpp ../code/http/*.cpp ../code/logsys/*.cpp \<br>       ../code/pool/*.cpp ../code/server/*.cpp ../code/timer/*.cpp \<br>       ../code/json/*.cpp ../main.cpp<br><br><span class="hljs-section">all: </span><br><span class="hljs-variable">$(CXX)</span> <span class="hljs-variable">$(CFLAGS)</span> <span class="hljs-variable">$(OBJS)</span> -o ../<span class="hljs-variable">$(TARGET)</span>  -pthread -lmysqlclient<br><br><span class="hljs-section">clean:</span><br>rm -rf ../<span class="hljs-variable">$(TARGET)</span><br></code></pre></td></tr></table></figure><p>一般我们写好makefile后只需运行：</p><figure class="highlight ebnf"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs ebnf"><span class="hljs-attribute">make</span><br></code></pre></td></tr></table></figure><p>若想清理生成的文件：</p><figure class="highlight ebnf"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs ebnf"><span class="hljs-attribute">make clean</span><br></code></pre></td></tr></table></figure><hr>]]></content>
+    
+    
+    <categories>
+      
+      <category>Linux</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>Linux</tag>
+      
+      <tag>Makefile</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>GNU编译工具使用</title>
     <link href="/2022/07/23/GNU%E7%BC%96%E8%AF%91%E5%B7%A5%E5%85%B7%E4%BD%BF%E7%94%A8/"/>
     <url>/2022/07/23/GNU%E7%BC%96%E8%AF%91%E5%B7%A5%E5%85%B7%E4%BD%BF%E7%94%A8/</url>
