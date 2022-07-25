@@ -13,8 +13,6 @@
     
     <categories>
       
-      <category>二叉树</category>
-      
       <category>数据结构与算法</category>
       
     </categories>
@@ -45,8 +43,6 @@
     
     
     <categories>
-      
-      <category>二叉树</category>
       
       <category>数据结构与算法</category>
       
@@ -79,8 +75,6 @@
     
     <categories>
       
-      <category>二叉树</category>
-      
       <category>数据结构与算法</category>
       
     </categories>
@@ -111,8 +105,6 @@
     
     
     <categories>
-      
-      <category>二叉树</category>
       
       <category>数据结构与算法</category>
       
@@ -171,8 +163,6 @@
     
     
     <categories>
-      
-      <category>C/C++</category>
       
       <category>Linux</category>
       
@@ -234,7 +224,7 @@
     
     <categories>
       
-      <category>命令</category>
+      <category>Linux</category>
       
     </categories>
     
@@ -244,6 +234,8 @@
       <tag>Git</tag>
       
       <tag>Github</tag>
+      
+      <tag>Linux</tag>
       
     </tags>
     
@@ -261,16 +253,16 @@
     
     <categories>
       
-      <category>linux</category>
+      <category>Linux</category>
       
     </categories>
     
     
     <tags>
       
-      <tag>linux</tag>
-      
       <tag>命令</tag>
+      
+      <tag>Linux</tag>
       
     </tags>
     
@@ -288,9 +280,7 @@
     
     <categories>
       
-      <category>C++</category>
-      
-      <category>算法</category>
+      <category>数据结构与算法</category>
       
     </categories>
     
@@ -299,7 +289,9 @@
       
       <tag>刷题</tag>
       
-      <tag>数据结构与算法</tag>
+      <tag>数据结构</tag>
+      
+      <tag>算法</tag>
       
     </tags>
     
@@ -317,8 +309,6 @@
     
     <categories>
       
-      <category>C++</category>
-      
       <category>项目</category>
       
     </categories>
@@ -329,6 +319,8 @@
       <tag>C++</tag>
       
       <tag>并发服务器</tag>
+      
+      <tag>C++11</tag>
       
     </tags>
     
@@ -346,16 +338,16 @@
     
     <categories>
       
-      <category>C++</category>
-      
-      <category>C++11</category>
+      <category>C++多线程编程</category>
       
     </categories>
     
     
     <tags>
       
-      <tag>C++11多线程</tag>
+      <tag>C++11</tag>
+      
+      <tag>多线程</tag>
       
     </tags>
     
@@ -384,6 +376,10 @@
       
       <tag>刷题</tag>
       
+      <tag>数据结构</tag>
+      
+      <tag>算法</tag>
+      
     </tags>
     
   </entry>
@@ -411,6 +407,10 @@
       
       <tag>刷题</tag>
       
+      <tag>数据结构</tag>
+      
+      <tag>算法</tag>
+      
     </tags>
     
   </entry>
@@ -427,14 +427,16 @@
     
     <categories>
       
-      <category>计算机学习</category>
+      <category>书单</category>
       
     </categories>
     
     
     <tags>
       
-      <tag>学习路线</tag>
+      <tag>计算机学习</tag>
+      
+      <tag>书单</tag>
       
     </tags>
     
