@@ -16,25 +16,27 @@
   <meta name="author" content="ZYUE">
   <meta name="keywords" content="">
   
-    <meta name="description" content="介绍 当一个工程里面的源文件非常多时，手动敲命令就比较麻烦，就可以使用makefile； Makefile 文件定义了一系列的规则来指定哪些文件需要先编译，哪些文件需要后编译，哪些文件需要重新编译，甚至于进行更复杂的功能操作，因为 Makefile 文件就像一个 Shell 脚本一样，也可以执行操作系统的命令； Makefile 带来的好处就是“自动化编译” ，一旦写好，只需要一个 make 命令">
+    <meta name="description" content="树 结点的度：节点拥有的子树数； 树的度：树内各结点度的最大值； 结点的层次从根开始定义，根为第一层； 树的深度或高度：树中结点的最大层次； 路径长度：路径上的分支数目； 树的路径长度是从树根到每一结点的路径长度之和，完全二叉树路径长度最短；   二叉树节点的深度：指从根节点到该节点的最长简单路径边的条数。   二叉树节点的高度：指从该节点到叶子节点的最长简单路径边的条数。   二叉树 二叉树每个">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Makefile使用">
-<meta property="og:url" content="http://example.com/2022/07/23/Makefile%E4%BD%BF%E7%94%A8/index.html">
+<meta property="og:title" content="二叉树基本概念">
+<meta property="og:url" content="http://example.com/2022/07/25/%E4%BA%8C%E5%8F%89%E6%A0%91%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5/index.html">
 <meta property="og:site_name" content="参天小树">
-<meta property="og:description" content="介绍 当一个工程里面的源文件非常多时，手动敲命令就比较麻烦，就可以使用makefile； Makefile 文件定义了一系列的规则来指定哪些文件需要先编译，哪些文件需要后编译，哪些文件需要重新编译，甚至于进行更复杂的功能操作，因为 Makefile 文件就像一个 Shell 脚本一样，也可以执行操作系统的命令； Makefile 带来的好处就是“自动化编译” ，一旦写好，只需要一个 make 命令">
+<meta property="og:description" content="树 结点的度：节点拥有的子树数； 树的度：树内各结点度的最大值； 结点的层次从根开始定义，根为第一层； 树的深度或高度：树中结点的最大层次； 路径长度：路径上的分支数目； 树的路径长度是从树根到每一结点的路径长度之和，完全二叉树路径长度最短；   二叉树节点的深度：指从根节点到该节点的最长简单路径边的条数。   二叉树节点的高度：指从该节点到叶子节点的最长简单路径边的条数。   二叉树 二叉树每个">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="http://example.com/post_img/12.jpg">
-<meta property="article:published_time" content="2022-07-23T08:59:24.000Z">
-<meta property="article:modified_time" content="2022-07-23T09:03:47.384Z">
+<meta property="og:image" content="http://example.com/post_img/13.jpg">
+<meta property="article:published_time" content="2022-07-25T14:49:53.000Z">
+<meta property="article:modified_time" content="2022-07-25T14:55:20.982Z">
 <meta property="article:author" content="ZYUE">
-<meta property="article:tag" content="Linux">
-<meta property="article:tag" content="Makefile">
+<meta property="article:tag" content="刷题">
+<meta property="article:tag" content="数据结构">
+<meta property="article:tag" content="算法">
+<meta property="article:tag" content="二叉树">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="http://example.com/post_img/12.jpg">
+<meta name="twitter:image" content="http://example.com/post_img/13.jpg">
   
   
   
-  <title>Makefile使用 - 参天小树</title>
+  <title>二叉树基本概念 - 参天小树</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -227,7 +229,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="Makefile使用"></span>
+            <span id="subtitle" data-typed-text="二叉树基本概念"></span>
           
         </div>
 
@@ -243,8 +245,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2022-07-23 16:59" pubdate>
-          2022年7月23日 下午
+        <time datetime="2022-07-25 22:49" pubdate>
+          2022年7月25日 晚上
         </time>
       </span>
     
@@ -255,7 +257,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          874 字
+          862 字
         
       </span>
     
@@ -304,61 +306,78 @@
         <div id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">Makefile使用</h1>
+            <h1 style="display: none">二叉树基本概念</h1>
             
             
               <div class="markdown-body">
                 
-                <h2 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h2><ul>
-<li>当一个工程里面的源文件非常多时，手动敲命令就比较麻烦，就可以使用makefile；</li>
-<li>Makefile 文件定义了一系列的规则来指定哪些文件需要先编译，哪些文件需要后编译，哪些文件需要重新编译，甚至于进行更复杂的功能操作，因为 Makefile 文件就像一个 Shell 脚本一样，也可以执行操作系统的命令；</li>
-<li>Makefile 带来的好处就是“自动化编译” ，一旦写好，只需要一个 make 命令，整个工程完全自动编译；</li>
-<li><strong>make</strong> 是一个命令工具，是一个解释 Makefile 文件中指令的命令工具；</li>
+                <h3 id="树"><a href="#树" class="headerlink" title="树"></a>树</h3><ol>
+<li>结点的度：节点拥有的子树数；</li>
+<li>树的度：树内各结点度的最大值；</li>
+<li>结点的层次从根开始定义，根为第一层；</li>
+<li>树的深度或高度：树中结点的最大层次；</li>
+<li>路径长度：路径上的分支数目；</li>
+<li>树的路径长度是从树根到每一结点的路径长度之和，完全二叉树路径长度最短；</li>
+</ol>
+<ul>
+<li><p>二叉树节点的深度：指从根节点到该节点的最长简单路径边的条数。 </p>
+</li>
+<li><p>二叉树节点的高度：指从该节点到叶子节点的最长简单路径边的条数。</p>
+</li>
 </ul>
-<h2 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h2><h3 id="文件命名"><a href="#文件命名" class="headerlink" title="文件命名"></a>文件命名</h3><p>makefile 或者 Makefile</p>
-<h3 id="Makefile-规则"><a href="#Makefile-规则" class="headerlink" title="Makefile 规则"></a>Makefile 规则</h3><ul>
-<li><p>一个 Makefile 文件中可以有一个或者多个规则</p>
+<h3 id="二叉树"><a href="#二叉树" class="headerlink" title="二叉树"></a>二叉树</h3><ol>
+<li>二叉树每个结点至多有两个子树；</li>
+<li>在二叉树的第i层至多有<code>2i-1</code>个结点；</li>
+<li>深度为k的二叉树至多有<code>2k-1</code> 个结点；</li>
+<li>对任何一棵二叉树，如果其终端结点数为n0 ，度为2的结点数为n2 ，则<code>n0 = n2 + 1</code>；</li>
+<li>满二叉树：一棵深度为k的有2k - 1 个结点的二叉树；</li>
+<li>赫夫曼树，又称最优二叉树，是一类带权路径长度最短的树；</li>
+</ol>
+<h3 id="完全二叉树"><a href="#完全二叉树" class="headerlink" title="完全二叉树"></a>完全二叉树</h3><ul>
+<li><p>定义：自上而下，自左而右，每一结点编号对应于满二叉树。</p>
+</li>
+<li><p>特点：对完全二叉树的任一结点 <code>i``(1&lt;=i&lt;=n)</code>有：</p>
 </li>
 <li><ul>
-<li>目标 … :	 依赖 …</li>
-<li>命令（Shell 命令）</li>
-<li>…</li>
+<li>若<code>i&gt;1</code>，则其<strong>双亲结点</strong>为结点<code>i/2</code>；</li>
+<li>若<code>2i&gt;n</code>，则结点i无<strong>左孩子</strong>，否则其左孩子为结点<code>2i</code>；</li>
+<li>若<code>2i+1&gt;n</code>，则结点i无<strong>右孩子</strong>，否则其右孩子为结点<code>2i+1</code>；</li>
 </ul>
 </li>
-<li><p>目标：最终要生成的文件（伪目标除外）</p>
-</li>
-<li><p>依赖：生成目标所需要的文件或是目标</p>
-</li>
-<li><p>命令：通过执行命令对依赖操作生成目标（命令前必须 Tab 缩进）</p>
-</li>
-<li><p>Makefile 中的其它规则一般都是为第一条规则服务的</p>
-</li>
-<li><p>自定义变量</p>
+</ul>
+<h3 id="遍历"><a href="#遍历" class="headerlink" title="遍历"></a>遍历</h3><ul>
+<li><p>深度优先遍历<strong>（栈）</strong></p>
 </li>
 <li><ul>
-<li>定义：变量名&#x3D;变量值，例如 var&#x3D;hello</li>
-<li>使用：获取变量的值，即<code> $(var)</code></li>
+<li>前序遍历（递归法，迭代法）</li>
+<li>中序遍历（递归法，迭代法）</li>
+<li>后序遍历（递归法，迭代法）</li>
 </ul>
 </li>
-<li><p>预定义变量</p>
+<li><p>广度优先遍历<strong>（队列）</strong></p>
 </li>
 <li><ul>
-<li>AR : 归档维护程序的名称，默认值为 ar</li>
-<li>CC : C 编译器的名称，默认值为 cc</li>
-<li>CXX : C++ 编译器的名称，默认值为 g++</li>
-<li>……</li>
+<li>层次遍历（迭代法）</li>
 </ul>
 </li>
 </ul>
-<h2 id="简单举例"><a href="#简单举例" class="headerlink" title="简单举例"></a>简单举例</h2><figure class="highlight makefile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs makefile">CXX = g++<br>CFLAGS = -std=c++17 -O2 -g -Wall<br><br>TARGET = serverApp<br>OBJS = ../code/buffer/*.cpp ../code/http/*.cpp ../code/logsys/*.cpp \<br>       ../code/pool/*.cpp ../code/server/*.cpp ../code/timer/*.cpp \<br>       ../code/json/*.cpp ../main.cpp<br><br><span class="hljs-section">all: </span><br>	<span class="hljs-variable">$(CXX)</span> <span class="hljs-variable">$(CFLAGS)</span> <span class="hljs-variable">$(OBJS)</span> -o ../<span class="hljs-variable">$(TARGET)</span>  -pthread -lmysqlclient<br><br><span class="hljs-section">clean:</span><br>	rm -rf ../<span class="hljs-variable">$(TARGET)</span><br></code></pre></td></tr></table></figure>
-
-<p>一般我们写好makefile后只需运行：</p>
-<figure class="highlight ebnf"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs ebnf"><span class="hljs-attribute">make</span><br></code></pre></td></tr></table></figure>
-
-<p>若想清理生成的文件：</p>
-<figure class="highlight ebnf"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs ebnf"><span class="hljs-attribute">make clean</span><br></code></pre></td></tr></table></figure>
-
-<hr>
+<h3 id="二叉搜索树"><a href="#二叉搜索树" class="headerlink" title="二叉搜索树"></a>二叉搜索树</h3><p>也称二叉排序树，定义如下：</p>
+<ul>
+<li><p>或者是一棵空树，或者满足以下条件；</p>
+</li>
+<li><p>若它的左子树不空，则左子树上所有结点的值均小于它的根结点的值；</p>
+</li>
+<li><p>若它的右子树不空，则右子树上所有结点的值均大于它的根结点的值；</p>
+</li>
+<li><p>它的左、右子树也分别为二叉排序树。</p>
+</li>
+</ul>
+<h3 id="平衡二叉树"><a href="#平衡二叉树" class="headerlink" title="平衡二叉树"></a>平衡二叉树</h3><p>也称<strong>AVL树</strong>，定义如下：</p>
+<ul>
+<li>它是一棵空树或它的左右两个子树的<strong>高度</strong>差的绝对值不超过1，并且左右两个子树都是一棵平衡二叉树。</li>
+</ul>
+<p>C++中map、set、multimap，multiset的底层实现都是平衡二叉搜索树（<strong>红黑树</strong>），所以map、set的增删操作时间时间复杂度是<strong>logn</strong>；</p>
+<p>unordered_map、unordered_set，unordered_map、unordered_map底层实现是<strong>哈希表</strong>。</p>
 
                 
               </div>
@@ -377,8 +396,15 @@
     
       <span class="category-chain">
         
-  <a href="/categories/Linux/" class="category-chain-item">Linux</a>
+  <a href="/categories/%E4%BA%8C%E5%8F%89%E6%A0%91/" class="category-chain-item">二叉树</a>
   
+  
+    <span>></span>
+    
+  <a href="/categories/%E4%BA%8C%E5%8F%89%E6%A0%91/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95/" class="category-chain-item">数据结构与算法</a>
+  
+  
+
   
 
       </span>
@@ -392,9 +418,13 @@
     <div class="post-meta">
       <i class="iconfont icon-tags"></i>
       
-        <a href="/tags/Linux/">#Linux</a>
+        <a href="/tags/%E5%88%B7%E9%A2%98/">#刷题</a>
       
-        <a href="/tags/Makefile/">#Makefile</a>
+        <a href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/">#数据结构</a>
+      
+        <a href="/tags/%E7%AE%97%E6%B3%95/">#算法</a>
+      
+        <a href="/tags/%E4%BA%8C%E5%8F%89%E6%A0%91/">#二叉树</a>
       
     </div>
   
@@ -406,8 +436,8 @@
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>Makefile使用</div>
-      <div>http://example.com/2022/07/23/Makefile使用/</div>
+      <div>二叉树基本概念</div>
+      <div>http://example.com/2022/07/25/二叉树基本概念/</div>
     </div>
     <div class="license-meta">
       
@@ -419,13 +449,13 @@
       
         <div class="license-meta-item license-meta-date">
           <div>发布于</div>
-          <div>2022年7月23日</div>
+          <div>2022年7月25日</div>
         </div>
       
       
         <div class="license-meta-item license-meta-date">
           <div>更新于</div>
-          <div>2022年7月23日</div>
+          <div>2022年7月25日</div>
         </div>
       
       <div class="license-meta-item">
@@ -454,9 +484,9 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2022/07/25/%E4%BA%8C%E5%8F%89%E6%A0%91%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5/" title="二叉树基本概念">
+                      <a href="/2022/07/25/%E9%81%8D%E5%8E%86%E4%BA%8C%E5%8F%89%E6%A0%91/" title="遍历二叉树">
                         <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">二叉树基本概念</span>
+                        <span class="hidden-mobile">遍历二叉树</span>
                         <span class="visible-mobile">上一篇</span>
                       </a>
                     
@@ -464,8 +494,8 @@
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2022/07/23/GNU%E7%BC%96%E8%AF%91%E5%B7%A5%E5%85%B7%E4%BD%BF%E7%94%A8/" title="GNU编译工具使用">
-                        <span class="hidden-mobile">GNU编译工具使用</span>
+                      <a href="/2022/07/23/Makefile%E4%BD%BF%E7%94%A8/" title="Makefile使用">
+                        <span class="hidden-mobile">Makefile使用</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
