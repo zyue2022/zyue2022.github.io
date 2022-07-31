@@ -1,0 +1,761 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/hexo_img/icon.jpg">
+  <link rel="icon" href="/hexo_img/icon.jpg">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#0D3562">
+  <meta name="author" content="ZYUE">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="可解决的问题  组合问题：N个数里面按一定规则找出k个数的集合 切割问题：一个字符串按一定规则有几种切割方式 排列问题：N个数按一定规则全排列，有几种排列方式 棋盘问题：N皇后，数独等等  总结模板123456789101112void backtracking(参数) &amp;#123;    if (终止条件) &amp;#123;        存放结果;        return;    &amp;#125;">
+<meta property="og:type" content="article">
+<meta property="og:title" content="回溯算法">
+<meta property="og:url" content="http://example.com/2022/07/31/%E5%9B%9E%E6%BA%AF%E7%AE%97%E6%B3%95/index.html">
+<meta property="og:site_name" content="参天小树">
+<meta property="og:description" content="可解决的问题  组合问题：N个数里面按一定规则找出k个数的集合 切割问题：一个字符串按一定规则有几种切割方式 排列问题：N个数按一定规则全排列，有几种排列方式 棋盘问题：N皇后，数独等等  总结模板123456789101112void backtracking(参数) &amp;#123;    if (终止条件) &amp;#123;        存放结果;        return;    &amp;#125;">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/post_img/20.jpg">
+<meta property="article:published_time" content="2022-07-31T13:44:08.000Z">
+<meta property="article:modified_time" content="2022-07-31T14:03:20.832Z">
+<meta property="article:author" content="ZYUE">
+<meta property="article:tag" content="刷题">
+<meta property="article:tag" content="数据结构">
+<meta property="article:tag" content="算法">
+<meta property="article:tag" content="回溯">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="http://example.com/post_img/20.jpg">
+  
+  
+  
+  <title>回溯算法 - 参天小树</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.2","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"follow_dnt":false,"baidu":"c03149260ee4667c7ea092624ddee2b5","google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+  
+    <!-- Baidu Analytics -->
+    <script async>
+      if (!Fluid.ctx.dnt) {
+        var _hmt = _hmt || [];
+        (function() {
+          var hm = document.createElement("script");
+          hm.src = "https://hm.baidu.com/hm.js?c03149260ee4667c7ea092624ddee2b5";
+          var s = document.getElementsByTagName("script")[0];
+          s.parentNode.insertBefore(hm, s);
+        })();
+      }
+    </script>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+
+  
+<meta name="generator" content="Hexo 6.2.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong> </strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/hexo_img/bk2.jpg') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="回溯算法"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-author" aria-hidden="true"></i>
+        ZYUE
+      </span>
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2022-07-31 21:44" pubdate>
+          2022年7月31日 晚上
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          5.1k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          43 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">回溯算法</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <p>可解决的问题</p>
+<ul>
+<li>组合问题：N个数里面按一定规则找出k个数的集合</li>
+<li>切割问题：一个字符串按一定规则有几种切割方式</li>
+<li>排列问题：N个数按一定规则全排列，有几种排列方式</li>
+<li>棋盘问题：N皇后，数独等等</li>
+</ul>
+<h2 id="总结模板"><a href="#总结模板" class="headerlink" title="总结模板"></a>总结模板</h2><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">backtracking</span><span class="hljs-params">(参数)</span> </span>&#123;<br>    <span class="hljs-keyword">if</span> (终止条件) &#123;<br>        存放结果;<br>        <span class="hljs-keyword">return</span>;<br>    &#125;<br><br>    <span class="hljs-keyword">for</span> (选择：本层集合中元素（树中节点孩子的数量就是集合的大小）) &#123;<br>        处理节点;<br>        <span class="hljs-built_in">backtracking</span>(路径，选择列表); <span class="hljs-comment">// 递归</span><br>        回溯，撤销处理结果<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>回溯法抽象为树形结构后，其遍历过程就是：for循环横向遍历，递归纵向遍历，回溯不断调整结果集。</li>
+<li>一般需要两个全局变量，或者放在函数形参里面；</li>
+</ul>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs cpp">vector&lt;vector&lt;<span class="hljs-type">int</span>&gt;&gt; result; <span class="hljs-comment">// 存放符合条件结果的集合</span><br>vector&lt;<span class="hljs-type">int</span>&gt; path; <span class="hljs-comment">// 用来存放符合条件结果</span><br></code></pre></td></tr></table></figure>
+
+<ul>
+<li><p>还有一个可选的位于回溯函数形参的int型<code>startIndex</code>变量，用来记录本层递归中，集合从哪里开始遍历；</p>
+</li>
+<li><p>组合问题，startIndex用在循环中<code>for (int i = startIndex; i &lt; n; i++)</code>;</p>
+</li>
+<li><p>排列问题，不用startIndex，是&#96;for (int i &#x3D; 0; i &lt; n; i++);</p>
+</li>
+<li><p>不重复选取某一元素<code>backTrack(candidates, target, i);</code></p>
+</li>
+<li><p>重复选取某一元素<code>backTrack(candidates, target, i + 1);</code></p>
+</li>
+<li><p>结果集去重，注意先<strong>排序</strong>；</p>
+</li>
+<li><ul>
+<li>组合问题可以使用下标去重：<code>if (i &gt; startIdx &amp;&amp; nums[i] == nums[i - 1]) continue;</code></li>
+<li>排列问题去重使用bool数组，注意树枝和树层去重，最好画N叉树图看，更直观；</li>
+<li>也还可以使用set集合去重；</li>
+</ul>
+</li>
+<li><p>字符串分割时要有判断条件<code>if (isValid(s, startIndex, i));</code></p>
+</li>
+</ul>
+<h2 id="组合问题"><a href="#组合问题" class="headerlink" title="组合问题"></a>组合问题</h2><h3 id="一个集合"><a href="#一个集合" class="headerlink" title="一个集合"></a>一个集合</h3><ul>
+<li>需要startIndex；</li>
+<li>递归传参时<code>i+1</code>表示不能重复使用元素；</li>
+<li>递归传参时<code>i</code>表示可以重复使用元素；</li>
+</ul>
+<h4 id="集合元素唯一"><a href="#集合元素唯一" class="headerlink" title="集合元素唯一"></a>集合元素唯一</h4><p>①如果是一个元素唯一的集合来求组合的话，就需要startIndex，并且递归时用<code>i+1</code>；</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = startIndex; i &lt;= n; i++) &#123; <span class="hljs-comment">// 控制树的横向遍历</span><br>    path.<span class="hljs-built_in">push_back</span>(i); <span class="hljs-comment">// 处理节点 </span><br>    <span class="hljs-built_in">backtracking</span>(n, k, i + <span class="hljs-number">1</span>); <span class="hljs-comment">// 递归：控制树的纵向遍历，注意下一层搜索要从i+1开始</span><br>    path.<span class="hljs-built_in">pop_back</span>(); <span class="hljs-comment">// 回溯，撤销处理的节点</span><br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>②如果题目说明<strong>可以重复选取元素</strong>，则仍然用startIndex，但递归时不用<code>i+1</code>而是<code>i</code>；</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = startIndex; i &lt; candidates.<span class="hljs-built_in">size</span>(); i++) &#123;<br>    sum += candidates[i];<br>    path.<span class="hljs-built_in">push_back</span>(candidates[i]);<br>    <span class="hljs-comment">// 关键点:不用i+1了，表示可以重复读取当前的数</span><br>    <span class="hljs-built_in">backtracking</span>(candidates, target, sum, i); <br>    sum -= candidates[i];   <span class="hljs-comment">// 回溯</span><br>    path.<span class="hljs-built_in">pop_back</span>();        <span class="hljs-comment">// 回溯</span><br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h4 id="集合元素不唯一"><a href="#集合元素不唯一" class="headerlink" title="集合元素不唯一"></a>集合元素不唯一</h4><p>即组合<strong>去重</strong>问题，集合（数组）有重复元素，但还不能有重复的组合，一般要求集合即数组<strong>排序</strong>。仍然需要用到startIndex，并且加一个bool型数组used，用来记录同一树枝上的元素是否使用过。要去重的是同一树层上的“使用过”，同一树枝上的都是一个组合里的元素，不用去重。</p>
+<p><strong>在candidates[i] &#x3D;&#x3D; candidates[i - 1]的情况下：</strong></p>
+<ul>
+<li><strong>used[i - 1] &#x3D;&#x3D; true，说明同一树枝candidates[i - 1]使用过</strong></li>
+<li><strong>used[i - 1] &#x3D;&#x3D; false，说明同一树层candidates[i - 1]使用过</strong></li>
+</ul>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = startIndex; i &lt; candidates.<span class="hljs-built_in">size</span>() &amp;&amp; sum + candidates[i] &lt;= target; i++) &#123;<br>    <span class="hljs-comment">// 要对同一树层使用过的元素进行跳过</span><br>    <span class="hljs-keyword">if</span> (i &gt; <span class="hljs-number">0</span> &amp;&amp; candidates[i] == candidates[i - <span class="hljs-number">1</span>] &amp;&amp; used[i - <span class="hljs-number">1</span>] == <span class="hljs-literal">false</span>) &#123;<br>        <span class="hljs-keyword">continue</span>;<br>    &#125;<br>    <span class="hljs-comment">// 要对同一树层使用过的元素进行跳过，使用startIndex去重，就可以不用used数组</span><br>    <span class="hljs-comment">//if (i &gt; startIndex &amp;&amp; candidates[i] == candidates[i - 1]) &#123;</span><br>    <span class="hljs-comment">//    continue;</span><br>    <span class="hljs-comment">//&#125;</span><br>    sum += candidates[i];<br>    path.<span class="hljs-built_in">push_back</span>(candidates[i]);<br>    used[i] = <span class="hljs-literal">true</span>;<br>    <span class="hljs-built_in">backtracking</span>(candidates, target, sum, i + <span class="hljs-number">1</span>, used); <br>    used[i] = <span class="hljs-literal">false</span>;<br>    sum -= candidates[i];<br>    path.<span class="hljs-built_in">pop_back</span>();<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h3 id="多个集合"><a href="#多个集合" class="headerlink" title="多个集合"></a>多个集合</h3><p>如果是多个集合取组合，各个集合之间相互不影响，那么就不用startIndex，例如：17.电话号码的字母组合，本题增加index来表示深度，以判断递归结束条件。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">0</span>; i &lt; letters.<span class="hljs-built_in">size</span>(); i++) &#123;<br>    s.<span class="hljs-built_in">push_back</span>(letters[i]);            <span class="hljs-comment">// 处理</span><br>    <span class="hljs-built_in">backtracking</span>(digits, index + <span class="hljs-number">1</span>);    <span class="hljs-comment">// 递归，注意index+1，下层要处理下一个数字了</span><br>    s.<span class="hljs-built_in">pop_back</span>();                       <span class="hljs-comment">// 回溯</span><br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h2 id="排列问题"><a href="#排列问题" class="headerlink" title="排列问题"></a>排列问题</h2><h3 id="无重复元素的序列"><a href="#无重复元素的序列" class="headerlink" title="无重复元素的序列"></a>无重复元素的序列</h3><p>例：给定一个没有重复数字的序列，返回其所有可能的全排列。</p>
+<p>输入: [1,2,3]</p>
+<p>输出: [ [1,2,3], [1,3,2], [2,1,3], [2,3,1], [3,1,2], [3,2,1] ]</p>
+<p>思路：</p>
+<ul>
+<li>不用startIndex</li>
+<li>需要一个used数组，标记已经选择的元素</li>
+</ul>
+<p>当收集元素的数组path的大小达到和nums数组一样大的时候，说明找到了一个全排列，也表示到达了叶子节点。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">0</span>; i &lt; nums.<span class="hljs-built_in">size</span>(); i++) &#123;<br>    <span class="hljs-keyword">if</span> (used[i] == <span class="hljs-literal">true</span>) <span class="hljs-keyword">continue</span>; <span class="hljs-comment">// path里已经收录的元素，直接跳过</span><br>    used[i] = <span class="hljs-literal">true</span>;<br>    path.<span class="hljs-built_in">push_back</span>(nums[i]);<br>    <span class="hljs-built_in">backtracking</span>(nums, used);<br>    path.<span class="hljs-built_in">pop_back</span>();<br>    used[i] = <span class="hljs-literal">false</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>注意：</p>
+<ul>
+<li>每层都是从0开始搜索</li>
+<li>需要used数组记录path里都放了哪些元素了</li>
+</ul>
+<h3 id="有重复元素的序列"><a href="#有重复元素的序列" class="headerlink" title="有重复元素的序列"></a>有重复元素的序列</h3><p>例：输入：nums &#x3D; [1,1,2]</p>
+<p>输出： [[1,1,2], [1,2,1], [2,1,1]]</p>
+<p>需要去重，去重一定要对元素进行排序，这样我们才方便通过相邻的节点来判断是否重复使用了。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">backtracking</span> <span class="hljs-params">(vector&lt;<span class="hljs-type">int</span>&gt;&amp; nums, vector&lt;<span class="hljs-type">bool</span>&gt;&amp; used)</span> </span>&#123;<br>    <span class="hljs-comment">// 此时说明找到了一组</span><br>    <span class="hljs-keyword">if</span> (path.<span class="hljs-built_in">size</span>() == nums.<span class="hljs-built_in">size</span>()) &#123;<br>        result.<span class="hljs-built_in">push_back</span>(path);<br>        <span class="hljs-keyword">return</span>;<br>    &#125;<br>    <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">0</span>; i &lt; nums.<span class="hljs-built_in">size</span>(); i++) &#123;<br>        <span class="hljs-comment">// used[i - 1] == true，说明同一树枝nums[i - 1]使用过</span><br>        <span class="hljs-comment">// used[i - 1] == false，说明同一树层nums[i - 1]使用过</span><br>        <span class="hljs-comment">// 如果同一树层nums[i - 1]使用过则直接跳过</span><br>        <span class="hljs-keyword">if</span> (i &gt; <span class="hljs-number">0</span> &amp;&amp; nums[i] == nums[i - <span class="hljs-number">1</span>] &amp;&amp; used[i - <span class="hljs-number">1</span>] == <span class="hljs-literal">false</span>) &#123;<br>            <span class="hljs-keyword">continue</span>;<br>        &#125;<br>        <span class="hljs-keyword">if</span> (used[i] == <span class="hljs-literal">true</span>) <span class="hljs-keyword">continue</span>;<span class="hljs-comment">// path里已经收录的元素，直接跳过</span><br>        used[i] = <span class="hljs-literal">true</span>;<br>        path.<span class="hljs-built_in">push_back</span>(nums[i]);<br>        <span class="hljs-built_in">backtracking</span>(nums, used);<br>        path.<span class="hljs-built_in">pop_back</span>();<br>        used[i] = <span class="hljs-literal">false</span>;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>对于排列问题，树层上去重和树枝上去重，都是可以的，但是树层上去重效率更高！</p>
+<h2 id="分割问题"><a href="#分割问题" class="headerlink" title="分割问题"></a>分割问题</h2><p>切割问题类似组合问题，<strong>需要startIndex</strong>；</p>
+<p>对于分割回文串问题：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs cpp">vector&lt;vector&lt;string&gt;&gt; result;<br>vector&lt;string&gt; path; <span class="hljs-comment">// 放已经回文的子串</span><br><span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">backtracking</span> <span class="hljs-params">(<span class="hljs-type">const</span> string&amp; s, <span class="hljs-type">int</span> startIndex)</span> </span><br></code></pre></td></tr></table></figure>
+
+<p>注意切割过的位置，不能重复切割，所以是backtracking(s, i + 1); 传入下一层的起始位置为i + 1。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = startIndex; i &lt; s.<span class="hljs-built_in">size</span>(); i++) &#123;<br>    <span class="hljs-keyword">if</span> (<span class="hljs-built_in">isValid</span>(s, startIndex, i)) &#123;   <span class="hljs-comment">// 是回文子串</span><br>        <span class="hljs-comment">// 获取[startIndex,i]在s中的子串</span><br>        string str = s.<span class="hljs-built_in">substr</span>(startIndex, i - startIndex + <span class="hljs-number">1</span>);<br>        path.<span class="hljs-built_in">push_back</span>(str);<br>        <span class="hljs-built_in">backtracking</span>(s, i + <span class="hljs-number">1</span>); <span class="hljs-comment">// 寻找i+1为起始位置的子串</span><br>        path.<span class="hljs-built_in">pop_back</span>(); 		<span class="hljs-comment">// 回溯过程，弹出本次已经填在的子串</span><br>    &#125; <span class="hljs-keyword">else</span> &#123;             		<br>        <span class="hljs-keyword">continue</span>;<span class="hljs-comment">// 不是回文，跳过；有时是break，不合法，直接结束本层循环例如ip地址。</span><br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h2 id="棋盘问题"><a href="#棋盘问题" class="headerlink" title="棋盘问题"></a>棋盘问题</h2><ul>
+<li><p>写回溯算法的时候，一般函数返回值都是void；</p>
+</li>
+<li><p>但也有bool的时候，就是需要在树形结构中找到唯一的一条通向叶子节点的路线</p>
+</li>
+</ul>
+<p>例一，N皇后</p>
+<p>因为是每一行都放一个皇后，所以是一维递归；</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-comment">// n 为输入的棋盘大小</span><br><span class="hljs-comment">// row 是当前递归到棋盘的第几行了</span><br><span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">backtracking</span><span class="hljs-params">(<span class="hljs-type">int</span> n, <span class="hljs-type">int</span> row, vector&lt;string&gt;&amp; chessboard)</span> </span>&#123;<br>    <span class="hljs-keyword">if</span> (row == n) &#123;<br>        result.<span class="hljs-built_in">push_back</span>(chessboard);<br>        <span class="hljs-keyword">return</span>;<br>    &#125;<br>    <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> col = <span class="hljs-number">0</span>; col &lt; n; col++) &#123;<br>        <span class="hljs-keyword">if</span> (<span class="hljs-built_in">isValid</span>(row, col, chessboard, n)) &#123; <span class="hljs-comment">// 验证合法就可以放</span><br>            chessboard[row][col] = <span class="hljs-string">&#x27;Q&#x27;</span>; <span class="hljs-comment">// 放置皇后</span><br>            <span class="hljs-built_in">backtracking</span>(n, row + <span class="hljs-number">1</span>, chessboard);<br>            chessboard[row][col] = <span class="hljs-string">&#x27;.&#x27;</span>; <span class="hljs-comment">// 回溯，撤销皇后</span><br>        &#125;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>例二，数独</p>
+<p>二维递归！</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-function"><span class="hljs-type">bool</span> <span class="hljs-title">backtracking</span><span class="hljs-params">(vector&lt;vector&lt;<span class="hljs-type">char</span>&gt;&gt;&amp; board)</span> </span>&#123;<br>    <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">0</span>; i &lt; board.<span class="hljs-built_in">size</span>(); i++) &#123;        <span class="hljs-comment">// 遍历行</span><br>        <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> j = <span class="hljs-number">0</span>; j &lt; board[<span class="hljs-number">0</span>].<span class="hljs-built_in">size</span>(); j++) &#123; <span class="hljs-comment">// 遍历列</span><br>            <span class="hljs-keyword">if</span> (board[i][j] != <span class="hljs-string">&#x27;.&#x27;</span>) <span class="hljs-keyword">continue</span>;<br>            <span class="hljs-keyword">for</span> (<span class="hljs-type">char</span> k = <span class="hljs-string">&#x27;1&#x27;</span>; k &lt;= <span class="hljs-string">&#x27;9&#x27;</span>; k++) &#123;     <span class="hljs-comment">// (i, j) 这个位置放k是否合适</span><br>                <span class="hljs-keyword">if</span> (<span class="hljs-built_in">isValid</span>(i, j, k, board)) &#123;<br>                    board[i][j] = k;                <span class="hljs-comment">// 放置k</span><br>                    <span class="hljs-keyword">if</span> (<span class="hljs-built_in">backtracking</span>(board)) <span class="hljs-keyword">return</span> <span class="hljs-literal">true</span>; <span class="hljs-comment">// 如果找到合适一组立刻返回</span><br>                    board[i][j] = <span class="hljs-string">&#x27;.&#x27;</span>;              <span class="hljs-comment">// 回溯，撤销k</span><br>                &#125;<br>            &#125;<br>            <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;                <span class="hljs-comment">// 9个数都试完了，都不行，那么就返回false</span><br>        &#125;<br>    &#125;<br>    <span class="hljs-keyword">return</span> <span class="hljs-literal">true</span>; <span class="hljs-comment">// 遍历完没有返回false，说明找到了合适棋盘位置了</span><br>&#125;<br></code></pre></td></tr></table></figure>
+
+<hr>
+<p>【参考资料】<a target="_blank" rel="noopener" href="https://programmercarl.com/">代码随想录</a>、力扣</p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95/" class="category-chain-item">数据结构与算法</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/%E5%88%B7%E9%A2%98/">#刷题</a>
+      
+        <a href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/">#数据结构</a>
+      
+        <a href="/tags/%E7%AE%97%E6%B3%95/">#算法</a>
+      
+        <a href="/tags/%E5%9B%9E%E6%BA%AF/">#回溯</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>回溯算法</div>
+      <div>http://example.com/2022/07/31/回溯算法/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>ZYUE</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2022年7月31日</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>更新于</div>
+          <div>2022年7月31日</div>
+        </div>
+      
+      <div class="license-meta-item">
+        <div>许可协议</div>
+        <div>
+          
+            
+            
+              <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+              <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                <i class="iconfont icon-by"></i>
+              </span>
+              </a>
+            
+          
+        </div>
+      </div>
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2022/07/31/%E5%B7%AE%E5%88%86%E6%95%B0%E7%BB%84/" title="差分数组">
+                        <span class="hidden-mobile">差分数组</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a>
+<a target="_blank" rel="noopener" href="https://developer.hitokoto.cn/" id="hitokoto_text"><span style="color:#134769;"  id="hitokoto"></span></a> <script src="https://v1.hitokoto.cn/?encode=js&select=%23hitokoto" defer></script> 
+    </div>
+  
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      headingSelector : CONFIG.toc.headingSelector || 'h1,h2,h3,h4,h5,h6',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      collapseDepth   : CONFIG.toc.collapseDepth || 0,
+      scrollSmooth    : true,
+      headingsOffset  : -boardTop
+    });
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.10/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"log":false,"pluginJsPath":"lib/","pluginModelPath":"assets/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
+</html>
