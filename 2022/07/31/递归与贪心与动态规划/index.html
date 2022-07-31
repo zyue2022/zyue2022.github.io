@@ -16,26 +16,31 @@
   <meta name="author" content="ZYUE">
   <meta name="keywords" content="">
   
-    <meta name="description" content="第一次下载123456apt-get install gitgit config --global user.name &quot;zyue&quot;        # your namegit config --global user.email &quot;3506656950@qq.com&quot;    # your emailgit config --global core.edit">
+    <meta name="description" content="递归递归三部曲 确定递归函数的参数和返回值： 确定哪些参数是递归的过程中需要处理的，那么就在递归函数里加上这个参数，并且还要明确每次递归的返回值是什么进而确定递归函数的返回类型。  确定终止条件： 写完了递归算法, 运行的时候，经常会遇到栈溢出的错误，就是没写终止条件或者终止条件写的不对，操作系统也是用一个栈的结构来保存每一层递归的信息，如果递归没有终止，操作系统的内存栈必然就会溢出。  确定单层">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Git使用和常用命令">
-<meta property="og:url" content="http://example.com/2022/07/23/Git%E4%BD%BF%E7%94%A8%E5%92%8C%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/index.html">
+<meta property="og:title" content="递归与贪心与动态规划">
+<meta property="og:url" content="http://example.com/2022/07/31/%E9%80%92%E5%BD%92%E4%B8%8E%E8%B4%AA%E5%BF%83%E4%B8%8E%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/index.html">
 <meta property="og:site_name" content="参天小树">
-<meta property="og:description" content="第一次下载123456apt-get install gitgit config --global user.name &quot;zyue&quot;        # your namegit config --global user.email &quot;3506656950@qq.com&quot;    # your emailgit config --global core.edit">
+<meta property="og:description" content="递归递归三部曲 确定递归函数的参数和返回值： 确定哪些参数是递归的过程中需要处理的，那么就在递归函数里加上这个参数，并且还要明确每次递归的返回值是什么进而确定递归函数的返回类型。  确定终止条件： 写完了递归算法, 运行的时候，经常会遇到栈溢出的错误，就是没写终止条件或者终止条件写的不对，操作系统也是用一个栈的结构来保存每一层递归的信息，如果递归没有终止，操作系统的内存栈必然就会溢出。  确定单层">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="http://example.com/post_img/04.jpg">
-<meta property="article:published_time" content="2022-07-23T07:25:24.000Z">
-<meta property="article:modified_time" content="2022-07-31T14:45:22.026Z">
+<meta property="og:image" content="http://example.com/post_img/20.jpg">
+<meta property="article:published_time" content="2022-07-31T14:33:13.000Z">
+<meta property="article:modified_time" content="2022-07-31T14:38:07.708Z">
 <meta property="article:author" content="ZYUE">
-<meta property="article:tag" content="Git">
-<meta property="article:tag" content="Github">
-<meta property="article:tag" content="Linux">
+<meta property="article:tag" content="刷题">
+<meta property="article:tag" content="数据结构">
+<meta property="article:tag" content="算法">
+<meta property="article:tag" content="动态规划">
+<meta property="article:tag" content="递归">
+<meta property="article:tag" content="贪心算法">
+<meta property="article:tag" content="概念">
+<meta property="article:tag" content="总结">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="http://example.com/post_img/04.jpg">
+<meta name="twitter:image" content="http://example.com/post_img/20.jpg">
   
   
   
-  <title>Git使用和常用命令 - 参天小树</title>
+  <title>递归与贪心与动态规划 - 参天小树</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -228,7 +233,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="Git使用和常用命令"></span>
+            <span id="subtitle" data-typed-text="递归与贪心与动态规划"></span>
           
         </div>
 
@@ -244,8 +249,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2022-07-23 15:25" pubdate>
-          2022年7月23日 下午
+        <time datetime="2022-07-31 22:33" pubdate>
+          2022年7月31日 晚上
         </time>
       </span>
     
@@ -256,7 +261,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          1.3k 字
+          839 字
         
       </span>
     
@@ -267,7 +272,7 @@
         
         
         
-          11 分钟
+          7 分钟
         
       </span>
     
@@ -305,28 +310,45 @@
         <div id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">Git使用和常用命令</h1>
+            <h1 style="display: none">递归与贪心与动态规划</h1>
             
             
               <div class="markdown-body">
                 
-                <h3 id="第一次下载"><a href="#第一次下载" class="headerlink" title="第一次下载"></a>第一次下载</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs bash">apt-get install git<br><br>git config --global user.name <span class="hljs-string">&quot;zyue&quot;</span>        <span class="hljs-comment"># your name</span><br>git config --global user.email <span class="hljs-string">&quot;3506656950@qq.com&quot;</span>    <span class="hljs-comment"># your email</span><br>git config --global core.editor vim            <span class="hljs-comment"># your favourite editor</span><br>git config --global color.ui <span class="hljs-literal">true</span><br></code></pre></td></tr></table></figure>
-
-<h3 id="初始化"><a href="#初始化" class="headerlink" title="初始化"></a>初始化</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">git init<br></code></pre></td></tr></table></figure>
-
-<h3 id="添加文件到git仓库"><a href="#添加文件到git仓库" class="headerlink" title="添加文件到git仓库"></a>添加文件到git仓库</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># 第一步</span><br>git add filename<br><span class="hljs-comment"># 全部文件</span><br>git add .<br><br><span class="hljs-comment"># 第二步</span><br>git commit -m <span class="hljs-string">&quot;此次提交说明&quot;</span><br><br><span class="hljs-comment"># add把要提交的修改放在暂存区，commit一次性把暂存区的所有修改提交到分支</span><br></code></pre></td></tr></table></figure>
-
-<h3 id="仓库状态"><a href="#仓库状态" class="headerlink" title="仓库状态"></a>仓库状态</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># 当前仓库状态</span><br>git status <br><br><span class="hljs-comment"># 比较同一个文件在不同版本中的区别</span><br>git diff filename<br></code></pre></td></tr></table></figure>
-
-<h3 id="查看所有存档"><a href="#查看所有存档" class="headerlink" title="查看所有存档"></a>查看所有存档</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs bash">git <span class="hljs-built_in">log</span> <br><br><span class="hljs-comment"># 输出的 HEAD 表示当前版本</span><br><span class="hljs-comment"># 输出的 HEAD^ 表示上一个版本</span><br><span class="hljs-comment"># 输出的 HEAD^^ 表示上上个版本</span><br><span class="hljs-comment"># 输出的 HEAD~N 表示上N个版本</span><br><br><span class="hljs-comment"># 简化输出</span><br>git <span class="hljs-built_in">log</span> --pretty=oneline<br></code></pre></td></tr></table></figure>
-
-<h3 id="回退版本"><a href="#回退版本" class="headerlink" title="回退版本"></a>回退版本</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs bash">git reset --hard HEAD^<br><span class="hljs-comment"># 或</span><br>git reset --hard 版本号前几位<br><br><span class="hljs-comment"># 注意shell关闭后就回不到将来了</span><br></code></pre></td></tr></table></figure>
-
-<h3 id="查看历史命令"><a href="#查看历史命令" class="headerlink" title="查看历史命令"></a>查看历史命令</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">git reflog<br></code></pre></td></tr></table></figure>
-
-<h3 id="远程github"><a href="#远程github" class="headerlink" title="远程github"></a>远程github</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># 创建ssh key</span><br>ssh-keygen -t rsa -C <span class="hljs-string">&quot;邮箱账号&quot;</span><br><span class="hljs-comment"># id_rsa.pub是公钥，用于添加远程账户</span><br><br><span class="hljs-comment"># ssh比https方便</span><br>git remote add origin git@github.com:H-ZYUE/learn_Ubuntu2104.git <span class="hljs-comment"># 关联仓库</span><br>git branch -m main <span class="hljs-comment"># 改名当前分支为main，master也可以</span><br>git push -u origin main <span class="hljs-comment"># 第一次加 -u，推送到远程仓库</span><br><br><span class="hljs-comment"># 后续上传</span><br>git push origin main<br><br>git remote <span class="hljs-built_in">rm</span> origin <span class="hljs-comment">#删除原来关联</span><br>git remote -v <span class="hljs-comment">#查看已有关联</span><br><br><span class="hljs-comment"># 从github克隆</span><br>git <span class="hljs-built_in">clone</span> 仓库名字<br></code></pre></td></tr></table></figure>
-
-<h3 id="分支"><a href="#分支" class="headerlink" title="分支"></a>分支</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># 创建并切换分支，dev是分支名</span><br><span class="hljs-comment"># git checkout -b dev</span><br><br><span class="hljs-comment"># -b表示创建并切换，上述等同于如下</span><br><span class="hljs-comment"># git branch dev</span><br><span class="hljs-comment"># git checkout dev </span><br><br><span class="hljs-comment"># 创建并切换到创建的分支</span><br>git switch -c branchName<br><br><span class="hljs-comment"># 切换到已有分支</span><br>git switch branchName<br><br><span class="hljs-comment"># 查看分支，*指示当前分支</span><br>git branch<br><br><span class="hljs-comment"># 当在dev分支完成工作后可以合并分支</span><br><span class="hljs-comment"># 合并指定分支到当前分支</span><br>git merge dev <span class="hljs-comment"># 此时在master分支下</span><br><br><span class="hljs-comment"># 合并完可以删除不需要的分支</span><br>git branch -d dev<br><br><span class="hljs-comment"># 通常使用分支完成某个任务，成功完成任务后合并其到master分支，再删除不需要的分支</span><br></code></pre></td></tr></table></figure>
+                <h2 id="递归"><a href="#递归" class="headerlink" title="递归"></a>递归</h2><h3 id="递归三部曲"><a href="#递归三部曲" class="headerlink" title="递归三部曲"></a>递归三部曲</h3><ul>
+<li><p><strong>确定递归函数的参数和返回值</strong>： 确定哪些参数是递归的过程中需要处理的，那么就在递归函数里加上这个参数，并且还要明确每次递归的返回值是什么进而确定递归函数的返回类型。</p>
+</li>
+<li><p><strong>确定终止条件</strong>： 写完了递归算法, 运行的时候，经常会遇到栈溢出的错误，就是没写终止条件或者终止条件写的不对，操作系统也是用一个栈的结构来保存每一层递归的信息，如果递归没有终止，操作系统的内存栈必然就会溢出。</p>
+</li>
+<li><p><strong>确定单层递归的逻辑</strong>：确定每一层递归需要处理的信息。在这里也就会重复调用自己来实现递归的过程。</p>
+</li>
+</ul>
+<h3 id="一些小记"><a href="#一些小记" class="headerlink" title="一些小记"></a>一些小记</h3><ul>
+<li>如果需要遍历整棵树，递归函数就不能有返回值；</li>
+<li>如果需要遍历某一条固定路线，递归函数就一定要有返回值；</li>
+<li>对于递归函数，如果让空节点（空指针）进入递归，就不加if，如果不让空节点进入递归，就加if限制一下， 终止条件也会相应的调整；</li>
+<li>例如二叉树，需要返回节点时就需要用某个临时变量接住返回值，用于后序逻辑处理；</li>
+<li>二叉树递归时，想着对它的左右子节点同样递归操作；</li>
+<li>对于二叉树，可以使用前序（中左右），也可以使用后序遍历（左右中），使用前序求的就是<strong>深度</strong>，使用后序求的是<strong>高度</strong>；</li>
+<li>自底向上是单层递归，时间复杂度为O(n) ；而自顶向下是双层递归，时间复杂度是O(n^2)；</li>
+</ul>
+<h2 id="贪心算法"><a href="#贪心算法" class="headerlink" title="贪心算法"></a>贪心算法</h2><p><strong>贪心的本质是选择每一阶段的局部最优，从而达到全局最优；</strong></p>
+<h2 id="动态规划"><a href="#动态规划" class="headerlink" title="动态规划:"></a>动态规划:</h2><p>动态规划中<strong>每一个状态是由上一个状态推导出来</strong>的，贪心则没有状态推导，而是从局部直接选最优的。</p>
+<h3 id="动规五步曲："><a href="#动规五步曲：" class="headerlink" title="动规五步曲："></a>动规五步曲：</h3><ol>
+<li>确定dp数组（dp table）以及下标的含义；</li>
+<li>确定递推公式；</li>
+<li>dp数组如何初始化；</li>
+<li>确定遍历顺序；</li>
+<li>举例推导dp数组；</li>
+</ol>
+<ul>
+<li>做动规的题目，写代码之前一定要把状态转移在dp数组的上具体情况模拟一遍，心中有数，确定最后推出的是想要的结果。</li>
+<li>然后再写代码，如果代码没通过就打印dp数组，看看是不是和自己预先推导的哪里不一样。</li>
+<li>如果打印出来和自己预先模拟推导是一样的，那么就是自己的递归公式、初始化或者遍历顺序有问题了。</li>
+<li>如果和自己预先模拟推导的不一样，那么就是代码实现细节有问题。</li>
+</ul>
+<hr>
+<p>【参考资料】<a target="_blank" rel="noopener" href="https://programmercarl.com/">代码随想录</a>、力扣</p>
 
                 
               </div>
@@ -345,7 +367,7 @@
     
       <span class="category-chain">
         
-  <a href="/categories/Linux/" class="category-chain-item">Linux</a>
+  <a href="/categories/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95/" class="category-chain-item">数据结构与算法</a>
   
   
 
@@ -360,11 +382,21 @@
     <div class="post-meta">
       <i class="iconfont icon-tags"></i>
       
-        <a href="/tags/Git/">#Git</a>
+        <a href="/tags/%E5%88%B7%E9%A2%98/">#刷题</a>
       
-        <a href="/tags/Github/">#Github</a>
+        <a href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/">#数据结构</a>
       
-        <a href="/tags/Linux/">#Linux</a>
+        <a href="/tags/%E7%AE%97%E6%B3%95/">#算法</a>
+      
+        <a href="/tags/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/">#动态规划</a>
+      
+        <a href="/tags/%E9%80%92%E5%BD%92/">#递归</a>
+      
+        <a href="/tags/%E8%B4%AA%E5%BF%83%E7%AE%97%E6%B3%95/">#贪心算法</a>
+      
+        <a href="/tags/%E6%A6%82%E5%BF%B5/">#概念</a>
+      
+        <a href="/tags/%E6%80%BB%E7%BB%93/">#总结</a>
       
     </div>
   
@@ -376,8 +408,8 @@
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>Git使用和常用命令</div>
-      <div>http://example.com/2022/07/23/Git使用和常用命令/</div>
+      <div>递归与贪心与动态规划</div>
+      <div>http://example.com/2022/07/31/递归与贪心与动态规划/</div>
     </div>
     <div class="license-meta">
       
@@ -389,7 +421,7 @@
       
         <div class="license-meta-item license-meta-date">
           <div>发布于</div>
-          <div>2022年7月23日</div>
+          <div>2022年7月31日</div>
         </div>
       
       
@@ -424,18 +456,12 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2022/07/23/Linux%E4%B8%8BVim%E7%BC%96%E8%BE%91%E5%99%A8%E7%9A%84%E4%BD%BF%E7%94%A8/" title="Linux下Vim编辑器的使用">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">Linux下Vim编辑器的使用</span>
-                        <span class="visible-mobile">上一篇</span>
-                      </a>
-                    
                   </article>
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2022/07/23/Linux%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4%E7%AC%94%E8%AE%B0/" title="Linux常用命令笔记">
-                        <span class="hidden-mobile">Linux常用命令笔记</span>
+                      <a href="/2022/07/31/%E8%83%8C%E5%8C%85%E9%97%AE%E9%A2%98/" title="背包问题">
+                        <span class="hidden-mobile">背包问题</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
