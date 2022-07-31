@@ -4,6 +4,39 @@
   
   
   <entry>
+    <title>背包问题</title>
+    <link href="/2022/07/31/%E8%83%8C%E5%8C%85%E9%97%AE%E9%A2%98/"/>
+    <url>/2022/07/31/%E8%83%8C%E5%8C%85%E9%97%AE%E9%A2%98/</url>
+    
+    <content type="html"><![CDATA[<h2 id="背包问题"><a href="#背包问题" class="headerlink" title="背包问题"></a>背包问题</h2><blockquote><p>一个商品如果可以重复多次放入是<strong>完全背包</strong>，而只能放入一次是<strong>01背包</strong></p></blockquote><h2 id="01背包："><a href="#01背包：" class="headerlink" title="01背包："></a>01背包：</h2><p>问题描述：有n件物品和一个最多能背重量为w 的背包。第i件物品的重量是weight[i]，得到的价值是value[i] 。每件物品只能用一次，求解将哪些物品装入背包里物品价值总和最大。</p><h3 id="一维dp"><a href="#一维dp" class="headerlink" title="一维dp"></a>一维dp</h3><ol><li>确定dp数组以及下标的含义：</li></ol><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs c++">p[j] 表示容量为j的背包的价值总和最大是多少<br></code></pre></td></tr></table></figure><ol start="2"><li>确定递推公式：</li></ol><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs c++">dp[j] = <span class="hljs-built_in">max</span>(dp[j], dp[j - weight[i]] + value[i]);<br></code></pre></td></tr></table></figure><ol start="3"><li>初始化dp数组：</li></ol><ul><li>dp[0]就应该是0，因为背包容量为0所背的物品的最大价值就是0；</li><li>如果题目给的价值都是正整数那么非0下标都初始化为0；</li><li><strong>01背包的dp数组初始化为0</strong>;</li></ul><ol start="4"><li>确定遍历顺序：</li></ol><ul><li>二维dp遍历的时候，背包容量是从小到大，而<strong>一维dp遍历的时候，背包是从大到小</strong>；</li><li>倒序遍历是为了保证物品i只被放入一次；</li><li><strong>先遍历物品再遍历背包容量</strong>是保证每个容量可放入多个物品；</li></ul><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> i = <span class="hljs-number">0</span>; i &lt; weight.<span class="hljs-built_in">size</span>(); i++) &#123; <span class="hljs-comment">// 遍历物品</span><br>    <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> j = bagWeight; j &gt;= weight[i]; j--) &#123; <span class="hljs-comment">// 遍历背包容量, j必须&gt;=weight[i];</span><br>        dp[j] = <span class="hljs-built_in">max</span>(dp[j], dp[j - weight[i]] + value[i]);<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure><ol start="5"><li>举例推导···</li></ol><h2 id="完全背包"><a href="#完全背包" class="headerlink" title="完全背包"></a>完全背包</h2><p>问题描述：</p><p>完全背包和01背包问题唯一不同的地方就是，每种物品有无限件。</p><ul><li><p>01背包和完全背包唯一不同就是体现在<strong>遍历顺序</strong>上;</p></li><li><p>01背包中一维dp数组的两个for循环先后循序一定是先遍历物品，再遍历背包容量；</p></li><li><p>完全背包物品和背包的先后遍历顺序都可以，区别是求组合还是排列数；</p></li><li><p>01背包内嵌(背包容量)的循环是从大到小遍历，为了保证每个物品仅被添加一次；</p></li><li><p>而完全背包的物品是可以添加多次的，所以完全背包的内嵌遍历顺序要<strong>从小到大</strong>去遍历；</p></li><li><p>如果求<strong>组合数</strong>就是外层for循环遍历物品，内层for遍历背包。</p></li><li><p>如果求<strong>排列数</strong>就是外层for遍历背包，内层for循环遍历物品。</p></li></ul><h3 id="一维dp-1"><a href="#一维dp-1" class="headerlink" title="一维dp"></a>一维dp</h3><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-comment">// 先遍历物品，再遍历背包</span><br><span class="hljs-comment">// 组合</span><br><span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> i = <span class="hljs-number">0</span>; i &lt; weight.<span class="hljs-built_in">size</span>(); i++) &#123; <span class="hljs-comment">// 遍历物品</span><br>    <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> j = weight[i]; j &lt;= bagWeight ; j++) &#123; <span class="hljs-comment">// 遍历背包容量</span><br>        dp[j] = <span class="hljs-built_in">max</span>(dp[j], dp[j - weight[i]] + value[i]);<br>    &#125;<br>&#125;<br><br><span class="hljs-comment">// 先遍历背包，再遍历物品</span><br><span class="hljs-comment">// 排列</span><br><span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> j = <span class="hljs-number">0</span>; j &lt;= amount; j++) &#123; <span class="hljs-comment">// 遍历背包容量</span><br>    <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">0</span>; i &lt; coins.<span class="hljs-built_in">size</span>(); i++) &#123; <span class="hljs-comment">// 遍历物品</span><br>        <span class="hljs-keyword">if</span> (j - coins[i] &gt;= <span class="hljs-number">0</span>) dp[j] += dp[j - coins[i]];<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure><h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><ul><li><p>问能否能装满背包（或者最多装多少）：dp[j] &#x3D; max(dp[j], dp[j - nums[i]] + nums[i]); </p></li><li><p>问装满背包有几种方法：dp[j] +&#x3D; dp[j - nums[i]]；(初始化dp[0] &#x3D; 1)</p></li><li><p>问背包装满最大价值：dp[j] &#x3D; max(dp[j], dp[j - weight[i]] + value[i]); </p></li><li><p>问装满背包所有物品的最小个数：dp[j] &#x3D; min(dp[j - coins[i]] + 1, dp[j]);</p></li></ul><hr><p>【参考资料】<a href="https://programmercarl.com/">代码随想录</a>、力扣</p>]]></content>
+    
+    
+    <categories>
+      
+      <category>数据结构与算法</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>刷题</tag>
+      
+      <tag>数据结构</tag>
+      
+      <tag>算法</tag>
+      
+      <tag>背包问题</tag>
+      
+      <tag>动态规划</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>回溯算法</title>
     <link href="/2022/07/31/%E5%9B%9E%E6%BA%AF%E7%AE%97%E6%B3%95/"/>
     <url>/2022/07/31/%E5%9B%9E%E6%BA%AF%E7%AE%97%E6%B3%95/</url>
