@@ -16,27 +16,27 @@
   <meta name="author" content="ZYUE">
   <meta name="keywords" content="">
   
-    <meta name="description" content="普通二叉树删除普通二叉树的节点，用交换值的操作，使用有返回值的递归，可以通过返回值来移除节点； 代码中目标节点（要删除的节点）被操作了两次：  第一次是和目标节点的右子树最左面节点交换。 第二次直接被nullptr覆盖了。  123456789101112131415161718192021class Solution &amp;#123;public:    TreeNode* deleteNode(T">
+    <meta name="description" content="介绍 跳表全称叫做跳跃表，简称跳表。 跳表是一个随机化的数据结构，实质就是一种可以进行二分查找的有序链表。 跳表不仅能提高搜索性能，同时也可以提高插入和删除操作的性能。 跳表可以被看做二叉树的一个变种，它在性能上和红黑树，AVL树不相上下，但是跳表的原理非常简单，目前在Redis中有用到。 跳表采用随机技术决定链表中哪些节点应增加向前指针以及在该节点中应增加多少个指针。跳表结构的头节点需有足够的指">
 <meta property="og:type" content="article">
-<meta property="og:title" content="删除二叉树节点">
-<meta property="og:url" content="http://example.com/2022/07/25/%E5%88%A0%E9%99%A4%E4%BA%8C%E5%8F%89%E6%A0%91%E8%8A%82%E7%82%B9/index.html">
+<meta property="og:title" content="跳表">
+<meta property="og:url" content="http://example.com/2022/07/31/%E8%B7%B3%E8%A1%A8/index.html">
 <meta property="og:site_name" content="参天小树">
-<meta property="og:description" content="普通二叉树删除普通二叉树的节点，用交换值的操作，使用有返回值的递归，可以通过返回值来移除节点； 代码中目标节点（要删除的节点）被操作了两次：  第一次是和目标节点的右子树最左面节点交换。 第二次直接被nullptr覆盖了。  123456789101112131415161718192021class Solution &amp;#123;public:    TreeNode* deleteNode(T">
+<meta property="og:description" content="介绍 跳表全称叫做跳跃表，简称跳表。 跳表是一个随机化的数据结构，实质就是一种可以进行二分查找的有序链表。 跳表不仅能提高搜索性能，同时也可以提高插入和删除操作的性能。 跳表可以被看做二叉树的一个变种，它在性能上和红黑树，AVL树不相上下，但是跳表的原理非常简单，目前在Redis中有用到。 跳表采用随机技术决定链表中哪些节点应增加向前指针以及在该节点中应增加多少个指针。跳表结构的头节点需有足够的指">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="http://example.com/post_img/16.jpg">
-<meta property="article:published_time" content="2022-07-25T14:53:57.000Z">
-<meta property="article:modified_time" content="2022-07-25T15:09:44.608Z">
+<meta property="og:image" content="http://example.com/post_img/17.jpg">
+<meta property="article:published_time" content="2022-07-31T12:26:00.000Z">
+<meta property="article:modified_time" content="2022-07-31T13:10:04.327Z">
 <meta property="article:author" content="ZYUE">
+<meta property="article:tag" content="C++">
 <meta property="article:tag" content="刷题">
 <meta property="article:tag" content="数据结构">
 <meta property="article:tag" content="算法">
-<meta property="article:tag" content="二叉树">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="http://example.com/post_img/16.jpg">
+<meta name="twitter:image" content="http://example.com/post_img/17.jpg">
   
   
   
-  <title>删除二叉树节点 - 参天小树</title>
+  <title>跳表 - 参天小树</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -229,7 +229,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="删除二叉树节点"></span>
+            <span id="subtitle" data-typed-text="跳表"></span>
           
         </div>
 
@@ -245,8 +245,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2022-07-25 22:53" pubdate>
-          2022年7月25日 晚上
+        <time datetime="2022-07-31 20:26" pubdate>
+          2022年7月31日 晚上
         </time>
       </span>
     
@@ -257,7 +257,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          2.1k 字
+          2.3k 字
         
       </span>
     
@@ -268,7 +268,7 @@
         
         
         
-          18 分钟
+          19 分钟
         
       </span>
     
@@ -306,31 +306,41 @@
         <div id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">删除二叉树节点</h1>
+            <h1 style="display: none">跳表</h1>
             
             
               <div class="markdown-body">
                 
-                <h2 id="普通二叉树"><a href="#普通二叉树" class="headerlink" title="普通二叉树"></a>普通二叉树</h2><p>删除普通二叉树的节点，用交换值的操作，使用有返回值的递归，可以通过返回值来移除节点；</p>
-<p>代码中目标节点（要删除的节点）被操作了两次：</p>
-<ul>
-<li>第一次是和目标节点的右子树最左面节点交换。</li>
-<li>第二次直接被nullptr覆盖了。</li>
+                <h2 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h2><ul>
+<li>跳表全称叫做跳跃表，简称跳表。</li>
+<li>跳表是一个随机化的数据结构，实质就是一种可以进行<strong>二分查找</strong>的有序链表。</li>
+<li>跳表不仅能提高搜索性能，同时也可以提高插入和删除操作的性能。</li>
+<li>跳表可以被看做二叉树的一个变种，它在性能上和红黑树，AVL树不相上下，但是跳表的原理非常简单，目前在Redis中有用到。</li>
+<li>跳表采用随机技术决定链表中哪些节点应增加<strong>向前指针</strong>以及在该节点中应增加多少个指针。跳表结构的头节点需有足够的指针域，以满足可能构造最大级数的需要，而尾节点不需要指针域。</li>
+<li>跳表在原有的有序链表上面增加了多级索引，通过索引来实现快速查找。首先在最高级索引上查找<strong>最后一个小于</strong>当前查找元素的位置，然后再跳到次高级索引继续查找，直到跳到最底层为止，这时候已经十分接近要查找的元素的位置。</li>
+<li>跳表中的搜索、插入、删除操作的时间均为O(logn)，然而，最坏情况下时间复杂性却变成O(n)。</li>
 </ul>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span> &#123;<br><span class="hljs-keyword">public</span>:<br>    <span class="hljs-function">TreeNode* <span class="hljs-title">deleteNode</span><span class="hljs-params">(TreeNode* root, <span class="hljs-type">int</span> key)</span> </span>&#123;<br>        <span class="hljs-keyword">if</span> (root == <span class="hljs-literal">nullptr</span>) <span class="hljs-keyword">return</span> root;<br>        <span class="hljs-keyword">if</span> (root-&gt;val == key) &#123;<br>            <span class="hljs-comment">// 这里第二次操作目标值：最终删除的作用</span><br>            <span class="hljs-keyword">if</span> (root-&gt;right == <span class="hljs-literal">nullptr</span>) &#123; <br>                <span class="hljs-keyword">return</span> root-&gt;left;<br>            &#125;<br>            TreeNode *cur = root-&gt;right;<br>            <span class="hljs-keyword">while</span> (cur-&gt;left) &#123;<br>                cur = cur-&gt;left;<br>            &#125;<br>            <span class="hljs-comment">// 这里第一次操作目标值：交换目标值其右子树最左面节点</span><br>            <span class="hljs-built_in">swap</span>(root-&gt;val, cur-&gt;val); <br>        &#125;<br>        root-&gt;left = <span class="hljs-built_in">deleteNode</span>(root-&gt;left, key);<br>        root-&gt;right = <span class="hljs-built_in">deleteNode</span>(root-&gt;right, key);<br>        <span class="hljs-keyword">return</span> root;<br>    &#125;<br>&#125;;<br></code></pre></td></tr></table></figure>
+<h2 id="实现"><a href="#实现" class="headerlink" title="实现"></a>实现</h2><h3 id="跳表层数"><a href="#跳表层数" class="headerlink" title="跳表层数"></a>跳表层数</h3><p>由于跳表是多层链表结构，层数需要指定，即跳表的最大高度，取经验值<code>level = 8</code>;</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-type">static</span> <span class="hljs-type">const</span> <span class="hljs-type">int</span> level = <span class="hljs-number">8</span>;  <span class="hljs-comment">// 层数，经验值 8</span><br></code></pre></td></tr></table></figure>
 
-<h2 id="二叉搜索树"><a href="#二叉搜索树" class="headerlink" title="二叉搜索树"></a>二叉搜索树</h2><p>利用二叉搜索树特性，递归处理：</p>
+<h3 id="跳表节点"><a href="#跳表节点" class="headerlink" title="跳表节点"></a>跳表节点</h3><p>在跳表的每一层都由头节点引出一条链表，所以一个跳表节点需要：</p>
 <ul>
-<li>第一种情况：没找到删除的节点，遍历到空节点直接返回了</li>
+<li>节点值；</li>
+<li>next数组，存储该节点在每一层的next指针，没有就是空指针；</li>
 </ul>
-<p>找到目标节点：</p>
-<ul>
-<li>第二种情况：左右孩子都为空（叶子节点），直接删除节点， 返回nullptr为根节点；</li>
-<li>第三种情况：删除节点的左孩子为空，右孩子不为空，删除节点，右孩子补位，返回右孩子为根节点；</li>
-<li>第四种情况：删除节点的右孩子为空，左孩子不为空，删除节点，左孩子补位，返回左孩子为根节点；</li>
-<li>第五种情况：左右孩子节点都不为空，则将删除节点的左子树头结点（左孩子）放到删除节点的右子树的最左面节点的左孩子上，返回删除节点右孩子为新的根节点；</li>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-comment">// 定义跳表节点</span><br><span class="hljs-keyword">struct</span> <span class="hljs-title class_">Node</span> &#123;<br>    <span class="hljs-type">int</span> val;<br>    <br>    <span class="hljs-comment">// 记录节点在每一层的 next，next[i] 表示当前节点第 i 层的 next</span><br>    vector&lt;Node*&gt; next;<br><br>    <span class="hljs-built_in">Node</span>(<span class="hljs-type">int</span> _val) : <span class="hljs-built_in">val</span>(_val) &#123; next.<span class="hljs-built_in">resize</span>(level, <span class="hljs-literal">nullptr</span>); &#125;<br>&#125; *head;  <span class="hljs-comment">// 定义头节点 head</span><br></code></pre></td></tr></table></figure>
+
+<h3 id="跳表结构"><a href="#跳表结构" class="headerlink" title="跳表结构"></a>跳表结构</h3><ul>
+<li>一个跳表类中成员函数一般就是查找、插入、删除操作；</li>
+<li>层索引是从最下层到最上层，0~level-1;</li>
+<li>我们统一定义一个辅助的查询函数<code>find()</code>，用来找到<strong>每一层</strong>中<strong>小于目标值的最大的节点</strong>；</li>
+<li>每一层的查找、插入、删除操作同于操作普通链表；</li>
+<li>插入操作时<strong>从下往上遍历</strong>每一层，每一层有50%的概率插入新节点，第0层一定是含有所有节点；</li>
 </ul>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span> &#123;<br><span class="hljs-keyword">public</span>:<br>    <span class="hljs-function">TreeNode* <span class="hljs-title">deleteNode</span><span class="hljs-params">(TreeNode* root, <span class="hljs-type">int</span> key)</span> </span>&#123;<br>        <span class="hljs-keyword">if</span> (root == <span class="hljs-literal">nullptr</span>) <span class="hljs-keyword">return</span> root; <span class="hljs-comment">// 第一种情况：没找到删除的节点，遍历到空节点直接返回了</span><br>        <span class="hljs-keyword">if</span> (root-&gt;val == key) &#123;<br>            <span class="hljs-comment">// 第二种情况：左右孩子都为空（叶子节点），直接删除节点， 返回NULL为根节点</span><br>            <span class="hljs-keyword">if</span> (root-&gt;left == <span class="hljs-literal">nullptr</span> &amp;&amp; root-&gt;right == <span class="hljs-literal">nullptr</span>) &#123;<br>                <span class="hljs-comment">///! 内存释放</span><br>                <span class="hljs-keyword">delete</span> root;<br>                <span class="hljs-keyword">return</span> <span class="hljs-literal">nullptr</span>;<br>            &#125;<br>            <span class="hljs-comment">// 第三种情况：其左孩子为空，右孩子不为空，删除节点，右孩子补位 ，返回右孩子为根节点</span><br>            <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (root-&gt;left == <span class="hljs-literal">nullptr</span>) &#123;<br>                <span class="hljs-keyword">auto</span> retNode = root-&gt;right;<br>                <span class="hljs-comment">///! 内存释放</span><br>                <span class="hljs-keyword">delete</span> root;<br>                <span class="hljs-keyword">return</span> retNode;<br>            &#125;<br>            <span class="hljs-comment">// 第四种情况：其右孩子为空，左孩子不为空，删除节点，左孩子补位，返回左孩子为根节点</span><br>            <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (root-&gt;right == <span class="hljs-literal">nullptr</span>) &#123;<br>                <span class="hljs-keyword">auto</span> retNode = root-&gt;left;<br>                <span class="hljs-comment">///! 内存释放</span><br>                <span class="hljs-keyword">delete</span> root;<br>                <span class="hljs-keyword">return</span> retNode;<br>            &#125;<br>            <span class="hljs-comment">// 第五种情况：左右孩子节点都不为空，则将删除节点的左子树放到删除节点的右子树的最左面节点的左孩子的位置</span><br>            <span class="hljs-comment">// 并返回删除节点右孩子为新的根节点。</span><br>            <span class="hljs-keyword">else</span> &#123;<br>                TreeNode* cur = root-&gt;right; <span class="hljs-comment">// 找右子树最左面的节点</span><br>                <span class="hljs-keyword">while</span>(cur-&gt;left != <span class="hljs-literal">nullptr</span>) &#123;<br>                    cur = cur-&gt;left;<br>                &#125;<br>                cur-&gt;left = root-&gt;left; <span class="hljs-comment">// 把要删除的节点（root）左子树放在cur的左孩子的位置</span><br>                TreeNode* tmp = root;   <span class="hljs-comment">// 把root节点保存一下，下面来删除</span><br>                root = root-&gt;right;     <span class="hljs-comment">// 返回旧root的右孩子作为新root</span><br>                <span class="hljs-keyword">delete</span> tmp;             <span class="hljs-comment">// 释放节点内存（这里不写也可以，但C++最好手动释放一下吧）</span><br>                <span class="hljs-keyword">return</span> root;<br>            &#125;<br>        &#125;<br>        <span class="hljs-keyword">if</span> (root-&gt;val &gt; key) root-&gt;left = <span class="hljs-built_in">deleteNode</span>(root-&gt;left, key);<br>        <span class="hljs-keyword">if</span> (root-&gt;val &lt; key) root-&gt;right = <span class="hljs-built_in">deleteNode</span>(root-&gt;right, key);<br>        <span class="hljs-keyword">return</span> root;<br>    &#125;<br>&#125;;<br></code></pre></td></tr></table></figure>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Skiplist</span> &#123;<br><span class="hljs-keyword">public</span>:<br>    <span class="hljs-comment">// 构造函数创建头节点</span><br>    <span class="hljs-built_in">Skiplist</span>() &#123;<br>        head = <span class="hljs-keyword">new</span> <span class="hljs-built_in">Node</span>(<span class="hljs-number">-1</span>);<br>    &#125;<br>	<br>    <span class="hljs-comment">// 析构函数删除头节点</span><br>    ~<span class="hljs-built_in">Skiplist</span>() &#123;<br>        <span class="hljs-keyword">delete</span> head;<br>    &#125;<br><br>    <span class="hljs-comment">// 辅助函数：找到每一层(层索引i)中小于目标值 target 的最大节点 pre[i]</span><br>    <span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">find</span><span class="hljs-params">(<span class="hljs-type">int</span> target, vector&lt;Node*&gt;&amp; pre)</span> </span>&#123;<br>        <span class="hljs-keyword">auto</span> p = head;<br>        <span class="hljs-comment">// 从头节点开始遍历，从上层往下层找</span><br>        <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = level - <span class="hljs-number">1</span>; i &gt;= <span class="hljs-number">0</span>; --i) &#123;<br>            <span class="hljs-keyword">while</span> (p-&gt;next[i] &amp;&amp; p-&gt;next[i]-&gt;val &lt; target) &#123;<br>                p = p-&gt;next[i];<br>            &#125;<br>            pre[i] = p;<br>        &#125;<br>    &#125;<br><br>    <span class="hljs-comment">// 从跳表中查找 target</span><br>    <span class="hljs-function"><span class="hljs-type">bool</span> <span class="hljs-title">search</span><span class="hljs-params">(<span class="hljs-type">int</span> target)</span> </span>&#123;<br>        <span class="hljs-comment">// 先找到每一层 i 小于目标值 target 的最大节点 pre[i]</span><br>        <span class="hljs-function">vector&lt;Node*&gt; <span class="hljs-title">pre</span><span class="hljs-params">(level)</span></span>;<br>        <span class="hljs-built_in">find</span>(target, pre);<br><br>        <span class="hljs-keyword">auto</span> p = pre[<span class="hljs-number">0</span>]-&gt;next[<span class="hljs-number">0</span>];<br>        <span class="hljs-keyword">return</span> p &amp;&amp; p-&gt;val == target;<br>    &#125;<br><br>    <span class="hljs-comment">// 向跳表中插入元素 num</span><br>    <span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">add</span><span class="hljs-params">(<span class="hljs-type">int</span> num)</span> </span>&#123;<br>        <span class="hljs-comment">// 先找到每一层 i 小于目标值 target 的最大节点 pre[i]</span><br>        <span class="hljs-function">vector&lt;Node*&gt; <span class="hljs-title">pre</span><span class="hljs-params">(level)</span></span>;<br>        <span class="hljs-built_in">find</span>(num, pre);<br><br>        <span class="hljs-keyword">auto</span> p = <span class="hljs-keyword">new</span> <span class="hljs-built_in">Node</span>(num); <br>        <span class="hljs-comment">// 从下往上遍历每一层，每一层是单链表的插入逻辑</span><br>        <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">0</span>; i &lt; level; i++) &#123;<br>            p-&gt;next[i] = pre[i]-&gt;next[i]; <br>            pre[i]-&gt;next[i] = p;<br>            <span class="hljs-comment">// 每一层有 50% 的概率不插入新节点</span><br>            <span class="hljs-keyword">if</span> (<span class="hljs-built_in">rand</span>() % <span class="hljs-number">2</span>) <span class="hljs-keyword">break</span>;  <br>        &#125;<br>    &#125;<br><br>    <span class="hljs-comment">// 从跳表中删除 num</span><br>    <span class="hljs-function"><span class="hljs-type">bool</span> <span class="hljs-title">erase</span><span class="hljs-params">(<span class="hljs-type">int</span> num)</span> </span>&#123;<br>        <span class="hljs-comment">// 先找到每一层 i 小于目标值 target 的最大节点 pre[i]</span><br>        <span class="hljs-function">vector&lt;Node*&gt; <span class="hljs-title">pre</span><span class="hljs-params">(level)</span></span>;<br>        <span class="hljs-built_in">find</span>(num, pre);<br><br>        <span class="hljs-comment">// 先判断 num 是否存在，不存在直接返回 false，只需在第0层判断</span><br>        <span class="hljs-keyword">auto</span> p = pre[<span class="hljs-number">0</span>]-&gt;next[<span class="hljs-number">0</span>];<br>        <span class="hljs-keyword">if</span> (!p || p-&gt;val != num) <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;<br><br>        <span class="hljs-comment">// 删除每一层的 num，如果 pre[i]-&gt;next[i] == p 说明第 i 层存在 p</span><br>        <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">0</span>; i &lt; level &amp;&amp; pre[i]-&gt;next[i] == p; ++i) &#123;<br>            pre[i]-&gt;next[i] = p-&gt;next[i];<br>        &#125;<br><br>        <span class="hljs-keyword">delete</span> p;<br><br>        <span class="hljs-keyword">return</span> <span class="hljs-literal">true</span>;<br>    &#125;<br>&#125;;<br></code></pre></td></tr></table></figure>
+
+<hr>
+<p>【参考资料】<a target="_blank" rel="noopener" href="https://leetcode.cn/problems/design-skiplist/solution/by-tonngw-ls2k/">力扣题解-设计跳表</a></p>
 
                 
               </div>
@@ -364,13 +374,13 @@
     <div class="post-meta">
       <i class="iconfont icon-tags"></i>
       
+        <a href="/tags/C/">#C++</a>
+      
         <a href="/tags/%E5%88%B7%E9%A2%98/">#刷题</a>
       
         <a href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/">#数据结构</a>
       
         <a href="/tags/%E7%AE%97%E6%B3%95/">#算法</a>
-      
-        <a href="/tags/%E4%BA%8C%E5%8F%89%E6%A0%91/">#二叉树</a>
       
     </div>
   
@@ -382,8 +392,8 @@
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>删除二叉树节点</div>
-      <div>http://example.com/2022/07/25/删除二叉树节点/</div>
+      <div>跳表</div>
+      <div>http://example.com/2022/07/31/跳表/</div>
     </div>
     <div class="license-meta">
       
@@ -395,13 +405,13 @@
       
         <div class="license-meta-item license-meta-date">
           <div>发布于</div>
-          <div>2022年7月25日</div>
+          <div>2022年7月31日</div>
         </div>
       
       
         <div class="license-meta-item license-meta-date">
           <div>更新于</div>
-          <div>2022年7月25日</div>
+          <div>2022年7月31日</div>
         </div>
       
       <div class="license-meta-item">
@@ -430,18 +440,12 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2022/07/31/%E8%B7%B3%E8%A1%A8/" title="跳表">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">跳表</span>
-                        <span class="visible-mobile">上一篇</span>
-                      </a>
-                    
                   </article>
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2022/07/25/%E9%87%8D%E5%BB%BA%E4%BA%8C%E5%8F%89%E6%A0%91/" title="重建二叉树">
-                        <span class="hidden-mobile">重建二叉树</span>
+                      <a href="/2022/07/25/%E5%88%A0%E9%99%A4%E4%BA%8C%E5%8F%89%E6%A0%91%E8%8A%82%E7%82%B9/" title="删除二叉树节点">
+                        <span class="hidden-mobile">删除二叉树节点</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
