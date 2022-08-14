@@ -25,7 +25,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="http://example.com/post_img/30.jpg">
 <meta property="article:published_time" content="2022-08-13T15:12:18.000Z">
-<meta property="article:modified_time" content="2022-08-14T15:17:19.821Z">
+<meta property="article:modified_time" content="2022-08-14T17:54:07.063Z">
 <meta property="article:author" content="ZYUE">
 <meta property="article:tag" content="项目">
 <meta property="article:tag" content="数据库">
@@ -272,7 +272,7 @@
         
         
         
-          99 分钟
+          103 分钟
         
       </span>
     
@@ -317,9 +317,9 @@
                 
                 <h2 id="简要介绍"><a href="#简要介绍" class="headerlink" title="简要介绍"></a>简要介绍</h2><p>这门课程共五个配套实验，不过关于数据库的是后面4个实验，第一个实验是检验基本C++语言能力的前菜。</p>
 <p>实验全部都是完形填空的形式，需要我们实现声明好的函数，自己也可以增加其它成员变量或成员函数来辅助完成实验要求。</p>
-<p>实验配套的开源项目是<code>bustub</code>，需要我们从github上clone下来，按照README配置环境就好。我是在VMWARE中装Ubuntu18.04虚拟机来完成实验的，一定要仔细看环境要求，免得工具链不支持折腾时间。我最开始是用Ubuntu22.04，结果回退代码版本到2021fall的实验位置后似乎编译不了，又不得不再配环境（因为我菜，不知道怎么修改）。</p>
+<p>实验配套的开源项目是<code>bustub</code>，需要我们从github上clone下来，按照README配置环境就好。我是在VMWARE中装Ubuntu18.04虚拟机来完成实验的，一定要仔细看环境要求，免得工具链不支持折腾时间。我最开始是用Ubuntu22.04，结果回退代码版本到2021FALL的实验位置后似乎编译不了，又不得不再配环境（因为我菜，不知道怎么修改）。</p>
 <p>另外，这门课还开放了<code>Gradescope</code>在线测试平台，非CMU的学生也可以使用，非常不错。因为本地的测试代码都比较简单，Gradescope上面才是严格的测试，注册时要选卡内梅隆基大学和填入口代码，每次上传代码文件时最好运行如下命令检查一下代码格式，因为代码格式检查非常严格，不合规直接0分。</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs bash">$ make format<br>$ make check-lint<br>$ make check-clang-tidy<br></code></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs bash">make format<br>make check-lint<br>make check-clang-tidy<br></code></pre></td></tr></table></figure>
 
 <p>还有一个上传代码的坑点是提交时要另外多加一个文件<code>tmp_tuple_page.h</code>，具体修改见github issue #225。</p>
 <p>于自己而言，实验难度大概是 <code>proj0 &lt; proj1 &lt; proj3 &lt;= proj4 &lt;&lt; proj2</code>。其中project2难度最大，是实现可扩展哈希索引，虽然不是2020年听着就非常难的B+树索引，但感觉也不相上下（project2前前后后提交了差不多100次，每次改bug后再提交都得需要运行十几分钟才出结果，难顶…，还好没放弃最终通过全部测试）。project0感觉做不做都没关系，简单的矩阵运算。project1是实现缓存池，其中用到LRU缓存替换策略，管理数据库页面，相对简单。project3是执行查询语句相关的，主要是调用函数，看懂代码中各个类的关联就好。project4是并发控制，实现一个锁管理器（读写锁）和事务回滚的控制。所有实验项目中注意线程安全。在每个Lab前我们需要好好理解实验要求，看懂代码中接口之前的关系，然后理解原理，想好实现思路。</p>
@@ -341,11 +341,11 @@
 </li>
 </ul>
 <h2 id="Project1-Buffer-Pool-Manager"><a href="#Project1-Buffer-Pool-Manager" class="headerlink" title="Project1 Buffer Pool Manager"></a>Project1 Buffer Pool Manager</h2><h3 id="说明-1"><a href="#说明-1" class="headerlink" title="说明"></a>说明</h3><p>第一个编程项目是在存储管理器中实现缓冲池。缓冲池负责将物理页面从主内存来回移动到磁盘。它允许 DBMS 支持大于系统可用内存量的数据库。</p>
-<p>因为在BusTub中，数据库中的数据以页为单位存储在磁盘中，使用时要把页面从磁盘加载到内存，此后再使用如果命中缓存也会提高效率。但内存的容量有限，当容量不足时就需要利用合理的规则淘汰掉某些页面，把位置留给有需要的；</p>
-<p>在缓存池中，有些页面是空闲的，存在于空闲链表中，即没有数据库页面与它对应；有些数据库页面处于PIN后的状态，它们正在被使用，不能被淘汰；还有些数据库页面处于Unpin状态，在内存容量不足时被淘汰掉；</p>
-<h3 id="思路-1"><a href="#思路-1" class="headerlink" title="思路"></a>思路</h3><h4 id="Task-1-LRU替换策略"><a href="#Task-1-LRU替换策略" class="headerlink" title="Task #1 LRU替换策略"></a>Task #1 LRU替换策略</h4><p>使用LRU缓存替换策略，lru_replacer相当于一个回收站，管理frame_id。</p>
+<p>因为在BusTub中，数据库中的数据以页为单位存储在磁盘中，使用时要把页面从磁盘加载到内存，此后再使用如果命中缓存也会提高效率。但内存的容量有限，当容量不足时就需要利用合理的规则淘汰掉某些页面，把位置留给有需要的。</p>
+<p>在缓存池中，有些页面是空闲的，存在于空闲链表中，即没有数据库页面与它对应；有些数据库页面处于PIN后的状态，它们正在被使用，不能被淘汰；还有些数据库页面处于Unpin状态，在内存容量不足时被淘汰掉。</p>
+<p>page_id唯一标识了一个数据库页面，disk_manager 就是根据 page_id 来读取和写入磁盘页；frame_id唯一标识了内存中的一个页面的位置，代表一个内存帧位置，内存页可以存放数据库页面page，它和page_id呼应。</p>
+<h3 id="思路-1"><a href="#思路-1" class="headerlink" title="思路"></a>思路</h3><h4 id="Task-1-LRU替换策略"><a href="#Task-1-LRU替换策略" class="headerlink" title="Task #1 LRU替换策略"></a>Task #1 LRU替换策略</h4><p>使用LRU缓存替换策略，lru_replacer相当于一个回收站，LRU管理的对象就是内存帧位置frame_id。</p>
 <ul>
-<li>一个frame_id_t类型的frame_id代表一个内存帧位置，内存帧位置可以存放页面page，LRU管理的对象就是内存帧位置frame_id；</li>
 <li>我们用unordered_map哈希表和list双向链表实现LRU算法，链表节点是一个frame_id帧位置，哈希表存每个链表节点的迭代器位置。这里链表尾部代表最近最久未使用的页面对应的 frame_id；</li>
 <li>Pin函数：代表该帧位置对应的页面被某个线程正在使用，不能被替换出去，所以从lru_replacer（umap和list）中移除参数frame_id。从上层的视角而言就是固定某个页面，不被LRU管理；</li>
 <li>Unpin函数：与Pin相反，表示没有线程在使用参数frame_id对应的页面，该页面可以被淘汰。所以要把frame_id加入到lru_replacer（umap和list）中，加到链表头部；</li>
@@ -369,8 +369,8 @@
 <p>这里的桶页就是数据库中存储键值对数据的页面。在目录页中桶只是逻辑上的概念，就是一个索引位置，目录页中数组的索引i对应第i个桶，实际上可能有多个桶指向同一个物理桶页面（page）。</p>
 <p>我把目录页中一个索引位置称作一个逻辑桶，一个物理桶页面称为桶页，满桶分裂时（空桶合并时）对应调整数据的桶称作镜像桶，它们互为兄弟桶。</p>
 <p>每个哈希表的Directory或Bucket页对应于从缓冲池中获取的内存内的内容。每次尝试读写页面的时候，需要使用唯一的page_id从缓冲池中获取页面，然后将他们重新转换为Directory或Bucket页，并且要在任何读写操作之后Unpin这个页面。</p>
-<p>建议先理解可扩展哈希索引的原理到位后再开始做此lab。</p>
-<h3 id="思路-2"><a href="#思路-2" class="headerlink" title="思路"></a>思路</h3><h4 id="目录页"><a href="#目录页" class="headerlink" title="目录页"></a>目录页</h4><table>
+<p>建议先理解可扩展哈希索引的原理到位后再开始做此lab，要理解全局深度和局部深度，理解原桶和镜像桶之间的关系。</p>
+<h3 id="思路-2"><a href="#思路-2" class="headerlink" title="思路"></a>思路</h3><h4 id="Task-1-页面布局"><a href="#Task-1-页面布局" class="headerlink" title="Task #1 页面布局"></a>Task #1 页面布局</h4><h5 id="哈希表目录页"><a href="#哈希表目录页" class="headerlink" title="哈希表目录页"></a>哈希表目录页</h5><table>
 <thead>
 <tr>
 <th align="center">一些成员变量</th>
@@ -408,7 +408,7 @@
 <li><p>获取镜像桶（兄弟桶）的索引，其实就是将原桶索引的最高位取反；</p>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-function"><span class="hljs-type">uint32_t</span> <span class="hljs-title">HashTableDirectoryPage::GetSplitImageIndex</span><span class="hljs-params">(<span class="hljs-type">uint32_t</span> bucket_idx)</span> </span>&#123;<br>  <span class="hljs-built_in">assert</span>(bucket_idx &lt; <span class="hljs-built_in">Size</span>());<br>  <span class="hljs-comment">// 用异或，给待分裂桶的下标的最高位取反，得到兄弟桶下标</span><br>  <span class="hljs-type">uint32_t</span> local_deep = local_depths_[bucket_idx];<br>  <span class="hljs-keyword">return</span> bucket_idx ^ (<span class="hljs-number">1</span> &lt;&lt; (local_deep - <span class="hljs-number">1</span>));<br>&#125;<br></code></pre></td></tr></table></figure></li>
 </ul>
-<h4 id="桶页"><a href="#桶页" class="headerlink" title="桶页"></a>桶页</h4><table>
+<h5 id="哈希表桶页"><a href="#哈希表桶页" class="headerlink" title="哈希表桶页"></a>哈希表桶页</h5><table>
 <thead>
 <tr>
 <th align="center">成员变量</th>
@@ -447,7 +447,7 @@
 <li><p>还自定义了两个辅助函数配合桶分裂，取出桶中全部可读数据，重置桶页面（将可读位全部置0）；</p>
 </li>
 </ul>
-<h4 id="可扩展哈希表"><a href="#可扩展哈希表" class="headerlink" title="可扩展哈希表"></a>可扩展哈希表</h4><ul>
+<h4 id="Task-2-实现可扩展哈希表"><a href="#Task-2-实现可扩展哈希表" class="headerlink" title="Task #2 实现可扩展哈希表"></a>Task #2 实现可扩展哈希表</h4><ul>
 <li><p>构造函数中创建目录页和第一个桶页，并设置第一个桶索引为0，局部高度为0；</p>
 </li>
 <li><p>普通的取出、插入、删除操作基本就是先取出目录页和对应桶页，然后调用我们在桶页实现的相应函数即可；</p>
@@ -484,7 +484,7 @@
 <li>递归合并其它可能存在的空桶；</li>
 </ul>
 </li>
-<li><p>每次取出目录页或桶页操作后一定要Unpin，不然内存承受不了；</p>
+<li><p>每次取出目录页或桶页操作后一定要Unpin，不然内存承受不了，缓存池满了；</p>
 </li>
 <li><p>取出目录页代码，用到了reinterpret_cast，取出桶页类似，都是将Page页面解释成相应类型；</p>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-keyword">template</span> &lt;<span class="hljs-keyword">typename</span> KeyType, <span class="hljs-keyword">typename</span> ValueType, <span class="hljs-keyword">typename</span> KeyComparator&gt;<br><span class="hljs-function">HashTableDirectoryPage *<span class="hljs-title">HASH_TABLE_TYPE::FetchDirectoryPage</span><span class="hljs-params">()</span> </span>&#123;<br>  Page *dir_page_raw = buffer_pool_manager_-&gt;<span class="hljs-built_in">FetchPage</span>(directory_page_id_);<br>  <span class="hljs-built_in">assert</span>(dir_page_raw != <span class="hljs-literal">nullptr</span>);<br>  <span class="hljs-keyword">return</span> <span class="hljs-built_in">reinterpret_cast</span>&lt;HashTableDirectoryPage *&gt;(dir_page_raw-&gt;<span class="hljs-built_in">GetData</span>());<br>&#125;<br></code></pre></td></tr></table></figure>
@@ -492,7 +492,7 @@
 <li><p>一些基本代码：</p>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-comment">// 创建新页</span><br>Page *buc0_page_raw = buffer_pool_manager_-&gt;<span class="hljs-built_in">NewPage</span>(&amp;buc0_page_id);<br><span class="hljs-comment">// 获取目录页、桶页</span><br>HashTableDirectoryPage *dir_page = <span class="hljs-built_in">FetchDirectoryPage</span>();<br><span class="hljs-type">page_id_t</span> buc_page_id = <span class="hljs-built_in">KeyToPageId</span>(key, dir_page);<br>HASH_TABLE_BUCKET_TYPE *buc_page = <span class="hljs-built_in">FetchBucketPage</span>(buc_page_id);<br><span class="hljs-comment">// unpin页面</span><br>buffer_pool_manager_-&gt;<span class="hljs-built_in">UnpinPage</span>(directory_page_id_, <span class="hljs-literal">false</span>);<br></code></pre></td></tr></table></figure></li>
 </ul>
-<h4 id="并发控制"><a href="#并发控制" class="headerlink" title="并发控制"></a>并发控制</h4><p>需要时就加锁，哈希表（目录页）有table_latch_，桶页用page对象原始的锁，两者都有读锁和写锁；</p>
+<h4 id="Task-3-并发控制"><a href="#Task-3-并发控制" class="headerlink" title="Task #3 并发控制"></a>Task #3 并发控制</h4><p>需要时就加锁，哈希表（目录页）有table_latch_，桶页用page对象原始的锁，两者都有读锁和写锁；</p>
 <p>桶页加锁用到reinterpret_cast，将桶页类型的对象重解释成page对象；</p>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs c++">Page *buc_page_raw = <span class="hljs-built_in">reinterpret_cast</span>&lt;Page *&gt;(buc_page);<br>buc_page_raw-&gt;<span class="hljs-built_in">RLatch</span>();  	<span class="hljs-comment">// 加读锁</span><br>buc_page_raw-&gt;<span class="hljs-built_in">RUnlatch</span>();  	<span class="hljs-comment">// 解读锁</span><br></code></pre></td></tr></table></figure>
 
@@ -529,31 +529,39 @@
 <p>需要LM支持三个常见的隔离级别：READ_UNCOMMITED，READ_COMMITTED和REPEATABLE_READ。</p>
 <p>任何失败的锁操作都应该导致事务终止（隐式Aborted）并抛出异常。事务管理器将进一步捕获该异常并回滚事务执行的写操作。</p>
 <p>我把共享锁也称作读锁，排他锁也称作写锁；</p>
-<h3 id="思路-4"><a href="#思路-4" class="headerlink" title="思路"></a>思路</h3><h4 id="锁管理器-amp-死锁预防"><a href="#锁管理器-amp-死锁预防" class="headerlink" title="锁管理器&amp;死锁预防"></a>锁管理器&amp;死锁预防</h4><table>
+<p>二段封锁协议（2PL）：事务分为两个阶段（不考虑commit&#x2F;abort），上锁阶段（<code>GROWING</code>）只获取锁或升级锁，不能释放锁；解锁阶段（<code>SHINKING</code>）只解锁，不能获取和升级锁。这样，第二次读取时，前一次读取的读锁一定还在，避免了中途被修改。</p>
+<p>严格二段封锁协议：增加在<code>SHRINKING</code>阶段也不能释放锁，只有在事务 commit 或 abort 时统一释放锁的限制；</p>
+<h3 id="思路-4"><a href="#思路-4" class="headerlink" title="思路"></a>思路</h3><h4 id="Task-1-锁管理器"><a href="#Task-1-锁管理器" class="headerlink" title="Task #1 锁管理器"></a>Task #1 锁管理器</h4><p>脏读的产生：事务1修改数据，被事务2读到，之后事务1 abort，事务2读到的是脏数据。</p>
+<p>不可重复读的产生：事务1读数据，事务2修改数据，事务1再读数据，事务1两次读到的数据不一致。</p>
+<p>幻读的产生：事务1统计行数，事务2插入数据，事务1再统计行数，事务1两次统计的行数不一致。</p>
+<table>
 <thead>
 <tr>
 <th align="center">隔离级别</th>
-<th align="left">实现方式</th>
+<th align="center">实现方式</th>
 <th align="center">可能问题</th>
 </tr>
 </thead>
 <tbody><tr>
 <td align="center">READ_UNCOMMITED</td>
-<td align="left">只在写操作时上写锁</td>
-<td align="center"></td>
+<td align="center">只在写操作时上写锁</td>
+<td align="center">脏读、不可重复读、幻读</td>
 </tr>
 <tr>
 <td align="center">READ_COMMITTED</td>
-<td align="left">读时上读锁，读完解读锁；写时上写锁，写完解写锁</td>
-<td align="center"></td>
+<td align="center">读时上读锁，读完解读锁；写时上写锁，写完解写锁</td>
+<td align="center">不可重复读、幻读</td>
 </tr>
 <tr>
 <td align="center">REPEATABLE_READ</td>
-<td align="left">读写均需要加锁，严格遵守二段封锁协议（2PL）：事务分为两个阶段（不考虑commit&#x2F;abort），上锁阶段(GROWING)只上锁，解锁阶段(SHINKING)只解锁。这样，第二次读取时，前一次读取的读锁一定还在，避免了中途被修改。只有在事务 commit 或 abort 时统一放锁。</td>
-<td align="center"></td>
+<td align="center">读写均需要加锁，遵守严格2PL</td>
+<td align="center">幻读</td>
 </tr>
 </tbody></table>
-<ul>
+<blockquote>
+<p>其它的和死锁预防预防一起写了；</p>
+</blockquote>
+<h4 id="Task-2-死锁预防"><a href="#Task-2-死锁预防" class="headerlink" title="Task #2 死锁预防"></a>Task #2 死锁预防</h4><ul>
 <li>事务txd_id大的就是新事务，小的是老事务；</li>
 <li>加共享锁步骤：<ul>
 <li>状态已经是<code>ABORTED</code>的事务，直接返回false；</li>
@@ -563,7 +571,7 @@
 <li>遍历rid（元组）对应的请求队列，根据wound-wait原则；</li>
 <li>若遇到新事务，如果新事物申请持有写锁就需要Abort这个新事务，新事务申请持有读锁则可以共存，跳过继续遍历；</li>
 <li>若遇到老事务，如果老事务申请持有写锁，事务就条件变量等待获取锁<code>cv_.wait(locker)</code>，如果老事务申请持有读锁，可以共存，跳过继续遍历；</li>
-<li>当成功获取锁后，还要循环判断事务自己是不是被abort了；</li>
+<li>当成功获取锁后，还要循环判断事务自己在等待获取锁期间是不是被abort了；</li>
 <li>构造<code>SHARED</code>模式的请求节点，将请求节点加入请求队列尾部，并将rid加入事务的共享锁集，设置事务状态为<code>GROWING</code>，返回true；</li>
 </ul>
 </li>
@@ -588,9 +596,9 @@
 </ul>
 </li>
 </ul>
-<h4 id="事务并发控制"><a href="#事务并发控制" class="headerlink" title="事务并发控制"></a>事务并发控制</h4><p>需要我们修改部分执行器的代码，加入刚刚实现好的共享或排他锁，并且还要求支持事务的回滚。只需要修改<code>Sequential Scan、Insert、Update、Delete</code>这4个执行器。</p>
+<h4 id="Task-3-执行并发查询"><a href="#Task-3-执行并发查询" class="headerlink" title="Task #3 执行并发查询"></a>Task #3 执行并发查询</h4><p>需要我们修改部分执行器的代码，加入刚刚实现好的共享或排他锁，并且还要求支持事务的回滚。只需要修改<code>Sequential Scan、Insert、Update、Delete</code>这4个执行器。</p>
 <p>顺序扫描时，如果不是<code>READ_UNCOMMITTED</code>，读取均需要获取共享锁。如果是 READ_COMMITTED，读完后需要立刻释放 shared lock。</p>
-<p>增删改操作不管什么级别都需要获取排他锁（如果已经有共享锁，升级为排他锁），READ_UNCOMMITTED和READ_COMMITTED写入完成后立刻释放排他锁。<code>REPEATABLE_READ</code>会在整个事务commit时统一 unlock，不需要我们自己编写代码。</p>
+<p>增删改操作不管什么级别都需要获取排他锁（如果已经有共享锁，升级为排他锁），READ_UNCOMMITTED和READ_COMMITTED写入完成后立刻释放排他锁。<code>REPEATABLE_READ</code>会在整个事务commit时统一 unlock，因为READ_COMMITTED 需要等待提交后才可以被其他事务读取，不释放锁，不需要我们自己编写代码。</p>
 <p>如下是需增加的示例代码：</p>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-comment">// 获取锁</span><br>LockManager *locker = <span class="hljs-built_in">GetExecutorContext</span>()-&gt;<span class="hljs-built_in">GetLockManager</span>();<br>Transaction *txn = <span class="hljs-built_in">GetExecutorContext</span>()-&gt;<span class="hljs-built_in">GetTransaction</span>();<br><br><span class="hljs-comment">// 加解读锁</span><br>locker-&gt;<span class="hljs-built_in">LockShared</span>(txn, rid);<br>locker-&gt;<span class="hljs-built_in">Unlock</span>(txn, rid);<br><br><span class="hljs-comment">// 加写锁</span><br><span class="hljs-keyword">if</span> (txn-&gt;<span class="hljs-built_in">IsSharedLocked</span>(new_rid)) &#123;<br>    locker-&gt;<span class="hljs-built_in">LockUpgrade</span>(txn, new_rid);<br>&#125; <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (!txn-&gt;<span class="hljs-built_in">IsExclusiveLocked</span>(new_rid)) &#123;<br>    locker-&gt;<span class="hljs-built_in">LockExclusive</span>(txn, new_rid);<br>&#125;<br><span class="hljs-comment">// 解写锁</span><br><span class="hljs-keyword">if</span> (txn-&gt;<span class="hljs-built_in">GetIsolationLevel</span>() != IsolationLevel::REPEATABLE_READ) &#123;<br>    locker-&gt;<span class="hljs-built_in">Unlock</span>(txn, new_rid);<br>&#125;<br><br><span class="hljs-comment">// 记录事务变更，为了回滚</span><br>txn-&gt;<span class="hljs-built_in">GetIndexWriteSet</span>()-&gt;<span class="hljs-built_in">emplace_back</span>(<span class="hljs-built_in">IndexWriteRecord</span>(new_rid, table_info_-&gt;oid_, WType::INSERT, *tuple,indexinfo-&gt;index_oid_, exec_ctx_-&gt;<span class="hljs-built_in">GetCatalog</span>()));<br></code></pre></td></tr></table></figure>
 
@@ -683,7 +691,7 @@
       
         <div class="license-meta-item license-meta-date">
           <div>更新于</div>
-          <div>2022年8月14日</div>
+          <div>2022年8月15日</div>
         </div>
       
       <div class="license-meta-item">
