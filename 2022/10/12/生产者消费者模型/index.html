@@ -16,24 +16,25 @@
   <meta name="author" content="ZYUE">
   <meta name="keywords" content="">
   
-    <meta name="description" content="析构函数我们都知道在C++的多类继承体系中的构造函数与析构函数执行顺序相反； 构造函数是从基类到派生类，析构函数是从派生类到基类； 123456789101112131415161718192021222324252627282930313233343536#include &lt;iostream&gt;using namespace std;class Base &amp;#123;public:">
+    <meta name="description" content="阻塞队列用C++简易实现生产者消费者模型，即实现一个阻塞队列； 之前Web服务器项中的异步日志系统也用到了该模型；   生产者生产数据到缓冲区中，消费者从缓冲区中取数据； 缓冲区满时，生产者线程阻塞，进入等待状态。 缓冲区空时，消费者线程阻塞，进入等待状态。 生产者生产资源后，会唤醒可能等待着的消费者； 消费者消耗资源后，会唤醒可能阻塞着的生产者；  12345678910111213141516">
 <meta property="og:type" content="article">
-<meta property="og:title" content="CPP中虚析构函数">
-<meta property="og:url" content="http://example.com/2022/09/30/CPP%E4%B8%AD%E8%99%9A%E6%9E%90%E6%9E%84%E5%87%BD%E6%95%B0/index.html">
+<meta property="og:title" content="生产者消费者模型">
+<meta property="og:url" content="http://example.com/2022/10/12/%E7%94%9F%E4%BA%A7%E8%80%85%E6%B6%88%E8%B4%B9%E8%80%85%E6%A8%A1%E5%9E%8B/index.html">
 <meta property="og:site_name" content="参天小树">
-<meta property="og:description" content="析构函数我们都知道在C++的多类继承体系中的构造函数与析构函数执行顺序相反； 构造函数是从基类到派生类，析构函数是从派生类到基类； 123456789101112131415161718192021222324252627282930313233343536#include &lt;iostream&gt;using namespace std;class Base &amp;#123;public:">
+<meta property="og:description" content="阻塞队列用C++简易实现生产者消费者模型，即实现一个阻塞队列； 之前Web服务器项中的异步日志系统也用到了该模型；   生产者生产数据到缓冲区中，消费者从缓冲区中取数据； 缓冲区满时，生产者线程阻塞，进入等待状态。 缓冲区空时，消费者线程阻塞，进入等待状态。 生产者生产资源后，会唤醒可能等待着的消费者； 消费者消耗资源后，会唤醒可能阻塞着的生产者；  12345678910111213141516">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="http://example.com/post_img/34.jpg">
-<meta property="article:published_time" content="2022-09-30T08:44:30.000Z">
-<meta property="article:modified_time" content="2022-09-30T09:21:48.860Z">
+<meta property="og:image" content="http://example.com/post_img/35.jpg">
+<meta property="article:published_time" content="2022-10-12T12:15:06.000Z">
+<meta property="article:modified_time" content="2022-10-12T12:24:59.531Z">
 <meta property="article:author" content="ZYUE">
-<meta property="article:tag" content="C++">
+<meta property="article:tag" content="生产者消费者">
+<meta property="article:tag" content="阻塞队列">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="http://example.com/post_img/34.jpg">
+<meta name="twitter:image" content="http://example.com/post_img/35.jpg">
   
   
   
-  <title>CPP中虚析构函数 - 参天小树</title>
+  <title>生产者消费者模型 - 参天小树</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -226,7 +227,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="CPP中虚析构函数"></span>
+            <span id="subtitle" data-typed-text="生产者消费者模型"></span>
           
         </div>
 
@@ -242,8 +243,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2022-09-30 16:44" pubdate>
-          2022年9月30日 下午
+        <time datetime="2022-10-12 20:15" pubdate>
+          2022年10月12日 晚上
         </time>
       </span>
     
@@ -303,32 +304,27 @@
         <div id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">CPP中虚析构函数</h1>
+            <h1 style="display: none">生产者消费者模型</h1>
             
             
               <div class="markdown-body">
                 
-                <h2 id="析构函数"><a href="#析构函数" class="headerlink" title="析构函数"></a>析构函数</h2><p>我们都知道在C++的多类继承体系中的构造函数与析构函数执行顺序相反；</p>
-<p>构造函数是从基类到派生类，析构函数是从派生类到基类；</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;iostream&gt;</span></span><br><span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> std;<br><br><span class="hljs-keyword">class</span> <span class="hljs-title class_">Base</span> &#123;<br><span class="hljs-keyword">public</span>:<br>    <span class="hljs-built_in">Base</span>() &#123;<br>        cout &lt;&lt; <span class="hljs-string">&quot;bsae&quot;</span> &lt;&lt; endl;<br>    &#125;<br>    ~<span class="hljs-built_in">Base</span>() &#123;<br>        cout &lt;&lt; <span class="hljs-string">&quot;~bsae&quot;</span> &lt;&lt; endl;<br>    &#125;<br>&#125;;<br><br><span class="hljs-keyword">class</span> <span class="hljs-title class_">Derived</span> : <span class="hljs-keyword">public</span> Base &#123;<br><span class="hljs-keyword">public</span>:<br>    <span class="hljs-built_in">Derived</span>() &#123;<br>        cout &lt;&lt; <span class="hljs-string">&quot;Derived&quot;</span> &lt;&lt; endl;<br>    &#125;<br>    ~<span class="hljs-built_in">Derived</span>() &#123;<br>        cout &lt;&lt; <span class="hljs-string">&quot;~Derived&quot;</span> &lt;&lt; endl;<br>    &#125;<br>&#125;;<br><br><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span> </span>&#123;<br>    Derived* p = <span class="hljs-keyword">new</span> <span class="hljs-built_in">Derived</span>();<br>    <span class="hljs-keyword">delete</span> p;<br>    <span class="hljs-built_in">system</span>(<span class="hljs-string">&quot;pause&quot;</span>);<br>    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br><br><span class="hljs-comment">/************************************/</span><br>输出：<br>    bsae<br>    Derived<br>    ~Derived<br>    ~bsae<br></code></pre></td></tr></table></figure>
+                <h2 id="阻塞队列"><a href="#阻塞队列" class="headerlink" title="阻塞队列"></a>阻塞队列</h2><p>用C++简易实现生产者消费者模型，即实现一个阻塞队列；</p>
+<p>之前Web服务器项中的异步日志系统也用到了该模型；</p>
+<hr>
+<ul>
+<li>生产者生产数据到缓冲区中，消费者从缓冲区中取数据；</li>
+<li>缓冲区满时，生产者线程阻塞，进入等待状态。</li>
+<li>缓冲区空时，消费者线程阻塞，进入等待状态。</li>
+<li>生产者生产资源后，会唤醒可能等待着的消费者；</li>
+<li>消费者消耗资源后，会唤醒可能阻塞着的生产者；</li>
+</ul>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-comment">/*</span><br><span class="hljs-comment"> * @Description  : 封装生产者消费者模式</span><br><span class="hljs-comment"> * @Date         : 2022-10-12 19:29:22</span><br><span class="hljs-comment"> * @LastEditTime : 2022-10-12 20:10:32</span><br><span class="hljs-comment"> */</span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;bits/stdc++.h&gt;</span></span><br><br><span class="hljs-comment">/**</span><br><span class="hljs-comment"> * @description: 阻塞队列类</span><br><span class="hljs-comment"> */</span><br><span class="hljs-keyword">template</span> &lt;<span class="hljs-keyword">class</span> <span class="hljs-title class_">T</span>&gt;<br><span class="hljs-keyword">class</span> <span class="hljs-title class_">BlockQueue</span> &#123;<br><span class="hljs-keyword">private</span>:<br>    std::queue&lt;T&gt; que_;       <span class="hljs-comment">// 共享队列</span><br>    std::mutex    mtx_;       <span class="hljs-comment">// 互斥量</span><br>    <span class="hljs-type">size_t</span>        capacity_;  <span class="hljs-comment">// 最大容量</span><br><br>    std::condition_variable cv_consumer_;  <span class="hljs-comment">// 消费者条件变量</span><br>    std::condition_variable cv_producer_;  <span class="hljs-comment">// 生产者条件变量</span><br><br><span class="hljs-keyword">public</span>:<br>    <span class="hljs-function"><span class="hljs-keyword">explicit</span> <span class="hljs-title">BlockQueue</span><span class="hljs-params">(<span class="hljs-type">size_t</span> MaxCapacity = <span class="hljs-number">100</span>)</span> : capacity_(MaxCapacity) &#123;</span><br>        <span class="hljs-built_in">assert</span>(MaxCapacity &gt; <span class="hljs-number">0</span>);<br>    &#125;<br><br>    <span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">push</span><span class="hljs-params">(<span class="hljs-type">const</span> T &amp;item)</span></span>;<br>    <span class="hljs-function">T    <span class="hljs-title">pop</span><span class="hljs-params">()</span></span>;<br>&#125;;<br><br><span class="hljs-comment">/**</span><br><span class="hljs-comment"> * @description: 向队尾加入一个元素</span><br><span class="hljs-comment"> */</span><br><span class="hljs-keyword">template</span> &lt;<span class="hljs-keyword">typename</span> T&gt;<br><span class="hljs-type">void</span> BlockQueue&lt;T&gt;::<span class="hljs-built_in">push</span>(<span class="hljs-type">const</span> T &amp;item) &#123;<br>    <span class="hljs-function">std::unique_lock&lt;std::mutex&gt; <span class="hljs-title">locker</span><span class="hljs-params">(mtx_)</span></span>;<br><br>    <span class="hljs-comment">/*条件变量控制，如果元素超过了容量，需要阻塞等待消费者消费后才能加入*/</span><br>    <span class="hljs-keyword">while</span> (que_.<span class="hljs-built_in">size</span>() &gt;= capacity_) &#123;<br>        <span class="hljs-comment">/*生产者等待*/</span><br>        cv_producer_.<span class="hljs-built_in">wait</span>(locker);<br>    &#125;<br><br>    que_.<span class="hljs-built_in">push</span>(item);<br><br>    <span class="hljs-comment">/*唤醒一个消费者*/</span><br>    cv_consumer_.<span class="hljs-built_in">notify_one</span>();<br>&#125;<br><br><span class="hljs-comment">/**</span><br><span class="hljs-comment"> * @description: 在队头弹出一个元素</span><br><span class="hljs-comment"> */</span><br><span class="hljs-keyword">template</span> &lt;<span class="hljs-keyword">typename</span> T&gt;<br>T BlockQueue&lt;T&gt;::<span class="hljs-built_in">pop</span>() &#123;<br>    <span class="hljs-function">std::unique_lock&lt;std::mutex&gt; <span class="hljs-title">locker</span><span class="hljs-params">(mtx_)</span></span>;<br><br>    <span class="hljs-comment">/*如果队列为空，消费者条件变量等待*/</span><br>    <span class="hljs-keyword">while</span> (que_.<span class="hljs-built_in">empty</span>()) &#123;<br>        cv_consumer_.<span class="hljs-built_in">wait</span>(locker);<br>    &#125;<br><br>    T item = que_.<span class="hljs-built_in">front</span>();<br>    que_.<span class="hljs-built_in">pop</span>();<br><br>    <span class="hljs-comment">/*唤醒一个生产者*/</span><br>    cv_producer_.<span class="hljs-built_in">notify_one</span>();<br><br>    <span class="hljs-keyword">return</span> item;<br>&#125;<br><br><span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">producer</span><span class="hljs-params">(BlockQueue&lt;<span class="hljs-type">int</span>&gt; &amp;q)</span> </span>&#123;<br>    <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">0</span>; i &lt; <span class="hljs-number">10</span>; i++) &#123;<br>        q.<span class="hljs-built_in">push</span>(i);<br>        std::cout &lt;&lt; <span class="hljs-string">&quot;push: &quot;</span> &lt;&lt; i &lt;&lt; std::endl;<br>    &#125;<br>&#125;<br><br><span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">comsumer</span><span class="hljs-params">(BlockQueue&lt;<span class="hljs-type">int</span>&gt; &amp;q)</span> </span>&#123;<br>    <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">0</span>; i &lt; <span class="hljs-number">10</span>; i++) &#123;<br>        <span class="hljs-type">int</span> item = q.<span class="hljs-built_in">pop</span>();<br>        std::cout &lt;&lt; <span class="hljs-string">&quot;pop:&quot;</span> &lt;&lt; item &lt;&lt; std::endl;<br>    &#125;<br>&#125;<br><br><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span> </span>&#123;<br>    <span class="hljs-function">BlockQueue&lt;<span class="hljs-type">int</span>&gt; <span class="hljs-title">bq</span><span class="hljs-params">(<span class="hljs-number">5</span>)</span></span>;<br><br>    <span class="hljs-function">std::thread <span class="hljs-title">t1</span><span class="hljs-params">(producer, std::ref(bq))</span></span>;<br>    <span class="hljs-function">std::thread <span class="hljs-title">t2</span><span class="hljs-params">(comsumer, std::ref(bq))</span></span>;<br><br>    t1.<span class="hljs-built_in">join</span>();<br>    t2.<span class="hljs-built_in">join</span>();<br><br>    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
 
-<h2 id="虚析构函数"><a href="#虚析构函数" class="headerlink" title="虚析构函数"></a>虚析构函数</h2><p>然而<strong>在使用多态时</strong>，如果不将基类的析构函数置为虚函数，可能会出现内存泄漏情况；</p>
-<p>例如，delete指向派生类的基类指针只会调用基类的析构函数，而不会调用到派生类的析构函数，导致派生类资源没有释放干净；</p>
-<p>这种情况下不再是动态绑定，变成静态绑定；</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;iostream&gt;</span></span><br><span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> std;<br><br><span class="hljs-keyword">class</span> <span class="hljs-title class_">Base</span> &#123;<br><span class="hljs-keyword">public</span>:<br>    <span class="hljs-built_in">Base</span>() &#123;<br>        cout &lt;&lt; <span class="hljs-string">&quot;bsae&quot;</span> &lt;&lt; endl;<br>    &#125;<br>    ~<span class="hljs-built_in">Base</span>() &#123;<br>        cout &lt;&lt; <span class="hljs-string">&quot;~bsae&quot;</span> &lt;&lt; endl;<br>    &#125;<br>    <span class="hljs-comment">// virtual ~Base() &#123;</span><br>    <span class="hljs-comment">//     cout &lt;&lt; &quot;~bsae&quot; &lt;&lt; endl;</span><br>    <span class="hljs-comment">// &#125;</span><br>&#125;;<br><br><span class="hljs-keyword">class</span> <span class="hljs-title class_">Derived</span> : <span class="hljs-keyword">public</span> Base &#123;<br><span class="hljs-keyword">public</span>:<br>    <span class="hljs-built_in">Derived</span>() &#123;<br>        cout &lt;&lt; <span class="hljs-string">&quot;Derived&quot;</span> &lt;&lt; endl;<br>    &#125;<br>    ~<span class="hljs-built_in">Derived</span>() &#123;<br>        cout &lt;&lt; <span class="hljs-string">&quot;~Derived&quot;</span> &lt;&lt; endl;<br>    &#125;<br>&#125;;<br><br><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span> </span>&#123;<br>    Base* p = <span class="hljs-keyword">new</span> <span class="hljs-built_in">Derived</span>();<br>    <span class="hljs-keyword">delete</span> p;<br>    <span class="hljs-built_in">system</span>(<span class="hljs-string">&quot;pause&quot;</span>);<br>    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br><br><span class="hljs-comment">/************************************/</span><br>输出：<br>    bsae<br>    Derived<br>    ~bsae<br>加上<span class="hljs-keyword">virtual</span>后输出：<br>    bsae<br>    Derived<br>    ~Derived<br>    ~bsae<br></code></pre></td></tr></table></figure>
-
-<h2 id="小扩展"><a href="#小扩展" class="headerlink" title="小扩展"></a>小扩展</h2><p>如果是使用派生类指针指向基类实例呐？当然是不行的；</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span> </span>&#123;<br>    <span class="hljs-comment">//语法错误： Base* 类型的值不能用于初始化 Derived* 类型的实体</span><br>    Derived* p = <span class="hljs-keyword">new</span> <span class="hljs-built_in">Base</span>();<br>    <span class="hljs-keyword">delete</span> p;<br>    <span class="hljs-built_in">system</span>(<span class="hljs-string">&quot;pause&quot;</span>);<br>    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
-
+<p>编译用：</p>
 <blockquote>
-<p>error: invalid conversion from ‘Base’ to ‘Derived’</p>
+<p>g++ BlockQueue.cpp -o bq -pthread</p>
 </blockquote>
-<h2 id="其它总结"><a href="#其它总结" class="headerlink" title="其它总结"></a>其它总结</h2><p>其实上面这个知识点很简单，也是今天面试的一个问题，当时我说基类如果不是虚析构函数会导致调用不到派生类的析构函数。（我是对的 &#x3D;_&#x3D;）</p>
-<p>但面试官却说是<del>调用不到基类的析构函数</del>，这让我一下慌了，难道自己记错了。(还好没有）</p>
-<p>后面想了想，一方面是自己没有回答好，回答问题时没有仔细想好每种分类，脱口就说，估计面试官是想问构造和析构函数的执行顺序的问题的，我应该按照使用多态和不使用多态两个方面分别回答；</p>
-<p>另一方面就是以后觉得自己还是要自信点，也不要每次听到“你确定吗”就怀疑自己错了，然后小紧张；</p>
-<p>当然，前提还是得把基础知识掌握牢固。</p>
-<p>如果错了也就错了，吸取经验，印象还更加深刻。</p>
 
                 
               </div>
@@ -362,7 +358,9 @@
     <div class="post-meta">
       <i class="iconfont icon-tags"></i>
       
-        <a href="/tags/C/">#C++</a>
+        <a href="/tags/%E7%94%9F%E4%BA%A7%E8%80%85%E6%B6%88%E8%B4%B9%E8%80%85/">#生产者消费者</a>
+      
+        <a href="/tags/%E9%98%BB%E5%A1%9E%E9%98%9F%E5%88%97/">#阻塞队列</a>
       
     </div>
   
@@ -374,8 +372,8 @@
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>CPP中虚析构函数</div>
-      <div>http://example.com/2022/09/30/CPP中虚析构函数/</div>
+      <div>生产者消费者模型</div>
+      <div>http://example.com/2022/10/12/生产者消费者模型/</div>
     </div>
     <div class="license-meta">
       
@@ -387,13 +385,13 @@
       
         <div class="license-meta-item license-meta-date">
           <div>发布于</div>
-          <div>2022年9月30日</div>
+          <div>2022年10月12日</div>
         </div>
       
       
         <div class="license-meta-item license-meta-date">
           <div>更新于</div>
-          <div>2022年9月30日</div>
+          <div>2022年10月12日</div>
         </div>
       
       <div class="license-meta-item">
@@ -422,18 +420,12 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2022/10/12/%E7%94%9F%E4%BA%A7%E8%80%85%E6%B6%88%E8%B4%B9%E8%80%85%E6%A8%A1%E5%9E%8B/" title="生产者消费者模型">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">生产者消费者模型</span>
-                        <span class="visible-mobile">上一篇</span>
-                      </a>
-                    
                   </article>
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2022/09/16/%E5%B2%9B%E5%B1%BF%E9%97%AE%E9%A2%98/" title="岛屿问题">
-                        <span class="hidden-mobile">岛屿问题</span>
+                      <a href="/2022/09/30/CPP%E4%B8%AD%E8%99%9A%E6%9E%90%E6%9E%84%E5%87%BD%E6%95%B0/" title="CPP中虚析构函数">
+                        <span class="hidden-mobile">CPP中虚析构函数</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
