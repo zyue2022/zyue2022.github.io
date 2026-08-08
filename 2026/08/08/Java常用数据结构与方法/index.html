@@ -1,0 +1,1550 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+
+  <link rel="apple-touch-icon" sizes="76x76" href="/hexo_img/icon.jpg">
+  <link rel="icon" href="/hexo_img/icon.jpg">
+  
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#0D3562">
+  <meta name="author" content="ZYUE">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="Java 常用类与算法函数介绍  本文档聚焦”函数的解释说明”：每个方法都给出 作用 &#x2F; 签名 &#x2F; 返回值 &#x2F; 时间复杂度 &#x2F; 易错点 &#x2F; 示例。   一、Arrays（数组工具类，全部是静态方法）   方法 作用 复杂度 易错点    Arrays.sort(a) 对数组原地排序（基本类型用快排变体；对象用 TimSort） O(n log n)">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Java常用数据结构与方法">
+<meta property="og:url" content="https://zyue2022.github.io/2026/08/08/Java%E5%B8%B8%E7%94%A8%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E6%96%B9%E6%B3%95/index.html">
+<meta property="og:site_name" content="参天小树">
+<meta property="og:description" content="Java 常用类与算法函数介绍  本文档聚焦”函数的解释说明”：每个方法都给出 作用 &#x2F; 签名 &#x2F; 返回值 &#x2F; 时间复杂度 &#x2F; 易错点 &#x2F; 示例。   一、Arrays（数组工具类，全部是静态方法）   方法 作用 复杂度 易错点    Arrays.sort(a) 对数组原地排序（基本类型用快排变体；对象用 TimSort） O(n log n)">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://zyue2022.github.io/post_img/38.png">
+<meta property="article:published_time" content="2026-08-08T12:32:03.000Z">
+<meta property="article:modified_time" content="2026-08-08T12:48:25.418Z">
+<meta property="article:author" content="ZYUE">
+<meta property="article:tag" content="Java">
+<meta property="article:tag" content="数据结构">
+<meta property="article:tag" content="算法">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://zyue2022.github.io/post_img/38.png">
+  
+  
+  
+  <title>Java常用数据结构与方法 - 参天小树</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1749284_5i9bdhy70f8.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1736178_k526ubmyhba.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"zyue2022.github.io","root":"/","version":"1.9.9","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"expand_all":true,"placement":"left","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"follow_dnt":false,"baidu":"c03149260ee4667c7ea092624ddee2b5","google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false},"openkounter":{"server_url":"https://open-kounter.mintimate.cn","path":"window.location.pathname","ignore_local":false},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2024-01-01T00:00:00.000Z","token":null,"api_server":null}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+  
+    <!-- Baidu Analytics -->
+    <script async>
+      if (!Fluid.ctx.dnt) {
+        var _hmt = _hmt || [];
+        (function() {
+          var hm = document.createElement("script");
+          hm.src = "https://hm.baidu.com/hm.js?c03149260ee4667c7ea092624ddee2b5";
+          var s = document.getElementsByTagName("script")[0];
+          s.parentNode.insertBefore(hm, s);
+        })();
+      }
+    </script>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+  
+
+
+
+
+  
+<meta name="generator" content="Hexo 8.1.2"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong> </strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content (desktop) -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<!-- Mobile grid menu overlay -->
+<div id="mobile-grid-menu" class="d-lg-none">
+  <div class="mobile-grid-menu-inner">
+    <div class="container">
+      <div class="row">
+        
+          
+          
+          
+          
+            <div class="col-4 mobile-grid-cell">
+              <a href="/" target="_self">
+                <div class="mobile-grid-item">
+                  <i class="iconfont icon-home-fill"></i>
+                  <span>首页</span>
+                </div>
+              </a>
+            </div>
+          
+        
+          
+          
+          
+          
+            <div class="col-4 mobile-grid-cell">
+              <a href="/archives/" target="_self">
+                <div class="mobile-grid-item">
+                  <i class="iconfont icon-archive-fill"></i>
+                  <span>归档</span>
+                </div>
+              </a>
+            </div>
+          
+        
+          
+          
+          
+          
+            <div class="col-4 mobile-grid-cell">
+              <a href="/categories/" target="_self">
+                <div class="mobile-grid-item">
+                  <i class="iconfont icon-category-fill"></i>
+                  <span>分类</span>
+                </div>
+              </a>
+            </div>
+          
+        
+          
+          
+          
+          
+            <div class="col-4 mobile-grid-cell">
+              <a href="/tags/" target="_self">
+                <div class="mobile-grid-item">
+                  <i class="iconfont icon-tags-fill"></i>
+                  <span>标签</span>
+                </div>
+              </a>
+            </div>
+          
+        
+          
+          
+          
+          
+            <div class="col-4 mobile-grid-cell">
+              <a href="/about/" target="_self">
+                <div class="mobile-grid-item">
+                  <i class="iconfont icon-user-fill"></i>
+                  <span>关于</span>
+                </div>
+              </a>
+            </div>
+          
+        
+        
+          <div class="col-4 mobile-grid-cell" id="mobile-search-btn">
+            <a href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <div class="mobile-grid-item">
+                <i class="iconfont icon-search"></i>
+                <span>搜索</span>
+              </div>
+            </a>
+          </div>
+        
+        
+          <div class="col-4 mobile-grid-cell" id="mobile-color-toggle-btn"
+               data-label-light="开灯"
+               data-label-dark="关灯">
+            <a href="javascript:;" aria-label="Color Toggle">
+              <div class="mobile-grid-item">
+                <i class="iconfont icon-dark" id="mobile-color-toggle-icon"></i>
+                <span id="mobile-color-toggle-label">关灯</span>
+              </div>
+            </a>
+          </div>
+        
+      </div>
+    </div>
+  </div>
+</div>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/hexo_img/bk2.jpg') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="Java常用数据结构与方法"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-author" aria-hidden="true"></i>
+        ZYUE
+      </span>
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2026-08-08 20:32" pubdate>
+          2026年8月8日 晚上
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          5.5k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          46 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="padding-left: 2rem; margin-right: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">Java常用数据结构与方法</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <p>Java 常用类与算法函数介绍</p>
+<blockquote>
+<p>本文档聚焦”函数的解释说明”：每个方法都给出 <strong>作用 &#x2F; 签名 &#x2F; 返回值 &#x2F; 时间复杂度 &#x2F; 易错点 &#x2F; 示例</strong>。</p>
+</blockquote>
+<hr>
+<h1 id="一、Arrays（数组工具类，全部是静态方法）"><a href="#一、Arrays（数组工具类，全部是静态方法）" class="headerlink" title="一、Arrays（数组工具类，全部是静态方法）"></a>一、Arrays（数组工具类，全部是静态方法）</h1><table>
+<thead>
+<tr>
+<th>方法</th>
+<th>作用</th>
+<th>复杂度</th>
+<th>易错点</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>Arrays.sort(a)</code></td>
+<td>对数组<strong>原地</strong>排序（基本类型用快排变体；对象用 TimSort）</td>
+<td>O(n log n)</td>
+<td>基本类型排序<strong>不稳定</strong>；<code>a</code> 会被直接修改</td>
+</tr>
+<tr>
+<td><code>Arrays.sort(a, (x,y)-&gt;x-y)</code></td>
+<td>自定义比较器排序（升序）</td>
+<td>O(n log n)</td>
+<td><code>x-y</code> 在差值超 int 范围时可能溢出，超大数用 <code>Integer.compare(x,y)</code></td>
+</tr>
+<tr>
+<td><code>Arrays.binarySearch(a, key)</code></td>
+<td>在<strong>已排序</strong>数组中二分查找</td>
+<td>O(log n)</td>
+<td>数组必须先排序，否则结果未定义；找不到返回负数插入点</td>
+</tr>
+<tr>
+<td><code>Arrays.fill(a, val)</code></td>
+<td>用 val 填充整个数组</td>
+<td>O(n)</td>
+<td>二维数组 <code>fill</code> 只会复制同一引用，行会共享（坑！）</td>
+</tr>
+<tr>
+<td><code>Arrays.copyOf(a, newLen)</code></td>
+<td>拷贝数组，可截断&#x2F;扩容</td>
+<td>O(n)</td>
+<td>新长度 &gt; 原长时多余位置填 0&#x2F;null</td>
+</tr>
+<tr>
+<td><code>Arrays.copyOfRange(a, from, to)</code></td>
+<td>拷贝 <code>[from, to)</code> 区间</td>
+<td>O(to-from)</td>
+<td>右边界是开区间</td>
+</tr>
+<tr>
+<td><code>Arrays.equals(a, b)</code></td>
+<td>比较两数组<strong>内容</strong>是否相等</td>
+<td>O(n)</td>
+<td>别用 <code>a == b</code>（比的是引用）</td>
+</tr>
+<tr>
+<td><code>Arrays.toString(a)</code></td>
+<td>数组转可读字符串（调试用）</td>
+<td>O(n)</td>
+<td>多维数组要用 <code>Arrays.deepToString</code></td>
+</tr>
+<tr>
+<td><code>Arrays.asList(arr)</code></td>
+<td>数组转 <code>List</code>（固定大小）</td>
+<td>O(1) 视图</td>
+<td>返回的 List <strong>不能 add&#x2F;remove</strong>，否则抛 <code>UnsupportedOperationException</code></td>
+</tr>
+</tbody></table>
+<hr>
+<h1 id="二、String（不可变字符串）"><a href="#二、String（不可变字符串）" class="headerlink" title="二、String（不可变字符串）"></a>二、String（不可变字符串）</h1><blockquote>
+<p>关键认知：<strong>String 对象不可变</strong>，任何”修改”都返回新对象，原串不变。</p>
+</blockquote>
+<table>
+<thead>
+<tr>
+<th>方法</th>
+<th>作用</th>
+<th>复杂度</th>
+<th>易错点</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>s.length()</code></td>
+<td>返回字符数（是<strong>方法</strong>不是字段）</td>
+<td>O(1)</td>
+<td>别写成 <code>s.length</code>（那是数组的字段）</td>
+</tr>
+<tr>
+<td><code>s.charAt(i)</code></td>
+<td>取第 i 个字符</td>
+<td>O(1)</td>
+<td>i 越界抛 <code>StringIndexOutOfBoundsException</code></td>
+</tr>
+<tr>
+<td><code>s.substring(l, r)</code></td>
+<td>截取 <code>[l, r)</code> 子串</td>
+<td>O(r-l)</td>
+<td>右边界开区间；r 最大为 <code>length()</code></td>
+</tr>
+<tr>
+<td><code>s.indexOf(&quot;x&quot;)</code> &#x2F; <code>lastIndexOf</code></td>
+<td>首次&#x2F;末次出现位置</td>
+<td>O(n)</td>
+<td>找不到返回 <code>-1</code>（常用 <code>!= -1</code> 判断存在）</td>
+</tr>
+<tr>
+<td><code>s.toCharArray()</code></td>
+<td>转 <code>char[]</code> 便于按索引修改</td>
+<td>O(n)</td>
+<td>改完用 <code>new String(char[])</code> 转回</td>
+</tr>
+<tr>
+<td><code>s.split(&quot; &quot;)</code></td>
+<td>按正则分割</td>
+<td>O(n)</td>
+<td>按 <code>.</code> 等正则元字符要转义 <code>split(&quot;\\.&quot;)</code>；末尾空串会被丢弃</td>
+</tr>
+<tr>
+<td><code>s.replace(a, b)</code> &#x2F; <code>replaceAll</code></td>
+<td>替换（前者按字面，后者按正则）</td>
+<td>O(n)</td>
+<td><code>replace</code> 不是正则；想用正则才用 <code>replaceAll</code></td>
+</tr>
+<tr>
+<td><code>s.trim()</code></td>
+<td>去首尾空白</td>
+<td>O(n)</td>
+<td>中间空格不动；不修改原串</td>
+</tr>
+<tr>
+<td><code>s.contains(&quot;x&quot;)</code></td>
+<td>是否包含子串</td>
+<td>O(n)</td>
+<td>—</td>
+</tr>
+<tr>
+<td><code>s.equals(t)</code> &#x2F; <code>equalsIgnoreCase</code></td>
+<td>内容比较</td>
+<td>O(n)</td>
+<td>永远用 <code>equals</code>，绝不用 <code>==</code></td>
+</tr>
+<tr>
+<td><code>s.compareTo(t)</code></td>
+<td>字典序比较（&lt;0 小于）</td>
+<td>O(n)</td>
+<td>用于排序</td>
+</tr>
+<tr>
+<td><code>s.startsWith/endsWith</code></td>
+<td>前缀&#x2F;后缀判断</td>
+<td>O(n)</td>
+<td>—</td>
+</tr>
+<tr>
+<td><code>s.isEmpty()</code></td>
+<td>长度是否为 0</td>
+<td>O(1)</td>
+<td><code>null</code> 调用会 NPE</td>
+</tr>
+</tbody></table>
+<hr>
+<h1 id="三、StringBuilder（可变字符串，拼接首选）"><a href="#三、StringBuilder（可变字符串，拼接首选）" class="headerlink" title="三、StringBuilder（可变字符串，拼接首选）"></a>三、StringBuilder（可变字符串，拼接首选）</h1><table>
+<thead>
+<tr>
+<th>方法</th>
+<th>作用</th>
+<th>易错点</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>append(x)</code></td>
+<td>尾部追加（任意类型）</td>
+<td>链式调用 <code>sb.append(a).append(b)</code></td>
+</tr>
+<tr>
+<td><code>insert(i, x)</code></td>
+<td>在 i 处插入</td>
+<td>会改变后续索引</td>
+</tr>
+<tr>
+<td><code>delete(l, r)</code> &#x2F; <code>deleteCharAt(i)</code></td>
+<td>删除区间&#x2F;单字符</td>
+<td>区间左闭右开</td>
+</tr>
+<tr>
+<td><code>replace(l, r, s)</code></td>
+<td>替换区间内容</td>
+<td>—</td>
+</tr>
+<tr>
+<td><code>reverse()</code></td>
+<td>反转</td>
+<td>原地修改，返回自身</td>
+</tr>
+<tr>
+<td><code>setCharAt(i, c)</code></td>
+<td>改指定位置字符</td>
+<td>—</td>
+</tr>
+<tr>
+<td><code>setLength(0)</code></td>
+<td>清空复用（避免反复 new）</td>
+<td>—</td>
+</tr>
+<tr>
+<td><code>toString()</code></td>
+<td>转成 String</td>
+<td>最终输出用</td>
+</tr>
+<tr>
+<td><code>length()</code> &#x2F; <code>capacity()</code></td>
+<td>当前长度 &#x2F; 内部容量</td>
+<td>容量自动扩容，无需关心</td>
+</tr>
+</tbody></table>
+<hr>
+<h1 id="四、List（以-ArrayList-为主）"><a href="#四、List（以-ArrayList-为主）" class="headerlink" title="四、List（以 ArrayList 为主）"></a>四、List（以 ArrayList 为主）</h1><table>
+<thead>
+<tr>
+<th>方法</th>
+<th>作用</th>
+<th>复杂度</th>
+<th>易错点</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>add(e)</code></td>
+<td>尾部追加</td>
+<td>O(1) 均摊</td>
+<td>超容量时扩容为 1.5 倍</td>
+</tr>
+<tr>
+<td><code>add(i, e)</code></td>
+<td>在 i 处插入</td>
+<td>O(n)</td>
+<td>后续元素后移</td>
+</tr>
+<tr>
+<td><code>get(i)</code> &#x2F; <code>set(i, e)</code></td>
+<td>取 &#x2F; 改第 i 个</td>
+<td>O(1)</td>
+<td>越界抛异常</td>
+</tr>
+<tr>
+<td><code>remove(i)</code> &#x2F; <code>remove(o)</code></td>
+<td>按下标 &#x2F; 按对象删除</td>
+<td>O(n)</td>
+<td><strong>注意重载</strong>：<code>remove(1)</code> 删下标1，<code>remove(Integer.valueOf(1))</code> 删值为1的元素</td>
+</tr>
+<tr>
+<td><code>contains(o)</code> &#x2F; <code>indexOf(o)</code></td>
+<td>是否包含 &#x2F; 首次下标</td>
+<td>O(n)</td>
+<td>对象比较用 <code>equals</code></td>
+</tr>
+<tr>
+<td><code>size()</code> &#x2F; <code>isEmpty()</code></td>
+<td>大小 &#x2F; 空判断</td>
+<td>O(1)</td>
+<td>—</td>
+</tr>
+<tr>
+<td><code>clear()</code></td>
+<td>清空</td>
+<td>O(n)</td>
+<td>—</td>
+</tr>
+<tr>
+<td><code>toArray()</code></td>
+<td>转 Object[]</td>
+<td>O(n)</td>
+<td>转 <code>Integer[]</code> 用 <code>list.toArray(new Integer[0])</code></td>
+</tr>
+<tr>
+<td><code>sort(cmp)</code></td>
+<td>原地排序</td>
+<td>O(n log n)</td>
+<td><code>list.sort((a,b)-&gt;a-b)</code></td>
+</tr>
+<tr>
+<td><code>subList(l, r)</code></td>
+<td>返回<strong>原表的视图</strong></td>
+<td>O(1)</td>
+<td>改子列表会影响原表；不能套 Arrays.sort</td>
+</tr>
+</tbody></table>
+<hr>
+<h1 id="五、Set（HashSet-哈希集-TreeSet-有序集）"><a href="#五、Set（HashSet-哈希集-TreeSet-有序集）" class="headerlink" title="五、Set（HashSet 哈希集 &#x2F; TreeSet 有序集）"></a>五、Set（HashSet 哈希集 &#x2F; TreeSet 有序集）</h1><table>
+<thead>
+<tr>
+<th>方法</th>
+<th>作用</th>
+<th>复杂度</th>
+<th>易错点</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>add(e)</code></td>
+<td>加入（已存在则忽略）</td>
+<td>O(1) 均摊</td>
+<td>去重核心</td>
+</tr>
+<tr>
+<td><code>contains(e)</code></td>
+<td>是否包含</td>
+<td>O(1)</td>
+<td>比 List 的 contains 快得多</td>
+</tr>
+<tr>
+<td><code>remove(e)</code></td>
+<td>删除</td>
+<td>O(1)</td>
+<td>—</td>
+</tr>
+<tr>
+<td><code>size()</code> &#x2F; <code>isEmpty()</code></td>
+<td>大小 &#x2F; 空</td>
+<td>O(1)</td>
+<td>—</td>
+</tr>
+<tr>
+<td><code>TreeSet</code> 专有：<code>first()/last()</code></td>
+<td>最小 &#x2F; 最大元素</td>
+<td>O(log n)</td>
+<td>空集调用抛 <code>NoSuchElementException</code></td>
+</tr>
+<tr>
+<td><code>TreeSet</code> 专有：<code>ceiling(k)/floor(k)</code></td>
+<td>&gt;&#x3D;k 的最小 &#x2F; &lt;&#x3D;k 的最大</td>
+<td>O(log n)</td>
+<td>找不到返回 null</td>
+</tr>
+<tr>
+<td><code>TreeSet</code> 专有：<code>higher(k)/lower(k)</code></td>
+<td>&gt;k 的最小 &#x2F; &lt;k 的最大</td>
+<td>O(log n)</td>
+<td>—</td>
+</tr>
+</tbody></table>
+<hr>
+<h1 id="六、Map（HashMap-为主）"><a href="#六、Map（HashMap-为主）" class="headerlink" title="六、Map（HashMap 为主）"></a>六、Map（HashMap 为主）</h1><table>
+<thead>
+<tr>
+<th>方法</th>
+<th>作用</th>
+<th>复杂度</th>
+<th>易错点</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>put(k, v)</code></td>
+<td>存入键值对（覆盖旧值）</td>
+<td>O(1)</td>
+<td>返回<strong>旧值</strong>（没有则返回 null）</td>
+</tr>
+<tr>
+<td><code>get(k)</code></td>
+<td>取值</td>
+<td>O(1)</td>
+<td><strong>未命中返回 null</strong>，直接拆箱可能 NPE</td>
+</tr>
+<tr>
+<td><code>getOrDefault(k, d)</code></td>
+<td>取不到返回默认值 d</td>
+<td>O(1)</td>
+<td>计数场景首选，避免 NPE</td>
+</tr>
+<tr>
+<td><code>containsKey(k)</code></td>
+<td>是否含键</td>
+<td>O(1)</td>
+<td>别用 <code>map.get(k) != null</code> 判断（值本身可能就是 null）</td>
+</tr>
+<tr>
+<td><code>remove(k)</code></td>
+<td>删键</td>
+<td>O(1)</td>
+<td>返回被删的值</td>
+</tr>
+<tr>
+<td><code>putIfAbsent(k, v)</code></td>
+<td>键不存在才放</td>
+<td>O(1)</td>
+<td>常用于首次初始化</td>
+</tr>
+<tr>
+<td><code>computeIfAbsent(k, f)</code></td>
+<td>键不存在时用 f(k) 计算并存入</td>
+<td>O(1)</td>
+<td>建邻接表&#x2F;分组极方便：<code>map.computeIfAbsent(k, x-&gt;new ArrayList&lt;&gt;()).add(v)</code></td>
+</tr>
+<tr>
+<td><code>merge(k, v, fn)</code></td>
+<td>合并（键存在用 fn 处理）</td>
+<td>O(1)</td>
+<td>计数：<code>map.merge(k, 1, Integer::sum)</code></td>
+</tr>
+<tr>
+<td><code>keySet()/values()/entrySet()</code></td>
+<td>键&#x2F;值&#x2F;键值对集合</td>
+<td>O(1) 视图</td>
+<td>遍历用 <code>entrySet()</code> 最高效</td>
+</tr>
+<tr>
+<td><code>forEach((k,v)-&gt;{})</code></td>
+<td>遍历</td>
+<td>O(n)</td>
+<td>—</td>
+</tr>
+<tr>
+<td><code>size()</code> &#x2F; <code>isEmpty()</code> &#x2F; <code>clear()</code></td>
+<td>大小 &#x2F; 空 &#x2F; 清空</td>
+<td>O(1)</td>
+<td>—</td>
+</tr>
+</tbody></table>
+<hr>
+<h1 id="七、Deque（ArrayDeque，栈和队列都用它）"><a href="#七、Deque（ArrayDeque，栈和队列都用它）" class="headerlink" title="七、Deque（ArrayDeque，栈和队列都用它）"></a>七、Deque（ArrayDeque，栈和队列都用它）</h1><blockquote>
+<p>推荐统一用 <code>ArrayDeque</code> 替代旧类 <code>Stack</code> 和 <code>LinkedList</code> 做栈&#x2F;队列，性能更好。</p>
+</blockquote>
+<p><strong>当栈用（LIFO）：</strong></p>
+<table>
+<thead>
+<tr>
+<th>方法</th>
+<th>作用</th>
+<th>等价旧 Stack</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>push(e)</code></td>
+<td>入栈</td>
+<td><code>addFirst</code></td>
+</tr>
+<tr>
+<td><code>pop()</code></td>
+<td>出栈（删并返回）</td>
+<td><code>removeFirst</code></td>
+</tr>
+<tr>
+<td><code>peek()</code></td>
+<td>看栈顶不删</td>
+<td><code>peekFirst</code></td>
+</tr>
+</tbody></table>
+<p><strong>当队列用（FIFO）：</strong></p>
+<table>
+<thead>
+<tr>
+<th>方法</th>
+<th>作用</th>
+<th>易错点</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>offer(e)</code></td>
+<td>入队</td>
+<td>比 <code>add</code> 安全（满时返回 false 而非抛异常）</td>
+</tr>
+<tr>
+<td><code>poll()</code></td>
+<td>出队（删并返回）</td>
+<td>空队列返回 null（别对 null 拆箱）</td>
+</tr>
+<tr>
+<td><code>peek()</code></td>
+<td>看队首不删</td>
+<td>空队列返回 null</td>
+</tr>
+<tr>
+<td><code>isEmpty()</code></td>
+<td>判空</td>
+<td><strong>用 isEmpty 判断，别用 poll()!&#x3D;null 当循环条件</strong>（会丢元素）</td>
+</tr>
+</tbody></table>
+<hr>
+<h1 id="八、PriorityQueue（堆）"><a href="#八、PriorityQueue（堆）" class="headerlink" title="八、PriorityQueue（堆）"></a>八、PriorityQueue（堆）</h1><table>
+<thead>
+<tr>
+<th>方法</th>
+<th>作用</th>
+<th>易错点</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>offer(e)</code> &#x2F; <code>add(e)</code></td>
+<td>入堆</td>
+<td>O(log n)</td>
+</tr>
+<tr>
+<td><code>poll()</code></td>
+<td>弹出<strong>堆顶</strong>（最小&#x2F;最大）</td>
+<td>O(log n)；空队列返回 null</td>
+</tr>
+<tr>
+<td><code>peek()</code></td>
+<td>看堆顶不删</td>
+<td>O(1)；空返回 null</td>
+</tr>
+<tr>
+<td><code>size()</code> &#x2F; <code>isEmpty()</code></td>
+<td>大小 &#x2F; 空</td>
+<td>—</td>
+</tr>
+<tr>
+<td>构造 <code>new PriorityQueue&lt;&gt;()</code></td>
+<td><strong>默认小根堆</strong>（队首最小）</td>
+<td>要大根堆必须传比较器 <code>(a,b)-&gt;b-a</code></td>
+</tr>
+<tr>
+<td>构造 <code>new PriorityQueue&lt;&gt;(k, cmp)</code></td>
+<td>指定初始容量与比较器</td>
+<td>—</td>
+</tr>
+</tbody></table>
+<hr>
+<h1 id="九、Math（静态数学方法）"><a href="#九、Math（静态数学方法）" class="headerlink" title="九、Math（静态数学方法）"></a>九、Math（静态数学方法）</h1><table>
+<thead>
+<tr>
+<th>方法</th>
+<th>作用</th>
+<th>注意</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>Math.abs(x)</code></td>
+<td>绝对值</td>
+<td><code>Integer.MIN_VALUE</code> 取绝对值仍溢出（仍是负值），注意边界</td>
+</tr>
+<tr>
+<td><code>Math.max(a,b)</code> &#x2F; <code>Math.min(a,b)</code></td>
+<td>最大&#x2F;最小</td>
+<td>重载支持 int&#x2F;long&#x2F;float&#x2F;double</td>
+</tr>
+<tr>
+<td><code>Math.sqrt(x)</code></td>
+<td>平方根（返回 double）</td>
+<td>取整 <code>(int)Math.sqrt(x)</code></td>
+</tr>
+<tr>
+<td><code>Math.pow(a, b)</code></td>
+<td>a 的 b 次幂（double）</td>
+<td>整数幂慎用，可能有精度误差</td>
+</tr>
+<tr>
+<td><code>Math.floor/ceil/round</code></td>
+<td>向下&#x2F;向上取整 &#x2F; 四舍五入</td>
+<td>round 返回 long</td>
+</tr>
+<tr>
+<td><code>Math.random()</code></td>
+<td>[0,1) 随机 double</td>
+<td>左闭右开</td>
+</tr>
+<tr>
+<td><code>Math.signum(x)</code></td>
+<td>符号：-1&#x2F;0&#x2F;1</td>
+<td>—</td>
+</tr>
+</tbody></table>
+<hr>
+<h1 id="十、Collections（集合工具类，静态方法）"><a href="#十、Collections（集合工具类，静态方法）" class="headerlink" title="十、Collections（集合工具类，静态方法）"></a>十、Collections（集合工具类，静态方法）</h1><table>
+<thead>
+<tr>
+<th>方法</th>
+<th>作用</th>
+<th>易错点</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>Collections.sort(list)</code> &#x2F; <code>sort(list, cmp)</code></td>
+<td>排序（与 <code>list.sort</code> 类似）</td>
+<td>对 List 用，不是数组</td>
+</tr>
+<tr>
+<td><code>Collections.reverse(list)</code></td>
+<td>反转</td>
+<td>原地修改</td>
+</tr>
+<tr>
+<td><code>Collections.shuffle(list)</code></td>
+<td>随机打乱</td>
+<td>抽样&#x2F;随机化用</td>
+</tr>
+<tr>
+<td><code>Collections.max/min(list)</code></td>
+<td>最大&#x2F;最小元素</td>
+<td>—</td>
+</tr>
+<tr>
+<td><code>Collections.binarySearch(list, key)</code></td>
+<td>二分查找（需先排序）</td>
+<td>返回下标</td>
+</tr>
+<tr>
+<td><code>Collections.frequency(c, o)</code></td>
+<td>出现次数</td>
+<td>O(n)</td>
+</tr>
+<tr>
+<td><code>Collections.unmodifiableList(list)</code></td>
+<td>返回不可修改视图</td>
+<td>防误改，原表改了视图也变</td>
+</tr>
+<tr>
+<td><code>Collections.singletonList(e)</code></td>
+<td>单元素不可变 List</td>
+<td>—</td>
+</tr>
+</tbody></table>
+<hr>
+<h1 id="十一、比较器：Comparator-与-Comparable"><a href="#十一、比较器：Comparator-与-Comparable" class="headerlink" title="十一、比较器：Comparator 与 Comparable"></a>十一、比较器：Comparator 与 Comparable</h1><p><strong>两种排序约定方式：</strong></p>
+<ol>
+<li><p><code>Comparable</code>：类自身实现 <code>compareTo</code>（自然序），如 <code>Integer</code>、<code>String</code> 已实现。</p>
+</li>
+<li><p><code>Comparator</code>：外部比较器，不修改原类，临时指定规则。</p>
+</li>
+</ol>
+<p><strong>易错点</strong>：比较器返回值只需保证”负&#x2F;零&#x2F;正”的符号正确，未必是 -1&#x2F;0&#x2F;1；但当差值可能超出 int 范围（如两个大 long 相减），用 <code>Integer.compare(a,b)</code> &#x2F; <code>Long.compare(a,b)</code> 避免溢出。</p>
+<hr>
+<h1 id="十二、算法”函数”使用说明（非类方法，而是套路逻辑）"><a href="#十二、算法”函数”使用说明（非类方法，而是套路逻辑）" class="headerlink" title="十二、算法”函数”使用说明（非类方法，而是套路逻辑）"></a>十二、算法”函数”使用说明（非类方法，而是套路逻辑）</h1><table>
+<thead>
+<tr>
+<th>套路</th>
+<th>核心操作</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>二分查找</td>
+<td><code>mid = l + (r-l)/2</code>；根据 <code>a[mid]</code> 与 target 比调整 <code>l/r</code></td>
+<td>防溢出必须写 <code>l + (r-l)/2</code> 而非 <code>(l+r)/2</code></td>
+</tr>
+<tr>
+<td>快排 partition</td>
+<td>选 <code>pivot = a[r]</code>，遍历把 <code>&lt;pivot</code> 的换到左侧，最后把 pivot 归位</td>
+<td>返回 pivot 最终下标，用于分治</td>
+</tr>
+<tr>
+<td>回溯</td>
+<td><code>做选择 → 递归 → 撤销选择</code></td>
+<td>全局状态（path&#x2F;used）递归后必须还原，否则污染后续分支</td>
+</tr>
+<tr>
+<td>BFS</td>
+<td><code>队列 + 入队标记 visited + 每层取 size</code></td>
+<td>用 <code>!q.isEmpty()</code> 判循环；层序遍历先取 <code>size</code></td>
+</tr>
+<tr>
+<td>滑动窗口</td>
+<td>右指针扩张 + <code>while</code> 收缩左指针</td>
+<td>收缩条件根据题意写；用 <code>right-left+1</code> 算窗口大小</td>
+</tr>
+<tr>
+<td>前缀和</td>
+<td><code>pre[i+1] = pre[i] + a[i]</code>，区间和 <code>pre[r+1]-pre[l]</code></td>
+<td>下标偏移 1，避免边界判断</td>
+</tr>
+<tr>
+<td>单调栈</td>
+<td>维护”递增&#x2F;递减”栈，破序时弹栈处理</td>
+<td>栈内存的是<strong>下标</strong>（方便算距离），不是值</td>
+</tr>
+<tr>
+<td>并查集</td>
+<td><code>find</code> 带路径压缩，<code>union</code> 按秩合并</td>
+<td><code>find</code> 返回值相等即连通；<code>union</code> 返回 false 说明已有环</td>
+</tr>
+<tr>
+<td>动态规划</td>
+<td>定义 <code>dp[i]</code> 含义 + 状态转移 + 初始化 + 遍历顺序</td>
+<td>0&#x2F;1 背包<strong>容量必须逆序遍历</strong>，完全背包才正序</td>
+</tr>
+</tbody></table>
+<hr>
+<h1 id="十三、速记口诀"><a href="#十三、速记口诀" class="headerlink" title="十三、速记口诀"></a>十三、速记口诀</h1><ul>
+<li><p><strong>数组</strong>用 <code>Arrays.sort/fill/copyOf/binarySearch</code>（注意先排序再二分）。</p>
+</li>
+<li><p><strong>字符串</strong>不可变，改就用 <code>StringBuilder</code>；判等用 <code>equals</code>。</p>
+</li>
+<li><p><strong>List</strong> 增删慢查慢，<strong>Set&#x2F;Map</strong> 查快，去重计数首选 <code>HashSet/HashMap</code>。</p>
+</li>
+<li><p><strong>栈队列</strong>统一 <code>ArrayDeque</code>；<strong>堆</strong>默认小根堆。</p>
+</li>
+<li><p><strong>比较</strong>用 <code>Comparator</code>，差值大用 <code>Integer.compare</code> 防溢出。</p>
+</li>
+<li><p><strong>二分中点</strong>永远 <code>l + (r-l)/2</code>。</p>
+</li>
+</ul>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/Java/" class="category-chain-item">Java</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" class="print-no-link">#数据结构</a>
+      
+        <a href="/tags/%E7%AE%97%E6%B3%95/" class="print-no-link">#算法</a>
+      
+        <a href="/tags/Java/" class="print-no-link">#Java</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>Java常用数据结构与方法</div>
+      <div>https://zyue2022.github.io/2026/08/08/Java常用数据结构与方法/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>ZYUE</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2026年8月8日</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>更新于</div>
+          <div>2026年8月8日</div>
+        </div>
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-cc-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2026/08/08/Hexo%E5%8D%9A%E5%AE%A2%E6%8C%81%E7%BB%AD%E6%9B%B4%E6%96%B0/" title="Hexo博客持续更新指南">
+                        <span class="hidden-mobile">Hexo博客持续更新指南</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a>
+<a target="_blank" rel="noopener" href="https://developer.hitokoto.cn/" id="hitokoto_text"><span style="color:#134769;"  id="hitokoto"></span></a> <script src="https://v1.hitokoto.cn/?encode=js&select=%23hitokoto" defer></script> 
+    </div>
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    function isExpandAllEnabled() {
+      return CONFIG.toc && CONFIG.toc.expand_all === true;
+    }
+    function expandAllToc() {
+      if (!isExpandAllEnabled()) { return; }
+      jQuery('#toc-body .tocbot-is-collapsed').removeClass('tocbot-is-collapsed');
+    }
+    function updateTocToggle($li, $childList) {
+      var $toggle = $li.children('.toc-toggle');
+      if ($toggle.length === 0) { return; }
+      var collapsed = $childList.hasClass('tocbot-is-collapsed');
+      $toggle
+        .toggleClass('toc-toggle-collapsed', collapsed)
+        .toggleClass('toc-toggle-expanded', !collapsed);
+    }
+    function bindTocToggle() {
+      if (!isExpandAllEnabled()) { return; }
+      jQuery('#toc-body .toc-list-item').each(function() {
+        var $li = jQuery(this);
+        var $childList = $li.children('ol');
+        if ($childList.length === 0) {
+          if ($li.children('.toc-toggle').length === 0) {
+            $li.prepend('<span class="toc-toggle toc-toggle-placeholder" aria-hidden="true">›</span>');
+          }
+          return;
+        }
+
+        if ($li.children('.toc-toggle').length === 0) {
+          $li.prepend('<span class="toc-toggle toc-toggle-expanded" aria-hidden="true">›</span>');
+        }
+        updateTocToggle($li, $childList);
+      });
+      jQuery('#toc-body').off('click.tocToggle').on('click.tocToggle', '.toc-toggle', function(e) {
+        e.preventDefault();
+        e.stopPropagation();
+        var $li = jQuery(this).parent('.toc-list-item');
+        var $childList = $li.children('ol');
+        if ($childList.length === 0) { return; }
+        $childList.toggleClass('tocbot-is-collapsed');
+        updateTocToggle($li, $childList);
+      });
+      if (!window.__tocToggleObserver) {
+        window.__tocToggleObserver = new MutationObserver(function(mutations) {
+          mutations.forEach(function(mutation) {
+            if (mutation.type !== 'attributes' || mutation.attributeName !== 'class') { return; }
+            var $list = jQuery(mutation.target);
+            var $li = $list.parent('.toc-list-item');
+            if ($li.length === 0) { return; }
+            updateTocToggle($li, $list);
+          });
+        });
+        jQuery('#toc-body ol').each(function() {
+          window.__tocToggleObserver.observe(this, { attributes: true });
+        });
+      }
+    }
+    var tocConfig = Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc);
+    if (isExpandAllEnabled()) {
+      tocConfig.collapseDepth = 6;
+    }
+    window.tocbot.init(tocConfig);
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+    expandAllToc();
+    bindTocToggle();
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+        expandAllToc();
+        bindTocToggle();
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/5.0.0/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script defer src="/js/openkounter.js" ></script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"log":false,"pluginJsPath":"lib/","pluginModelPath":"assets/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
+</html>
