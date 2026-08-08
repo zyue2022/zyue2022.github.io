@@ -11,6 +11,8 @@
   <link rel="apple-touch-icon" sizes="76x76" href="/hexo_img/icon.jpg">
   <link rel="icon" href="/hexo_img/icon.jpg">
   
+    <link rel="canonical" href="https://zyue2022.github.io/2022/07/23/GNU编译工具使用/"/>
+  
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
   <meta http-equiv="x-ua-compatible" content="ie=edge">
@@ -38,6 +40,8 @@
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://zyue2022.github.io/post_img/05.jpg">
   
+  
+    <meta name="referrer" content="no-referrer-when-downgrade">
   
   
   <title>GNU编译工具使用 - 参天小树</title>
@@ -384,6 +388,15 @@
 
     
     
+      
+        <span id="busuanzi_container_page_pv" style="display: none">
+          <i class="iconfont icon-eye" aria-hidden="true"></i>
+          <span id="busuanzi_value_page_pv"></span> 次
+        </span>
+        
+
+      
+    
   </div>
 
 
@@ -436,7 +449,7 @@
                 
                 <h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h2><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs c++">sudo apt update<br># 通过以下命令安装编译器和调试器<br>sudo apt install build-essential gdb<br><br># 查看版本号<br>gcc --version<br>g++ --version<br>gdb --version<br></code></pre></td></tr></table></figure>
 
-<h2 id="gcc-x2F-g-基本用法"><a href="#gcc-x2F-g-基本用法" class="headerlink" title="gcc&#x2F;g++基本用法"></a>gcc&#x2F;g++基本用法</h2><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs c++">gcc filename -o outputfileName<br><br><span class="hljs-meta"># gdb支持</span><br>gcc filename -g -o outputfileName<br></code></pre></td></tr></table></figure>
+<h2 id="gcc-g-基本用法"><a href="#gcc-g-基本用法" class="headerlink" title="gcc&#x2F;g++基本用法"></a>gcc&#x2F;g++基本用法</h2><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs c++">gcc filename -o outputfileName<br><br><span class="hljs-meta"># gdb支持</span><br>gcc filename -g -o outputfileName<br></code></pre></td></tr></table></figure>
 
 <h2 id="编译过程"><a href="#编译过程" class="headerlink" title="编译过程"></a>编译过程</h2><h3 id="预处理"><a href="#预处理" class="headerlink" title="预处理"></a>预处理</h3><blockquote>
 <p>生成**.i** 文件</p>
@@ -699,6 +712,32 @@
     </div>
   
   
+    <div class="statistics">
+  
+  
+
+  
+    
+      <span id="busuanzi_container_site_pv" style="display: none">
+        总访问量 
+        <span id="busuanzi_value_site_pv"></span>
+         次
+      </span>
+    
+    
+      <span id="busuanzi_container_site_uv" style="display: none">
+        总访客数 
+        <span id="busuanzi_value_site_uv"></span>
+         人
+      </span>
+    
+    
+
+  
+
+</div>
+
+  
   
 </div>
 
@@ -909,6 +948,8 @@
   <script defer src="/js/openkounter.js" ></script>
 
   <script  src="/js/local-search.js" ></script>
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
 
 
 
