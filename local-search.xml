@@ -374,11 +374,11 @@
       
       <tag>刷题</tag>
       
-      <tag>总结</tag>
-      
       <tag>数据结构</tag>
       
       <tag>算法</tag>
+      
+      <tag>总结</tag>
       
       <tag>排序算法</tag>
       
@@ -460,11 +460,11 @@
       
       <tag>刷题</tag>
       
-      <tag>总结</tag>
-      
       <tag>数据结构</tag>
       
       <tag>算法</tag>
+      
+      <tag>总结</tag>
       
       <tag>动态规划</tag>
       
@@ -495,11 +495,11 @@
       
       <tag>刷题</tag>
       
-      <tag>总结</tag>
-      
       <tag>数据结构</tag>
       
       <tag>算法</tag>
+      
+      <tag>总结</tag>
       
       <tag>动态规划</tag>
       
@@ -538,9 +538,9 @@
       
       <tag>算法</tag>
       
-      <tag>动态规划</tag>
-      
       <tag>背包问题</tag>
+      
+      <tag>动态规划</tag>
       
     </tags>
     
@@ -842,9 +842,9 @@
     
     <tags>
       
-      <tag>Linux</tag>
-      
       <tag>GNU</tag>
+      
+      <tag>Linux</tag>
       
       <tag>GCC</tag>
       
@@ -902,11 +902,11 @@
     
     <tags>
       
+      <tag>Linux</tag>
+      
       <tag>Git</tag>
       
       <tag>Github</tag>
-      
-      <tag>Linux</tag>
       
     </tags>
     
@@ -987,13 +987,13 @@
     
     <tags>
       
-      <tag>总结</tag>
-      
       <tag>C++</tag>
       
       <tag>C++11</tag>
       
       <tag>项目</tag>
+      
+      <tag>总结</tag>
       
       <tag>并发服务器</tag>
       
@@ -1144,7 +1144,7 @@
     <link href="/2022/07/01/hexo%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/"/>
     <url>/2022/07/01/hexo%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/</url>
     
-    <content type="html"><![CDATA[<h2 id="前置安装"><a href="#前置安装" class="headerlink" title="前置安装"></a>前置安装</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs bash">npm i -g hexo-cli<br><br>npm install hexo-deployer-git --save<br></code></pre></td></tr></table></figure><h2 id="基本命令"><a href="#基本命令" class="headerlink" title="基本命令"></a>基本命令</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># 新建一个名为new_post的post</span><br>hexo n new_post<br><br><span class="hljs-comment"># 清楚缓存</span><br>hexo clear<br><br><span class="hljs-comment"># 生成</span><br>hexo g<br><br><span class="hljs-comment"># 发布到本地</span><br>hexo s<br><br><span class="hljs-comment"># 发布到github</span><br>hexo d<br></code></pre></td></tr></table></figure><h2 id="常用命令"><a href="#常用命令" class="headerlink" title="常用命令"></a>常用命令</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># 本地发布</span><br>hexo clear &amp;&amp; hexo g &amp;&amp; hexo s<br><br><span class="hljs-comment"># github发布</span><br>hexo clear &amp;&amp; hexo g &amp;&amp; hexo d<br><br><span class="hljs-comment"># 删除文章</span><br>删除 <span class="hljs-string">&quot;sourc/_posts&quot;</span> 文件夹中相应的md文件<br></code></pre></td></tr></table></figure><h2 id="Front-matter"><a href="#Front-matter" class="headerlink" title="Front-matter"></a>Front-matter</h2><p>格式举例如下：</p><figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs yaml"><span class="hljs-attr">title:</span> <span class="hljs-string">C++给常用数据结构传入排序算法</span><br><span class="hljs-attr">date:</span> <span class="hljs-number">2022-07-01 16:22:30</span><br><span class="hljs-attr">tags:</span> <br>  <span class="hljs-bullet">-</span> <span class="hljs-string">刷题</span><br>  <span class="hljs-bullet">-</span> <span class="hljs-string">C++</span><br><span class="hljs-attr">categories:</span><br>  <span class="hljs-bullet">-</span> <span class="hljs-string">C++</span><br><span class="hljs-attr">index_img:</span> <span class="hljs-string">/post_img/02.jpg</span><br></code></pre></td></tr></table></figure>]]></content>
+    <content type="html"><![CDATA[<h2 id="前置安装"><a href="#前置安装" class="headerlink" title="前置安装"></a>前置安装</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs bash">npm i -g hexo-cli<br><br>npm install hexo-deployer-git --save<br></code></pre></td></tr></table></figure><h2 id="基本命令"><a href="#基本命令" class="headerlink" title="基本命令"></a>基本命令</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># 新建一个名为new_post的post</span><br>hexo n new_post<br><br><span class="hljs-comment"># 清楚缓存</span><br>hexo clear<br><br><span class="hljs-comment"># 生成</span><br>hexo g<br><br><span class="hljs-comment"># 发布到本地</span><br>hexo s<br><br><span class="hljs-comment"># 发布到github</span><br>hexo d<br></code></pre></td></tr></table></figure><h2 id="常用命令"><a href="#常用命令" class="headerlink" title="常用命令"></a>常用命令</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># 本地发布</span><br>hexo clear &amp;&amp; hexo g &amp;&amp; hexo s<br><br><span class="hljs-comment"># github发布</span><br>hexo clear &amp;&amp; hexo g &amp;&amp; hexo d<br><br><span class="hljs-comment"># 删除文章</span><br>删除 <span class="hljs-string">&quot;sourc/_posts&quot;</span> 文件夹中相应的md文件<br><br><span class="hljs-comment"># 更新网站备份文件</span><br>git add -A &amp;&amp; git commit -m <span class="hljs-string">&quot;提交信息&quot;</span> &amp;&amp; git push<br></code></pre></td></tr></table></figure><h2 id="Front-matter"><a href="#Front-matter" class="headerlink" title="Front-matter"></a>Front-matter</h2><p>格式举例如下：</p><figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs yaml"><span class="hljs-attr">title:</span> <span class="hljs-string">C++给常用数据结构传入排序算法</span><br><span class="hljs-attr">date:</span> <span class="hljs-number">2022-07-01 16:22:30</span><br><span class="hljs-attr">tags:</span> <br>  <span class="hljs-bullet">-</span> <span class="hljs-string">刷题</span><br>  <span class="hljs-bullet">-</span> <span class="hljs-string">C++</span><br><span class="hljs-attr">categories:</span><br>  <span class="hljs-bullet">-</span> <span class="hljs-string">C++</span><br><span class="hljs-attr">index_img:</span> <span class="hljs-string">/post_img/02.jpg</span><br></code></pre></td></tr></table></figure>]]></content>
     
     
     <categories>
