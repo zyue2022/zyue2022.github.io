@@ -989,11 +989,11 @@
       
       <tag>总结</tag>
       
-      <tag>C++</tag>
-      
       <tag>C++11</tag>
       
       <tag>项目</tag>
+      
+      <tag>C++</tag>
       
       <tag>并发服务器</tag>
       
@@ -1153,6 +1153,12 @@
       
     </categories>
     
+    
+    <tags>
+      
+      <tag>Hexo</tag>
+      
+    </tags>
     
   </entry>
   
