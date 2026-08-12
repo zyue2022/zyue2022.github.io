@@ -21,16 +21,16 @@
   <meta name="author" content="ZYUE">
   <meta name="keywords" content="">
   
-    <meta name="description" content="用 Python 给视频换个背景一个基于 RVM 的抠像小工具！ 最近折腾了这么个小工具：把视频里的人像抠出来，换成你指定的背景图，同时把原来的声音原样保留。不用绿幕，不用一帧一帧手动描，丢进去一批视频就能批量出片。 写它的起因挺简单——手头有些固定机位拍的视频，背景乱七八糟，想换成干净一点的图。网上抠像工具要么要钱，要么只能处理图片，要么在线的传视频又慢又担心隐私。于是干脆自己vibe codi">
+    <meta name="description" content="用 Python 给视频换个背景一个基于 RVM 的抠像小工具。 最近折腾了这么个小工具：把视频里的人像抠出来，换成你指定的背景图，同时把原来的声音原样保留。不用绿幕，不用一帧一帧手动描，丢进去一批视频就能批量出片。 写它的起因挺简单——手头有些固定机位拍的视频，背景乱七八糟，想换成干净一点的图。网上抠像工具要么要钱，要么只能处理图片，要么在线的传视频又慢又担心隐私。于是干脆自己vibe codi">
 <meta property="og:type" content="article">
 <meta property="og:title" content="简易视频人像背景AI替换">
 <meta property="og:url" content="https://zyue2022.github.io/2026/08/10/%E7%AE%80%E6%98%93%E8%A7%86%E9%A2%91%E4%BA%BA%E5%83%8F%E8%83%8C%E6%99%AFAI%E6%9B%BF%E6%8D%A2/index.html">
 <meta property="og:site_name" content="参天小树">
-<meta property="og:description" content="用 Python 给视频换个背景一个基于 RVM 的抠像小工具！ 最近折腾了这么个小工具：把视频里的人像抠出来，换成你指定的背景图，同时把原来的声音原样保留。不用绿幕，不用一帧一帧手动描，丢进去一批视频就能批量出片。 写它的起因挺简单——手头有些固定机位拍的视频，背景乱七八糟，想换成干净一点的图。网上抠像工具要么要钱，要么只能处理图片，要么在线的传视频又慢又担心隐私。于是干脆自己vibe codi">
+<meta property="og:description" content="用 Python 给视频换个背景一个基于 RVM 的抠像小工具。 最近折腾了这么个小工具：把视频里的人像抠出来，换成你指定的背景图，同时把原来的声音原样保留。不用绿幕，不用一帧一帧手动描，丢进去一批视频就能批量出片。 写它的起因挺简单——手头有些固定机位拍的视频，背景乱七八糟，想换成干净一点的图。网上抠像工具要么要钱，要么只能处理图片，要么在线的传视频又慢又担心隐私。于是干脆自己vibe codi">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://zyue2022.github.io/post_img/39.png">
 <meta property="article:published_time" content="2026-08-10T14:04:54.000Z">
-<meta property="article:modified_time" content="2026-08-10T14:37:40.439Z">
+<meta property="article:modified_time" content="2026-08-10T15:21:41.601Z">
 <meta property="article:author" content="ZYUE">
 <meta property="article:tag" content="AI Coding">
 <meta property="article:tag" content="Python">
@@ -77,7 +77,7 @@
   <script id="fluid-configs">
     var Fluid = window.Fluid || {};
     Fluid.ctx = Object.assign({}, Fluid.ctx)
-    var CONFIG = {"hostname":"zyue2022.github.io","root":"/","version":"1.9.9","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"expand_all":true,"placement":"left","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"follow_dnt":false,"baidu":"c03149260ee4667c7ea092624ddee2b5","google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false},"openkounter":{"server_url":"https://open-kounter.mintimate.cn","path":"window.location.pathname","ignore_local":false},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2024-01-01T00:00:00.000Z","token":null,"api_server":null}},"search_path":"/local-search.xml","include_content_in_search":true};
+    var CONFIG = {"hostname":"zyue2022.github.io","root":"/","version":"1.9.9","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"expand_all":true,"placement":"left","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":3},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"follow_dnt":false,"baidu":"c03149260ee4667c7ea092624ddee2b5","google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false},"openkounter":{"server_url":"https://open-kounter.mintimate.cn","path":"window.location.pathname","ignore_local":false},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2024-01-01T00:00:00.000Z","token":null,"api_server":null}},"search_path":"/local-search.xml","include_content_in_search":true};
 
     if (CONFIG.web_analytics.follow_dnt) {
       var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
@@ -433,7 +433,7 @@
             
               <div class="markdown-body">
                 
-                <h1 id="用-Python-给视频换个背景"><a href="#用-Python-给视频换个背景" class="headerlink" title="用 Python 给视频换个背景"></a>用 Python 给视频换个背景</h1><p>一个基于 RVM 的抠像小工具！</p>
+                <h1 id="用-Python-给视频换个背景"><a href="#用-Python-给视频换个背景" class="headerlink" title="用 Python 给视频换个背景"></a>用 Python 给视频换个背景</h1><p>一个基于 RVM 的抠像小工具。</p>
 <p>最近折腾了这么个小工具：把视频里的人像抠出来，换成你指定的背景图，同时把原来的声音原样保留。不用绿幕，不用一帧一帧手动描，丢进去一批视频就能批量出片。</p>
 <p>写它的起因挺简单——手头有些固定机位拍的视频，背景乱七八糟，想换成干净一点的图。网上抠像工具要么要钱，要么只能处理图片，要么在线的传视频又慢又担心隐私。于是干脆自己vibe coding撸一个，能本地跑、能批量、速度快就行。</p>
 <h2 id="它到底在做什么"><a href="#它到底在做什么" class="headerlink" title="它到底在做什么"></a>它到底在做什么</h2><p>一句话：对每一帧，模型先判断”这个像素属于前景的概率是多少”，得到一个透明度遮罩（alpha），再用这个遮罩把原画面和背景图按比例叠在一起。</p>
@@ -590,6 +590,12 @@
                 <div class="post-prevnext my-3">
                   <article class="post-prev col-6">
                     
+                    
+                      <a href="/2026/08/12/Java%E4%B8%ADStream%E6%B5%81%E5%AE%8C%E5%85%A8%E6%8C%87%E5%8D%97/" title="Java中Stream流完全指南">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">Java中Stream流完全指南</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
                     
                   </article>
                   <article class="post-next col-6">

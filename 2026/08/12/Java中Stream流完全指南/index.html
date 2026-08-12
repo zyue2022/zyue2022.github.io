@@ -1,0 +1,988 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+
+  <link rel="apple-touch-icon" sizes="76x76" href="/hexo_img/icon.jpg">
+  <link rel="icon" href="/hexo_img/icon.jpg">
+  
+    <link rel="canonical" href="https://zyue2022.github.io/2026/08/12/Java中Stream流完全指南/"/>
+  
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#0D3562">
+  <meta name="author" content="ZYUE">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="Stream 是 Java 8 引入的一套集合处理 API。它让你用”声明式”的方式处理数据——你告诉它”要什么”，而不是”怎么循环”。这篇文章把 Stream 的用法、原理、收集器、并行流、常见坑都过一遍，争取让你看完能直接上手写，也知道哪里会翻车。  一、Stream 到底是什么先说清楚它不是什么：  不是集合，不存储数据，只是数据的”管道”。 不是数据结构，没有下标，不能随机访问。 不会修改">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Java中Stream流完全指南">
+<meta property="og:url" content="https://zyue2022.github.io/2026/08/12/Java%E4%B8%ADStream%E6%B5%81%E5%AE%8C%E5%85%A8%E6%8C%87%E5%8D%97/index.html">
+<meta property="og:site_name" content="参天小树">
+<meta property="og:description" content="Stream 是 Java 8 引入的一套集合处理 API。它让你用”声明式”的方式处理数据——你告诉它”要什么”，而不是”怎么循环”。这篇文章把 Stream 的用法、原理、收集器、并行流、常见坑都过一遍，争取让你看完能直接上手写，也知道哪里会翻车。  一、Stream 到底是什么先说清楚它不是什么：  不是集合，不存储数据，只是数据的”管道”。 不是数据结构，没有下标，不能随机访问。 不会修改">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://zyue2022.github.io/post_img/40.jpg">
+<meta property="article:published_time" content="2026-08-12T15:31:58.000Z">
+<meta property="article:modified_time" content="2026-08-12T15:58:28.251Z">
+<meta property="article:author" content="ZYUE">
+<meta property="article:tag" content="Java">
+<meta property="article:tag" content="笔记">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://zyue2022.github.io/post_img/40.jpg">
+  
+  
+  
+  <title>Java中Stream流完全指南 - 参天小树</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1749284_5i9bdhy70f8.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1736178_k526ubmyhba.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"zyue2022.github.io","root":"/","version":"1.9.9","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"expand_all":true,"placement":"left","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":3},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"follow_dnt":false,"baidu":"c03149260ee4667c7ea092624ddee2b5","google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false},"openkounter":{"server_url":"https://open-kounter.mintimate.cn","path":"window.location.pathname","ignore_local":false},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2024-01-01T00:00:00.000Z","token":null,"api_server":null}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+  
+    <!-- Baidu Analytics -->
+    <script async>
+      if (!Fluid.ctx.dnt) {
+        var _hmt = _hmt || [];
+        (function() {
+          var hm = document.createElement("script");
+          hm.src = "https://hm.baidu.com/hm.js?c03149260ee4667c7ea092624ddee2b5";
+          var s = document.getElementsByTagName("script")[0];
+          s.parentNode.insertBefore(hm, s);
+        })();
+      }
+    </script>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+  
+
+
+
+
+  
+<meta name="generator" content="Hexo 8.1.2"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong> </strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content (desktop) -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<!-- Mobile grid menu overlay -->
+<div id="mobile-grid-menu" class="d-lg-none">
+  <div class="mobile-grid-menu-inner">
+    <div class="container">
+      <div class="row">
+        
+          
+          
+          
+          
+            <div class="col-4 mobile-grid-cell">
+              <a href="/" target="_self">
+                <div class="mobile-grid-item">
+                  <i class="iconfont icon-home-fill"></i>
+                  <span>首页</span>
+                </div>
+              </a>
+            </div>
+          
+        
+          
+          
+          
+          
+            <div class="col-4 mobile-grid-cell">
+              <a href="/archives/" target="_self">
+                <div class="mobile-grid-item">
+                  <i class="iconfont icon-archive-fill"></i>
+                  <span>归档</span>
+                </div>
+              </a>
+            </div>
+          
+        
+          
+          
+          
+          
+            <div class="col-4 mobile-grid-cell">
+              <a href="/categories/" target="_self">
+                <div class="mobile-grid-item">
+                  <i class="iconfont icon-category-fill"></i>
+                  <span>分类</span>
+                </div>
+              </a>
+            </div>
+          
+        
+          
+          
+          
+          
+            <div class="col-4 mobile-grid-cell">
+              <a href="/tags/" target="_self">
+                <div class="mobile-grid-item">
+                  <i class="iconfont icon-tags-fill"></i>
+                  <span>标签</span>
+                </div>
+              </a>
+            </div>
+          
+        
+          
+          
+          
+          
+            <div class="col-4 mobile-grid-cell">
+              <a href="/about/" target="_self">
+                <div class="mobile-grid-item">
+                  <i class="iconfont icon-user-fill"></i>
+                  <span>关于</span>
+                </div>
+              </a>
+            </div>
+          
+        
+        
+          <div class="col-4 mobile-grid-cell" id="mobile-search-btn">
+            <a href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <div class="mobile-grid-item">
+                <i class="iconfont icon-search"></i>
+                <span>搜索</span>
+              </div>
+            </a>
+          </div>
+        
+        
+          <div class="col-4 mobile-grid-cell" id="mobile-color-toggle-btn"
+               data-label-light="开灯"
+               data-label-dark="关灯">
+            <a href="javascript:;" aria-label="Color Toggle">
+              <div class="mobile-grid-item">
+                <i class="iconfont icon-dark" id="mobile-color-toggle-icon"></i>
+                <span id="mobile-color-toggle-label">关灯</span>
+              </div>
+            </a>
+          </div>
+        
+      </div>
+    </div>
+  </div>
+</div>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/hexo_img/bk2.jpg') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="Java中Stream流完全指南"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-author" aria-hidden="true"></i>
+        ZYUE
+      </span>
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2026-08-12 23:31" pubdate>
+          2026年8月12日 晚上
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          12k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          97 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="padding-left: 2rem; margin-right: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">Java中Stream流完全指南</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <p>Stream 是 Java 8 引入的一套集合处理 API。它让你用”声明式”的方式处理数据——你告诉它”要什么”，而不是”怎么循环”。这篇文章把 Stream 的用法、原理、收集器、并行流、常见坑都过一遍，争取让你看完能直接上手写，也知道哪里会翻车。</p>
+<hr>
+<h2 id="一、Stream-到底是什么"><a href="#一、Stream-到底是什么" class="headerlink" title="一、Stream 到底是什么"></a>一、Stream 到底是什么</h2><p>先说清楚它不是什么：</p>
+<ul>
+<li><strong>不是集合</strong>，不存储数据，只是数据的”管道”。</li>
+<li><strong>不是数据结构</strong>，没有下标，不能随机访问。</li>
+<li><strong>不会修改源数据</strong>，所有操作都产生新结果。</li>
+</ul>
+<p>Stream 处理数据的三段式结构：</p>
+<figure class="highlight scss"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs scss">数据源 → 中间操作(<span class="hljs-number">0</span>~N个) → 终止操作(<span class="hljs-number">1</span>个)<br></code></pre></td></tr></table></figure>
+
+<p>举个例子：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs java">List&lt;String&gt; names = Arrays.asList(<span class="hljs-string">&quot;Alice&quot;</span>, <span class="hljs-string">&quot;Bob&quot;</span>, <span class="hljs-string">&quot;Charlie&quot;</span>);<br>List&lt;String&gt; result = names.stream()          <span class="hljs-comment">// 数据源</span><br>    .filter(n -&gt; n.length() &gt; <span class="hljs-number">3</span>)              <span class="hljs-comment">// 中间操作</span><br>    .map(String::toUpperCase)                 <span class="hljs-comment">// 中间操作</span><br>    .collect(Collectors.toList());            <span class="hljs-comment">// 终止操作</span><br><span class="hljs-comment">// 结果: [ALICE, CHARLIE]</span><br></code></pre></td></tr></table></figure>
+
+<p><strong>两个关键特性</strong>必须记住：</p>
+<ol>
+<li><strong>惰性求值</strong>：中间操作（filter、map 等）不会立刻执行，只有遇到终止操作（collect、count）才会真正跑一遍。</li>
+<li><strong>一次性消费</strong>：一个 Stream 对象只能被终止操作消费一次，用完就废了，再调用会抛 <code>IllegalStateException: stream has already been operated upon or closed</code>。</li>
+</ol>
+<hr>
+<h2 id="二、创建-Stream-的所有姿势"><a href="#二、创建-Stream-的所有姿势" class="headerlink" title="二、创建 Stream 的所有姿势"></a>二、创建 Stream 的所有姿势</h2><p>数据源有很多种来源，记住这几类就够了：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-comment">// 1. 集合（最常用）</span><br>List&lt;String&gt; list = Arrays.asList(<span class="hljs-string">&quot;a&quot;</span>, <span class="hljs-string">&quot;b&quot;</span>, <span class="hljs-string">&quot;c&quot;</span>);<br>Stream&lt;String&gt; s1 = list.stream();        <span class="hljs-comment">// 串行</span><br>Stream&lt;String&gt; s2 = list.parallelStream(); <span class="hljs-comment">// 并行</span><br><br><span class="hljs-comment">// 2. 数组</span><br>String[] arr = &#123;<span class="hljs-string">&quot;a&quot;</span>, <span class="hljs-string">&quot;b&quot;</span>, <span class="hljs-string">&quot;c&quot;</span>&#125;;<br>Stream&lt;String&gt; s3 = Arrays.stream(arr);<br><br><span class="hljs-comment">// 3. 直接 of（可变参数）</span><br>Stream&lt;String&gt; s4 = Stream.of(<span class="hljs-string">&quot;a&quot;</span>, <span class="hljs-string">&quot;b&quot;</span>, <span class="hljs-string">&quot;c&quot;</span>);<br><br><span class="hljs-comment">// 4. 迭代生成（Java 8 需要 limit 截断）</span><br>Stream&lt;Integer&gt; s5 = Stream.iterate(<span class="hljs-number">0</span>, n -&gt; n + <span class="hljs-number">2</span>).limit(<span class="hljs-number">5</span>); <span class="hljs-comment">// 0,2,4,6,8</span><br><br><span class="hljs-comment">// 5. 无限生成（常用于造测试数据）</span><br>Stream&lt;Double&gt; s6 = Stream.generate(Math::random).limit(<span class="hljs-number">3</span>);<br><br><span class="hljs-comment">// 6. 原始类型流 range / rangeClosed</span><br><span class="hljs-type">IntStream</span> <span class="hljs-variable">s7</span> <span class="hljs-operator">=</span> IntStream.range(<span class="hljs-number">0</span>, <span class="hljs-number">5</span>);       <span class="hljs-comment">// 0,1,2,3,4（不含上界）</span><br><span class="hljs-type">IntStream</span> <span class="hljs-variable">s8</span> <span class="hljs-operator">=</span> IntStream.rangeClosed(<span class="hljs-number">0</span>, <span class="hljs-number">5</span>); <span class="hljs-comment">// 0,1,2,3,4,5（含上界）</span><br><br><span class="hljs-comment">// 7. 读取文件每行（自动处理 IO 和关闭）</span><br><span class="hljs-keyword">try</span> (Stream&lt;String&gt; lines = Files.lines(Paths.get(<span class="hljs-string">&quot;data.txt&quot;</span>))) &#123;<br>    lines.forEach(System.out::println);<br>&#125;<br><br><span class="hljs-comment">// 8. 空流</span><br>Stream&lt;String&gt; s9 = Stream.empty();<br></code></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="三、中间操作（Intermediate-Operations）"><a href="#三、中间操作（Intermediate-Operations）" class="headerlink" title="三、中间操作（Intermediate Operations）"></a>三、中间操作（Intermediate Operations）</h2><p>中间操作返回一个新的 Stream，且<strong>惰性的</strong>——不遇到终止操作绝不执行。</p>
+<h3 id="无状态操作（每个元素独立处理，效率高、可并行友好）"><a href="#无状态操作（每个元素独立处理，效率高、可并行友好）" class="headerlink" title="无状态操作（每个元素独立处理，效率高、可并行友好）"></a>无状态操作（每个元素独立处理，效率高、可并行友好）</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-comment">// filter：按条件保留</span><br>stream.filter(x -&gt; x &gt; <span class="hljs-number">0</span>)<br><br><span class="hljs-comment">// map：一对一转换</span><br>stream.map(String::toUpperCase)        <span class="hljs-comment">// T -&gt; R</span><br>stream.mapToInt(Integer::intValue)     <span class="hljs-comment">// T -&gt; int（转原始流，避免装箱）</span><br><br><span class="hljs-comment">// flatMap：一对多&quot;拍平&quot;，常用于处理嵌套集合</span><br>List&lt;List&lt;Integer&gt;&gt; nested = Arrays.asList(Arrays.asList(<span class="hljs-number">1</span>, <span class="hljs-number">2</span>), Arrays.asList(<span class="hljs-number">3</span>, <span class="hljs-number">4</span>));<br>List&lt;Integer&gt; flat = nested.stream()<br>    .flatMap(List::stream)             <span class="hljs-comment">// List&lt;Integer&gt; -&gt; Integer 流</span><br>    .collect(Collectors.toList());     <span class="hljs-comment">// [1,2,3,4]</span><br><br><span class="hljs-comment">// 字符串拆词也是经典场景</span><br>List&lt;String&gt; words = lines.stream()<br>    .flatMap(line -&gt; Arrays.stream(line.split(<span class="hljs-string">&quot; &quot;</span>)))<br>    .collect(Collectors.toList());<br><br><span class="hljs-comment">// peek：偷偷看一眼，主要用于调试（注意：不触发终止操作就不会执行）</span><br>stream.peek(System.out::println)<br></code></pre></td></tr></table></figure>
+
+<h3 id="有状态操作（需要”记住”之前的元素，开销更大）"><a href="#有状态操作（需要”记住”之前的元素，开销更大）" class="headerlink" title="有状态操作（需要”记住”之前的元素，开销更大）"></a>有状态操作（需要”记住”之前的元素，开销更大）</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-comment">// distinct：去重（依赖 equals/hashCode）</span><br>stream.distinct()<br><br><span class="hljs-comment">// sorted：排序，无参用自然序，可传 Comparator</span><br>stream.sorted()<br>stream.sorted(Comparator.comparing(Person::getAge).reversed())<br><br><span class="hljs-comment">// limit：截取前 N 个</span><br>stream.limit(<span class="hljs-number">10</span>)<br><br><span class="hljs-comment">// skip：跳过前 N 个</span><br>stream.skip(<span class="hljs-number">5</span>)<br></code></pre></td></tr></table></figure>
+
+<p><strong>性能提示</strong>：有状态操作（尤其 <code>sorted</code>、<code>distinct</code>）在并行流里需要跨线程”碰头”，成本不低，数据量小的时候别盲目上并行。</p>
+<hr>
+<h2 id="四、终止操作（Terminal-Operations）"><a href="#四、终止操作（Terminal-Operations）" class="headerlink" title="四、终止操作（Terminal Operations）"></a>四、终止操作（Terminal Operations）</h2><p>终止操作会触发整条流水线执行，并且只许一个。</p>
+<h3 id="遍历与收集"><a href="#遍历与收集" class="headerlink" title="遍历与收集"></a>遍历与收集</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-comment">// forEach：遍历，并行时不保证顺序</span><br>stream.forEach(System.out::println);<br><span class="hljs-comment">// forEachOrdered：并行时也按原序输出（牺牲并行性能）</span><br>stream.parallel().forEachOrdered(System.out::println);<br><br><span class="hljs-comment">// collect：把结果收进容器（最常用，下一节细讲）</span><br>List&lt;String&gt; list = stream.collect(Collectors.toList());<br><br><span class="hljs-comment">// toArray：转数组</span><br>String[] arr = stream.toArray(String[]::<span class="hljs-keyword">new</span>);<br></code></pre></td></tr></table></figure>
+
+<h3 id="聚合与归约"><a href="#聚合与归约" class="headerlink" title="聚合与归约"></a>聚合与归约</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-comment">// count：计数</span><br><span class="hljs-type">long</span> <span class="hljs-variable">n</span> <span class="hljs-operator">=</span> stream.count();<br><br><span class="hljs-comment">// reduce：把一串元素&quot;折叠&quot;成单个结果，典型场景是求和、求积、拼接、找极值。</span><br><span class="hljs-comment">// 核心机制：手里有个累加器，从初始值（种子）开始，每遇到一个元素就把它合并进去。</span><br><br><span class="hljs-comment">// 重载一：带初始值，元素类型 == 结果类型（BinaryOperator&lt;T&gt; 即 (T,T)-&gt;T）</span><br><span class="hljs-comment">// 串行演算：0 → 0+1=1 → 1+2=3 → 3+3=6 → 6+4=10</span><br><span class="hljs-type">int</span> <span class="hljs-variable">sum1</span> <span class="hljs-operator">=</span> Arrays.asList(<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>, <span class="hljs-number">4</span>).stream().reduce(<span class="hljs-number">0</span>, Integer::sum);<br><span class="hljs-comment">//                                         ↑初始值   ↑累加器：(当前和, 元素) -&gt; 新和</span><br><span class="hljs-comment">// 结果一定非 null（至少返回初始值 0），所以返回 int 而不是 Optional</span><br><br><span class="hljs-comment">// 重载二：不带初始值，拿第一个元素当种子</span><br><span class="hljs-comment">// 非空流：seed=1 → 1+2=3 → 3+3=6 → 6+4=10 → Optional[10]</span><br><span class="hljs-comment">// 空流：没有第一个元素 → Optional.empty()</span><br>Optional&lt;Integer&gt; sum2 = Arrays.asList(<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>, <span class="hljs-number">4</span>).stream().reduce(Integer::sum);<br><br><span class="hljs-comment">// 重载三：结果类型可以和元素类型不同，并且支持并行</span><br><span class="hljs-comment">// 把若干字符串&quot;折&quot;成它们的总长度（元素是 String，结果是 int）</span><br><span class="hljs-type">int</span> <span class="hljs-variable">totalLen</span> <span class="hljs-operator">=</span> Arrays.asList(<span class="hljs-string">&quot;ab&quot;</span>, <span class="hljs-string">&quot;cde&quot;</span>, <span class="hljs-string">&quot;fg&quot;</span>).stream().reduce(<br>    <span class="hljs-number">0</span>,                                       <span class="hljs-comment">// 初始值（int）</span><br>    (len, word) -&gt; len + word.length(),      <span class="hljs-comment">// 累加器：(当前总长度, 元素) -&gt; 新总长度</span><br>    Integer::sum);                           <span class="hljs-comment">// 合并器：并行时把两个分片的长度相加</span><br><span class="hljs-comment">// 串行演算：0+2=2 → 2+3=5 → 5+2=7 → 7</span><br></code></pre></td></tr></table></figure>
+
+<p>关于第三个重载的 <code>combiner</code>：串行执行时它不参与计算；一旦 <code>.parallel()</code>，流会被切成多段，每段各自用 <code>accumulator</code> 算出局部结果，最后用 <code>combiner</code> 把各段结果合成一个。所以 <code>combiner</code> 不是装饰，是并行正确性的保证。</p>
+<p>必须规避的陷阱：<strong>初始值（identity）必须是”中性值”</strong>，即满足 <code>combiner.apply(identity, x) == x</code>。求和用 0、求积用 1、拼接用 <code>&quot;&quot;</code>。如果求和误把初始值写成 10，并行时每个分片都从 10 起步，合并后会多出”分片数个 10”，结果就错了。</p>
+<p>reduce 与 collect 的分工：reduce 适合”聚合成一个标量或简单对象”（数字、字符串、自定义累加器）；”收集成集合 &#x2F; 分组 &#x2F; 转 Map”请用 <code>collect</code> + <code>Collectors</code>，那是它的主场，别硬用 reduce 拼 List（既慢又啰嗦）。</p>
+<h3 id="匹配与查找"><a href="#匹配与查找" class="headerlink" title="匹配与查找"></a>匹配与查找</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-comment">// 匹配：返回 boolean，遇到结果立即短路</span><br><span class="hljs-type">boolean</span> <span class="hljs-variable">any</span> <span class="hljs-operator">=</span> stream.anyMatch(x -&gt; x &gt; <span class="hljs-number">10</span>);   <span class="hljs-comment">// 有一个满足</span><br><span class="hljs-type">boolean</span> <span class="hljs-variable">all</span> <span class="hljs-operator">=</span> stream.allMatch(x -&gt; x &gt; <span class="hljs-number">0</span>);    <span class="hljs-comment">// 全满足</span><br><span class="hljs-type">boolean</span> <span class="hljs-variable">none</span> <span class="hljs-operator">=</span> stream.noneMatch(x -&gt; x &lt; <span class="hljs-number">0</span>);  <span class="hljs-comment">// 全不满足</span><br><br><span class="hljs-comment">// 查找：返回 Optional</span><br>Optional&lt;String&gt; first = stream.findFirst();  <span class="hljs-comment">// 第一个（并行下也稳定）</span><br>Optional&lt;String&gt; anyOne = stream.findAny();   <span class="hljs-comment">// 任意一个（并行下更快）</span><br></code></pre></td></tr></table></figure>
+
+<h3 id="极值"><a href="#极值" class="headerlink" title="极值"></a>极值</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs java">Optional&lt;Integer&gt; max = numbers.stream().max(Integer::compareTo);<br>Optional&lt;Integer&gt; min = numbers.stream().min(Integer::compareTo);<br><span class="hljs-comment">// 也可以用原始流，省去 Optional</span><br><span class="hljs-type">int</span> <span class="hljs-variable">maxVal</span> <span class="hljs-operator">=</span> numbers.stream().mapToInt(Integer::intValue).max().orElse(<span class="hljs-number">0</span>);<br></code></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="五、Collectors-收集器大全"><a href="#五、Collectors-收集器大全" class="headerlink" title="五、Collectors 收集器大全"></a>五、Collectors 收集器大全</h2><p><code>collect</code> 搭配 <code>Collectors</code> 几乎能做所有”收尾”工作。这是日常写 Stream 最密集用到的部分。</p>
+<h3 id="收集到集合"><a href="#收集到集合" class="headerlink" title="收集到集合"></a>收集到集合</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-comment">// 转 List / Set</span><br>List&lt;String&gt; list = stream.collect(Collectors.toList());<br>Set&lt;String&gt; set = stream.collect(Collectors.toSet());<br><br><span class="hljs-comment">// 想要具体实现类（比如 LinkedHashSet 保持插入序）</span><br>Set&lt;String&gt; linked = stream.collect(Collectors.toCollection(LinkedHashSet::<span class="hljs-keyword">new</span>));<br><br><span class="hljs-comment">// 想要不可变集合，用 Collections.unmodifiableXXX 包一层（Java 8 标准做法）</span><br>List&lt;String&gt; immutable = Collections.unmodifiableList(<br>    stream.collect(Collectors.toList()));<br></code></pre></td></tr></table></figure>
+
+<h3 id="转-Map（最容易踩坑的地方）"><a href="#转-Map（最容易踩坑的地方）" class="headerlink" title="转 Map（最容易踩坑的地方）"></a>转 Map（最容易踩坑的地方）</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-comment">// 基础版：key 重复会抛 IllegalStateException</span><br>Map&lt;String, Integer&gt; m1 = people.stream()<br>    .collect(Collectors.toMap(Person::getName, Person::getAge));<br><br><span class="hljs-comment">// 解决重复 key：第三个参数是&quot;合并函数&quot;，决定重复时留哪个</span><br>Map&lt;String, Integer&gt; m2 = people.stream()<br>    .collect(Collectors.toMap(Person::getName, Person::getAge, (oldV, newV) -&gt; newV));<br><br><span class="hljs-comment">// 收集成对象本身当 value</span><br>Map&lt;String, Person&gt; m3 = people.stream()<br>    .collect(Collectors.toMap(Person::getName, Function.identity()));<br></code></pre></td></tr></table></figure>
+
+<h3 id="分组与分区"><a href="#分组与分区" class="headerlink" title="分组与分区"></a>分组与分区</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-comment">// 按某个属性分组（最常用）</span><br>Map&lt;Integer, List&lt;Person&gt;&gt; byAge = people.stream()<br>    .collect(Collectors.groupingBy(Person::getAge));<br><br><span class="hljs-comment">// 多级分组</span><br>Map&lt;Integer, Map&lt;String, List&lt;Person&gt;&gt;&gt; byAgeThenName = people.stream()<br>    .collect(Collectors.groupingBy(Person::getAge,<br>        Collectors.groupingBy(Person::getName)));<br><br><span class="hljs-comment">// 分组后做下游聚合（而不是收集成 List）</span><br>Map&lt;Integer, Long&gt; countByAge = people.stream()<br>    .collect(Collectors.groupingBy(Person::getAge, Collectors.counting()));<br><br>Map&lt;Integer, Double&gt; avgScore = students.stream()<br>    .collect(Collectors.groupingBy(Student::getClassId,<br>        Collectors.averagingInt(Student::getScore)));<br><br><span class="hljs-comment">// 分区：特殊的二分组（true / false）</span><br>Map&lt;Boolean, List&lt;Person&gt;&gt; adults = people.stream()<br>    .collect(Collectors.partitioningBy(p -&gt; p.getAge() &gt;= <span class="hljs-number">18</span>));<br></code></pre></td></tr></table></figure>
+
+<h3 id="统计与拼接"><a href="#统计与拼接" class="headerlink" title="统计与拼接"></a>统计与拼接</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-comment">// 数值统计三件套</span><br><span class="hljs-type">long</span> <span class="hljs-variable">count</span> <span class="hljs-operator">=</span> stream.collect(Collectors.counting());<br><span class="hljs-type">double</span> <span class="hljs-variable">avg</span> <span class="hljs-operator">=</span> stream.collect(Collectors.averagingInt(Person::getAge));<br><span class="hljs-type">int</span> <span class="hljs-variable">sum</span>  <span class="hljs-operator">=</span> stream.collect(Collectors.summingInt(Person::getAge));<br><br><span class="hljs-comment">// summarizing：一次性拿到 count/sum/avg/min/max</span><br><span class="hljs-type">IntSummaryStatistics</span> <span class="hljs-variable">stat</span> <span class="hljs-operator">=</span> people.stream()<br>    .collect(Collectors.summarizingInt(Person::getAge));<br><span class="hljs-comment">// stat.getMax(), getMin(), getAverage()...</span><br><br><span class="hljs-comment">// 极值</span><br>Optional&lt;Person&gt; oldest = people.stream()<br>    .collect(Collectors.maxBy(Comparator.comparing(Person::getAge)));<br><br><span class="hljs-comment">// 拼接字符串</span><br><span class="hljs-type">String</span> <span class="hljs-variable">joined</span> <span class="hljs-operator">=</span> stream.collect(Collectors.joining());        <span class="hljs-comment">// 无分隔</span><br><span class="hljs-type">String</span> <span class="hljs-variable">csv</span> <span class="hljs-operator">=</span> stream.collect(Collectors.joining(<span class="hljs-string">&quot;, &quot;</span>));       <span class="hljs-comment">// 逗号分隔</span><br><span class="hljs-type">String</span> <span class="hljs-variable">pretty</span> <span class="hljs-operator">=</span> stream.collect(Collectors.joining(<span class="hljs-string">&quot;, &quot;</span>, <span class="hljs-string">&quot;[&quot;</span>, <span class="hljs-string">&quot;]&quot;</span>)); <span class="hljs-comment">// [a, b, c]</span><br></code></pre></td></tr></table></figure>
+
+<h3 id="进阶：mapping-与-collectingAndThen"><a href="#进阶：mapping-与-collectingAndThen" class="headerlink" title="进阶：mapping 与 collectingAndThen"></a>进阶：mapping 与 collectingAndThen</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-comment">// groupingBy 后只想收集某个字段</span><br>Map&lt;Integer, List&lt;String&gt;&gt; namesByAge = people.stream()<br>    .collect(Collectors.groupingBy(Person::getAge,<br>        Collectors.mapping(Person::getName, Collectors.toList())));<br><br><span class="hljs-comment">// collectingAndThen：收集完再包一层转换（常用于转不可变集合）</span><br>List&lt;String&gt; safe = stream.collect(Collectors.collectingAndThen(<br>    Collectors.toList(),<br>    Collections::unmodifiableList));<br></code></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="六、Optional-与-Stream-的配合"><a href="#六、Optional-与-Stream-的配合" class="headerlink" title="六、Optional 与 Stream 的配合"></a>六、Optional 与 Stream 的配合</h2><p>凡是”可能不存在”的结果（findFirst、max、min、reduce 无初值版），返回的都是 <code>Optional</code>。别再用 <code>null</code> 到处判空了：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs java">Optional&lt;Person&gt; top = people.stream()<br>    .max(Comparator.comparing(Person::getScore));<br><br><span class="hljs-comment">// 正确姿势：用 Optional 自带方法处理&quot;空&quot;的情况</span><br>top.ifPresent(p -&gt; System.out.println(p.getName()));  <span class="hljs-comment">// 有才打印</span><br><span class="hljs-type">Person</span> <span class="hljs-variable">p1</span> <span class="hljs-operator">=</span> top.orElse(defaultPerson);                 <span class="hljs-comment">// 没有给默认值</span><br><span class="hljs-type">Person</span> <span class="hljs-variable">p2</span> <span class="hljs-operator">=</span> top.orElseGet(() -&gt; loadDefault());        <span class="hljs-comment">// 懒加载默认值</span><br><span class="hljs-type">Person</span> <span class="hljs-variable">p3</span> <span class="hljs-operator">=</span> top.orElseThrow(() -&gt; <span class="hljs-keyword">new</span> <span class="hljs-title class_">RuntimeException</span>(<span class="hljs-string">&quot;没人&quot;</span>)); <span class="hljs-comment">// 没有就抛</span><br></code></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="七、并行流（Parallel-Stream）"><a href="#七、并行流（Parallel-Stream）" class="headerlink" title="七、并行流（Parallel Stream）"></a>七、并行流（Parallel Stream）</h2><p>一行 <code>parallel()</code> 就能把串行流变成并行：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-type">long</span> <span class="hljs-variable">count</span> <span class="hljs-operator">=</span> list.parallelStream()<br>    .filter(s -&gt; s.length() &gt; <span class="hljs-number">3</span>)<br>    .count();<br><br><span class="hljs-comment">// 也可以中途切换</span><br>list.stream().parallel().filter(...).sequential().map(...);<br></code></pre></td></tr></table></figure>
+
+<p><strong>原理</strong>：底层用 <code>ForkJoinPool.commonPool()</code>，把数据分片，多个线程各自处理一段，最后合并。</p>
+<p><strong>什么时候适合上并行</strong>：</p>
+<ul>
+<li>数据量大（万级、百万级以上才看得出收益）。</li>
+<li>每个元素的计算是 <strong>CPU 密集</strong> 且彼此独立。</li>
+<li>中间操作里<strong>没有</strong> <code>sorted</code>、<code>distinct</code>、有状态操作这种需要”碰头”的（它们会大幅抵消并行优势）。</li>
+</ul>
+<p><strong>什么时候千万别用</strong>：</p>
+<ul>
+<li>数据量小：线程调度开销比计算还大，反而更慢。</li>
+<li>IO 密集任务（网络、数据库）：会占满公共线程池，拖累整个 JVM。</li>
+<li>操作里有共享可变状态：并行读写没加锁会出并发 bug。</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-comment">// 错误示范：并行里改外部累加器（线程不安全）</span><br>List&lt;Integer&gt; nums = ...;<br><span class="hljs-type">int</span>[] sum = &#123;<span class="hljs-number">0</span>&#125;;<br>nums.parallelStream().forEach(n -&gt; sum[<span class="hljs-number">0</span>] += n); <span class="hljs-comment">// 结果不可预测！</span><br><br><span class="hljs-comment">// 正确做法：交给 reduce / 原始流</span><br><span class="hljs-type">int</span> <span class="hljs-variable">total</span> <span class="hljs-operator">=</span> nums.parallelStream().mapToInt(Integer::intValue).sum();<br></code></pre></td></tr></table></figure>
+
+<p><strong>踩坑点</strong>：<code>findAny</code> 在并行下确实更快（随便给一个），但 <code>findFirst</code> 在并行下要保序，成本更高；如果你不关心顺序，用 <code>findAny</code>。</p>
+<hr>
+<h2 id="八、常见坑与注意事项"><a href="#八、常见坑与注意事项" class="headerlink" title="八、常见坑与注意事项"></a>八、常见坑与注意事项</h2><p>把这几个坑记住，能省掉不少调试时间。</p>
+<p><strong>1. 流只能消费一次</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs java">Stream&lt;String&gt; s = list.stream();<br>s.count();<br>s.count(); <span class="hljs-comment">// 抛 IllegalStateException</span><br></code></pre></td></tr></table></figure>
+
+<p>解决办法：每次用都重新 <code>list.stream()</code>，或者把结果先 <code>collect</code> 成集合。</p>
+<p><strong>2. 中间操作是惰性的，<code>peek</code> 不触发</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs java">list.stream()<br>    .peek(System.out::println)  <span class="hljs-comment">// 这行不会打印！</span><br>    .filter(x -&gt; x &gt; <span class="hljs-number">0</span>);        <span class="hljs-comment">// 没有终止操作，啥都不执行</span><br><br>list.stream()<br>    .peek(System.out::println)<br>    .filter(x -&gt; x &gt; <span class="hljs-number">0</span>)<br>    .collect(Collectors.toList()); <span class="hljs-comment">// 加上终止操作，peek 才会跑</span><br></code></pre></td></tr></table></figure>
+
+<p><strong>3. 自动装箱的性能陷阱</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-comment">// 慢：每个 Integer 都要装箱/拆箱</span><br><span class="hljs-type">int</span> <span class="hljs-variable">sum</span> <span class="hljs-operator">=</span> list.stream().map(x -&gt; x * <span class="hljs-number">2</span>).reduce(<span class="hljs-number">0</span>, Integer::sum);<br><br><span class="hljs-comment">// 快：用原始类型流</span><br><span class="hljs-type">int</span> <span class="hljs-variable">sum</span> <span class="hljs-operator">=</span> list.stream().mapToInt(x -&gt; x * <span class="hljs-number">2</span>).sum();<br></code></pre></td></tr></table></figure>
+
+<p>处理大量数值时务必用 <code>IntStream</code> &#x2F; <code>LongStream</code> &#x2F; <code>DoubleStream</code>，避免无谓的装箱。</p>
+<p><strong>4. 流里改外部变量会编译失败</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-type">int</span> <span class="hljs-variable">total</span> <span class="hljs-operator">=</span> <span class="hljs-number">0</span>;<br>list.stream().forEach(x -&gt; total += x); <span class="hljs-comment">// 编译错误：变量必须是 final 或 effectively final</span><br></code></pre></td></tr></table></figure>
+
+<p>Stream 的函数式接口要求捕获的变量不可变。要聚合就用 <code>reduce</code> &#x2F; <code>collect</code>，别想着改外部变量。</p>
+<p><strong>5. 流里出现 null 元素</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs java">List&lt;String&gt; list = Arrays.asList(<span class="hljs-string">&quot;a&quot;</span>, <span class="hljs-literal">null</span>, <span class="hljs-string">&quot;b&quot;</span>);<br>list.stream().map(String::length); <span class="hljs-comment">// 碰上 null 就 NPE</span><br><span class="hljs-comment">// 防御：先 filter 掉 null</span><br>list.stream().filter(Objects::nonNull).map(String::length)<br></code></pre></td></tr></table></figure>
+
+<p>源头可在 <code>map</code> 前先 <code>.filter(Objects::nonNull)</code> 剔除 null 元素。</p>
+<p><strong>6. <code>toMap</code> 的重复 key</strong></p>
+<p>前面提过，重复 key 默认抛异常，记得传合并函数。</p>
+<p><strong>7. <code>forEach</code> 顺序与并行</strong></p>
+<p>并行流里 <code>forEach</code> 不保证顺序，<code>forEachOrdered</code> 才保序（但拖慢并行）。想要有序输出，不如直接串行。</p>
+<hr>
+<h2 id="九、性能与最佳实践"><a href="#九、性能与最佳实践" class="headerlink" title="九、性能与最佳实践"></a>九、性能与最佳实践</h2><p>一些实打实的建议：</p>
+<ol>
+<li><strong>原始类型流优先</strong>：处理 int&#x2F;long&#x2F;double 用 <code>IntStream</code> 等，避免装箱开销。</li>
+<li><strong>短路操作往前放</strong>：<code>filter</code> 尽量放在 <code>map</code> 前面，先减数据量再做转换。</li>
+<li><strong>别在流里搞副作用</strong>：流的精髓是”无副作用”——不要在 <code>forEach</code> &#x2F; <code>peek</code> 里修改外部状态，用 <code>collect</code> &#x2F; <code>reduce</code> 拿结果。</li>
+<li><strong><code>sorted</code> + 并行要谨慎</strong>：大数据量且确实需要排序时，先想清楚是否真要并行。</li>
+<li><strong>不是所有循环都该换 Stream</strong>：简单的几行 for 循环、需要中途 break&#x2F;continue、或者逻辑分支很绕的场景，传统循环反而更清晰。Stream 是让”数据转换”变优雅，不是消灭所有 for。</li>
+<li><strong>可读性第一</strong>：一条流水线超过七八步、嵌套了 <code>flatMap</code> 又 <code>groupingBy</code> 的，可以考虑拆成中间变量，或者干脆分步写，别为了”炫”堆成一行。</li>
+</ol>
+<hr>
+<h2 id="十、一个完整的实战例子"><a href="#十、一个完整的实战例子" class="headerlink" title="十、一个完整的实战例子"></a>十、一个完整的实战例子</h2><p>假设有一个 <code>Order</code> 列表，需求：统计每个用户、每个月的订单总金额，并且只保留金额大于 1000 的记录，最后按金额降序输出。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Order</span> &#123;<br>    String userId;<br>    <span class="hljs-type">int</span> month;      <span class="hljs-comment">// 1~12</span><br>    BigDecimal amount;<br>    <span class="hljs-comment">// getters...</span><br>&#125;<br><br>List&lt;Order&gt; orders = loadOrders();<br><br>Map&lt;String, Map&lt;Integer, BigDecimal&gt;&gt; result = orders.stream()<br>    <span class="hljs-comment">// 1. 过滤掉金额过小的订单</span><br>    .filter(o -&gt; o.getAmount().compareTo(BigDecimal.valueOf(<span class="hljs-number">1000</span>)) &gt; <span class="hljs-number">0</span>)<br>    <span class="hljs-comment">// 2. 按 userId 分组，再按 month 二级分组</span><br>    .collect(Collectors.groupingBy(Order::getUserId,<br>        Collectors.groupingBy(Order::getMonth,<br>            <span class="hljs-comment">// 3. 下游用 reducing 做金额求和</span><br>            Collectors.reducing(<br>                BigDecimal.ZERO,<br>                Order::getAmount,<br>                BigDecimal::add))));<br><br><span class="hljs-comment">// 输出（顺便按金额降序）</span><br>result.forEach((userId, byMonth) -&gt; &#123;<br>    System.out.println(<span class="hljs-string">&quot;用户 &quot;</span> + userId);<br>    byMonth.entrySet().stream()<br>        .sorted(Map.Entry.&lt;Integer, BigDecimal&gt;comparingByValue().reversed())<br>        .forEach(e -&gt; System.out.println(<span class="hljs-string">&quot;  &quot;</span> + e.getKey() + <span class="hljs-string">&quot;月: &quot;</span> + e.getValue()));<br>&#125;);<br></code></pre></td></tr></table></figure>
+
+<p>这个例子串起了 <code>filter</code> → <code>groupingBy</code>(多级) → <code>reducing</code>(下游聚合) → 再 <code>stream</code> 排序输出，基本覆盖了日常 80% 的聚合场景。</p>
+<hr>
+<h2 id="十一、总结"><a href="#十一、总结" class="headerlink" title="十一、总结"></a>十一、总结</h2><p>Stream 的核心心智模型就三句话：</p>
+<ul>
+<li><strong>数据源 + 中间操作（惰性）+ 终止操作（触发）</strong> 三段式。</li>
+<li><strong>无状态操作（filter&#x2F;map&#x2F;flatMap）便宜，有状态操作（distinct&#x2F;sorted&#x2F;limit）贵</strong>，并行时尤其明显。</li>
+<li><strong>能 collect 就别副作用</strong>，能原始流就别装箱。</li>
+</ul>
+<p>它不会让你写出更快的程序（极端情况下甚至更慢），但能让你写出更短、更易读、更不容易出 bug 的数据处理代码。先把中间操作和 <code>Collectors</code> 那几个常用方法练熟，剩下的 <code>parallel</code>、自定义收集器都是锦上添花，用到再查也不迟。</p>
+<hr>
+<p><em>参考资料：Java 8 官方 <code>java.util.stream</code> 包文档。</em></p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/Java/" class="category-chain-item">Java</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/Java/" class="print-no-link">#Java</a>
+      
+        <a href="/tags/%E7%AC%94%E8%AE%B0/" class="print-no-link">#笔记</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>Java中Stream流完全指南</div>
+      <div>https://zyue2022.github.io/2026/08/12/Java中Stream流完全指南/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>ZYUE</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2026年8月12日</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>更新于</div>
+          <div>2026年8月12日</div>
+        </div>
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-cc-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2026/08/10/%E7%AE%80%E6%98%93%E8%A7%86%E9%A2%91%E4%BA%BA%E5%83%8F%E8%83%8C%E6%99%AFAI%E6%9B%BF%E6%8D%A2/" title="简易视频人像背景AI替换">
+                        <span class="hidden-mobile">简易视频人像背景AI替换</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a>
+<a target="_blank" rel="noopener" href="https://developer.hitokoto.cn/" id="hitokoto_text"><span style="color:#134769;"  id="hitokoto"></span></a> <script src="https://v1.hitokoto.cn/?encode=js&select=%23hitokoto" defer></script> 
+    </div>
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    function isExpandAllEnabled() {
+      return CONFIG.toc && CONFIG.toc.expand_all === true;
+    }
+    function expandAllToc() {
+      if (!isExpandAllEnabled()) { return; }
+      jQuery('#toc-body .tocbot-is-collapsed').removeClass('tocbot-is-collapsed');
+    }
+    function updateTocToggle($li, $childList) {
+      var $toggle = $li.children('.toc-toggle');
+      if ($toggle.length === 0) { return; }
+      var collapsed = $childList.hasClass('tocbot-is-collapsed');
+      $toggle
+        .toggleClass('toc-toggle-collapsed', collapsed)
+        .toggleClass('toc-toggle-expanded', !collapsed);
+    }
+    function bindTocToggle() {
+      if (!isExpandAllEnabled()) { return; }
+      jQuery('#toc-body .toc-list-item').each(function() {
+        var $li = jQuery(this);
+        var $childList = $li.children('ol');
+        if ($childList.length === 0) {
+          if ($li.children('.toc-toggle').length === 0) {
+            $li.prepend('<span class="toc-toggle toc-toggle-placeholder" aria-hidden="true">›</span>');
+          }
+          return;
+        }
+
+        if ($li.children('.toc-toggle').length === 0) {
+          $li.prepend('<span class="toc-toggle toc-toggle-expanded" aria-hidden="true">›</span>');
+        }
+        updateTocToggle($li, $childList);
+      });
+      jQuery('#toc-body').off('click.tocToggle').on('click.tocToggle', '.toc-toggle', function(e) {
+        e.preventDefault();
+        e.stopPropagation();
+        var $li = jQuery(this).parent('.toc-list-item');
+        var $childList = $li.children('ol');
+        if ($childList.length === 0) { return; }
+        $childList.toggleClass('tocbot-is-collapsed');
+        updateTocToggle($li, $childList);
+      });
+      if (!window.__tocToggleObserver) {
+        window.__tocToggleObserver = new MutationObserver(function(mutations) {
+          mutations.forEach(function(mutation) {
+            if (mutation.type !== 'attributes' || mutation.attributeName !== 'class') { return; }
+            var $list = jQuery(mutation.target);
+            var $li = $list.parent('.toc-list-item');
+            if ($li.length === 0) { return; }
+            updateTocToggle($li, $list);
+          });
+        });
+        jQuery('#toc-body ol').each(function() {
+          window.__tocToggleObserver.observe(this, { attributes: true });
+        });
+      }
+    }
+    var tocConfig = Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc);
+    if (isExpandAllEnabled()) {
+      tocConfig.collapseDepth = 6;
+    }
+    window.tocbot.init(tocConfig);
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+    expandAllToc();
+    bindTocToggle();
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+        expandAllToc();
+        bindTocToggle();
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/5.0.0/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script defer src="/js/openkounter.js" ></script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"log":false,"pluginJsPath":"lib/","pluginModelPath":"assets/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
+</html>
