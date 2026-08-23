@@ -11,7 +11,7 @@
   <link rel="apple-touch-icon" sizes="76x76" href="/hexo_img/icon.jpg">
   <link rel="icon" href="/hexo_img/icon.jpg">
   
-    <link rel="canonical" href="https://zyue2022.github.io/2022/07/31/排序算法总结/"/>
+    <link rel="canonical" href="https://zyue2022.github.io/2024/07/31/排序算法总结/"/>
   
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
@@ -24,13 +24,13 @@
     <meta name="description" content="一些知识 稳定排序：如果 a 原本在 b 的前面，且 a &#x3D;&#x3D; b，排序之后 a 仍然在 b 的前面，则为稳定排序。 非稳定排序：如果 a 原本在 b 的前面，且 a &#x3D;&#x3D; b，排序之后 a 可能不在 b 的前面，则为非稳定排序。 原地排序：指在排序过程中不申请多余的存储空间，只利用原来存储待排数据的存储空间进行比较和交换。 非原地排序：需要利用额外的数组来">
 <meta property="og:type" content="article">
 <meta property="og:title" content="排序算法总结">
-<meta property="og:url" content="https://zyue2022.github.io/2022/07/31/%E6%8E%92%E5%BA%8F%E7%AE%97%E6%B3%95%E6%80%BB%E7%BB%93/index.html">
+<meta property="og:url" content="https://zyue2022.github.io/2024/07/31/%E6%8E%92%E5%BA%8F%E7%AE%97%E6%B3%95%E6%80%BB%E7%BB%93/index.html">
 <meta property="og:site_name" content="参天小树">
 <meta property="og:description" content="一些知识 稳定排序：如果 a 原本在 b 的前面，且 a &#x3D;&#x3D; b，排序之后 a 仍然在 b 的前面，则为稳定排序。 非稳定排序：如果 a 原本在 b 的前面，且 a &#x3D;&#x3D; b，排序之后 a 可能不在 b 的前面，则为非稳定排序。 原地排序：指在排序过程中不申请多余的存储空间，只利用原来存储待排数据的存储空间进行比较和交换。 非原地排序：需要利用额外的数组来">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://zyue2022.github.io/post_img/26.jpg">
-<meta property="article:published_time" content="2022-07-31T15:39:36.000Z">
-<meta property="article:modified_time" content="2022-08-01T13:54:00.186Z">
+<meta property="article:published_time" content="2024-07-31T15:39:36.000Z">
+<meta property="article:modified_time" content="2026-08-23T04:50:19.956Z">
 <meta property="article:author" content="ZYUE">
 <meta property="article:tag" content="冒泡排序">
 <meta property="article:tag" content="刷题">
@@ -366,8 +366,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2022-07-31 23:39" pubdate>
-          2022年7月31日 晚上
+        <time datetime="2024-07-31 23:39" pubdate>
+          2024年7月31日 晚上
         </time>
       </span>
     
@@ -474,7 +474,7 @@
 <blockquote>
 <p>时间O(n^2)、空间O(1)、不稳定</p>
 </blockquote>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">selectSort</span><span class="hljs-params">(vector&lt;<span class="hljs-type">int</span>&gt;&amp; nums)</span> </span>&#123;<br>	<span class="hljs-type">int</span> len = nums.<span class="hljs-built_in">size</span>();<br>	<span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">0</span>; i &lt; len; ++i) &#123;<br>		<span class="hljs-type">int</span> minIndex = i;<br>		<span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> j = i + <span class="hljs-number">1</span>; j &lt; len; ++j) &#123;<br>			<span class="hljs-keyword">if</span> (nums[j] &lt; nums[minIndex]) minIndex = j;<br>		&#125;<br>		<span class="hljs-built_in">swap</span>(nums[i], nums[minIndex]);<br>	&#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">selectSort</span><span class="hljs-params">(vector&lt;<span class="hljs-type">int</span>&gt;&amp; nums)</span> </span>&#123;<br>    <span class="hljs-type">int</span> len = nums.<span class="hljs-built_in">size</span>();<br>    <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">0</span>; i &lt; len; ++i) &#123;<br>        <span class="hljs-type">int</span> minIndex = i;<br>        <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> j = i + <span class="hljs-number">1</span>; j &lt; len; ++j) &#123;<br>            <span class="hljs-keyword">if</span> (nums[j] &lt; nums[minIndex]) minIndex = j;<br>        &#125;<br>        <span class="hljs-built_in">swap</span>(nums[i], nums[minIndex]);<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
 
 <h3 id="3-插入排序"><a href="#3-插入排序" class="headerlink" title="3.插入排序"></a>3.插入排序</h3><p>插入排序是在一个已经有序的小序列的基础上，每次寻找合适的插入位置来插入一个元素。刚开始这个有序的小序列就是第一个元素，每次从有序序列的末尾倒序开始寻找插入位置。</p>
 <p>步骤：</p>
@@ -495,7 +495,7 @@
 <blockquote>
 <p>时间O(n^2)、空间O(1)、稳定</p>
 </blockquote>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">insertionSort</span><span class="hljs-params">(vector&lt;<span class="hljs-type">int</span>&gt;&amp; a)</span> </span>&#123; <br>    <span class="hljs-type">int</span> n = a.<span class="hljs-built_in">size</span>();<br>    <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">1</span>; i &lt; n; ++i) &#123;<br>        <span class="hljs-keyword">if</span> (a[i] &lt; a[i - <span class="hljs-number">1</span>]) &#123;<br>            <span class="hljs-type">int</span> j = i - <span class="hljs-number">1</span>;<br>            <span class="hljs-comment">// 待排序的新元素</span><br>            <span class="hljs-type">int</span> x = a[i];<br><br>            <span class="hljs-keyword">while</span> (j &gt;= <span class="hljs-number">0</span> &amp;&amp; x &lt; a[j]) &#123;<br>                <span class="hljs-comment">// 把大于新元素的元素后移</span><br>                a[j + <span class="hljs-number">1</span>] = a[j];<br>                --j;<br>            &#125;<br>			<span class="hljs-comment">// 此处x &gt;= a[j]</span><br>            a[j + <span class="hljs-number">1</span>] = x;<br>        &#125;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">insertionSort</span><span class="hljs-params">(vector&lt;<span class="hljs-type">int</span>&gt;&amp; a)</span> </span>&#123; <br>    <span class="hljs-type">int</span> n = a.<span class="hljs-built_in">size</span>();<br>    <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">1</span>; i &lt; n; ++i) &#123;<br>        <span class="hljs-keyword">if</span> (a[i] &lt; a[i - <span class="hljs-number">1</span>]) &#123;<br>            <span class="hljs-type">int</span> j = i - <span class="hljs-number">1</span>;<br>            <span class="hljs-comment">// 待排序的新元素</span><br>            <span class="hljs-type">int</span> x = a[i];<br><br>            <span class="hljs-keyword">while</span> (j &gt;= <span class="hljs-number">0</span> &amp;&amp; x &lt; a[j]) &#123;<br>                <span class="hljs-comment">// 把大于新元素的元素后移</span><br>                a[j + <span class="hljs-number">1</span>] = a[j];<br>                --j;<br>            &#125;<br>            <span class="hljs-comment">// 此处x &gt;= a[j]</span><br>            a[j + <span class="hljs-number">1</span>] = x;<br>        &#125;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
 
 <h3 id="4-快速排序"><a href="#4-快速排序" class="headerlink" title="4.快速排序"></a>4.<code>快速排序</code></h3><p>每次处理完后基准位置是有序的，然后递归处理左右区间；</p>
 <p>步骤：</p>
@@ -510,7 +510,7 @@
 <blockquote>
 <p>时间O(nlogn)、空间O(logn)、不稳定</p>
 </blockquote>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-comment">// 左闭右闭</span><br><span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">quickSort</span><span class="hljs-params">(vector&lt;<span class="hljs-type">int</span>&gt;&amp; a, <span class="hljs-type">int</span> left, <span class="hljs-type">int</span> right)</span> </span>&#123;<br>    <span class="hljs-comment">// 递归结束标志</span><br>    <span class="hljs-keyword">if</span> (left &gt;= right) <span class="hljs-keyword">return</span>;<br><br>    <span class="hljs-type">int</span> first = left;      <span class="hljs-comment">// 低位下标</span><br>    <span class="hljs-type">int</span> last  = right;     <span class="hljs-comment">// 高位下标</span><br>    <span class="hljs-type">int</span> key   = a[first];  <span class="hljs-comment">// 设第一个为基准</span><br><br>    <span class="hljs-keyword">while</span> (first &lt; last) &#123;<br>        <span class="hljs-comment">// 从后往前走，将比第一个小的移到前面</span><br>        <span class="hljs-keyword">while</span> (first &lt; last &amp;&amp; a[last] &gt; key) --last;<br>        <span class="hljs-keyword">if</span> (first &lt; last) a[first++] = a[last];<br><br>        <span class="hljs-comment">//从前往后走， 将比第一个大的移到后面</span><br>        <span class="hljs-keyword">while</span> (first &lt; last &amp;&amp; a[first] &lt;= key) ++first;<br>        <span class="hljs-keyword">if</span> (first &lt; last) a[last--] = a[first];<br>    &#125;<br>    a[first] = key;<br>    <br>    <span class="hljs-comment">// 自顶向下</span><br>    <span class="hljs-built_in">quickSort</span>(a, left, first - <span class="hljs-number">1</span>);  <span class="hljs-comment">// 前半递归</span><br>    <span class="hljs-built_in">quickSort</span>(a, first + <span class="hljs-number">1</span>, right); <span class="hljs-comment">// 后半递归</span><br>&#125;<br></code></pre></td></tr></table></figure>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-comment">// 左闭右闭</span><br><span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">quickSort</span><span class="hljs-params">(vector&lt;<span class="hljs-type">int</span>&gt;&amp; a, <span class="hljs-type">int</span> left, <span class="hljs-type">int</span> right)</span> </span>&#123;<br>    <span class="hljs-comment">// 递归结束标志</span><br>    <span class="hljs-keyword">if</span> (left &gt;= right) <span class="hljs-keyword">return</span>;<br><br>    <span class="hljs-type">int</span> first = left;      <span class="hljs-comment">// 低位下标</span><br>    <span class="hljs-type">int</span> last  = right;     <span class="hljs-comment">// 高位下标</span><br>    <span class="hljs-type">int</span> key   = a[first];  <span class="hljs-comment">// 设第一个为基准</span><br><br>    <span class="hljs-keyword">while</span> (first &lt; last) &#123;<br>        <span class="hljs-comment">// 从后往前走，将比第一个小的移到前面</span><br>        <span class="hljs-keyword">while</span> (first &lt; last &amp;&amp; a[last] &gt; key) --last;<br>        <span class="hljs-keyword">if</span> (first &lt; last) a[first++] = a[last];<br><br>        <span class="hljs-comment">//从前往后走， 将比第一个大的移到后面</span><br>        <span class="hljs-keyword">while</span> (first &lt; last &amp;&amp; a[first] &lt;= key) ++first;<br>        <span class="hljs-keyword">if</span> (first &lt; last) a[last--] = a[first];<br>    &#125;<br>    a[first] = key;<br><br>    <span class="hljs-comment">// 自顶向下</span><br>    <span class="hljs-built_in">quickSort</span>(a, left, first - <span class="hljs-number">1</span>);  <span class="hljs-comment">// 前半递归</span><br>    <span class="hljs-built_in">quickSort</span>(a, first + <span class="hljs-number">1</span>, right); <span class="hljs-comment">// 后半递归</span><br>&#125;<br></code></pre></td></tr></table></figure>
 
 <h3 id="5-希尔排序"><a href="#5-希尔排序" class="headerlink" title="5.希尔排序"></a>5.<code>希尔排序</code></h3><p>希尔排序是插入排序的一种变种。无论是插入排序还是冒泡排序，如果原数组的一个元素距离它正确的位置很远的话，则需要与相邻元素交换很多次才能到达正确的位置，这样是相对比较花时间了。希尔排序就是为了加快速度简单地改进了插入排序，<strong>交换不相邻的元素</strong>以对数组的局部进行排序。</p>
 <p>希尔排序的思想是采用插入排序的方法，先让数组中任意<strong>间隔为 h</strong> 的元素有序，刚开始 h 的大小可以是 h &#x3D; n &#x2F; 2,接着让 h &#x3D; n &#x2F; 4，让 h 一直缩小，当 h &#x3D; 1 时，也就是此时数组中任意间隔为1的元素有序，此时的数组就是有序的了。间隔也称作增量。</p>
@@ -610,8 +610,6 @@
 </blockquote>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-comment">// 取出最大位数</span><br><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">getBitNum</span><span class="hljs-params">(vector&lt;<span class="hljs-type">int</span>&gt;&amp; nums)</span> </span>&#123;<br>    <span class="hljs-type">int</span> maxValue = INT_MIN;<br>    <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> num : nums) &#123;<br>        <span class="hljs-keyword">if</span> (num &gt; maxValue) maxValue = num;<br>    &#125;<br><br>    <span class="hljs-type">int</span> bitCount = <span class="hljs-number">1</span>;<br>    <span class="hljs-keyword">while</span> (maxValue &gt;= <span class="hljs-number">10</span>) &#123;<br>        maxValue /= <span class="hljs-number">10</span>;<br>        ++bitCount;<br>    &#125;<br>    <span class="hljs-keyword">return</span> bitCount;<br>&#125;<br><br><span class="hljs-comment">// 计数排序的思想，不过记录的是数位上数字的出现次数</span><br><span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">radixSortCore</span><span class="hljs-params">(vector&lt;<span class="hljs-type">int</span>&gt;&amp; nums, <span class="hljs-type">int</span> divisor)</span> </span>&#123;<br>    <span class="hljs-function">vector&lt;<span class="hljs-type">int</span>&gt; <span class="hljs-title">countBit</span><span class="hljs-params">(<span class="hljs-number">10</span>, <span class="hljs-number">0</span>)</span></span>;  <span class="hljs-comment">// 0~9 共10个</span><br>    <span class="hljs-comment">// 统计个、十、百、千...位上 0~9 数字的出现次数；</span><br>    <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> num : nums) &#123;<br>        <span class="hljs-comment">// 多余的位数算出来就是0</span><br>        <span class="hljs-type">int</span> x = (num / divisor) % <span class="hljs-number">10</span>;<br>        ++countBit[x];<br>    &#125;<br><br>    <span class="hljs-comment">// 这里不同于利用差值的计数排序，需要算前缀和</span><br>    <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">1</span>; i &lt;= <span class="hljs-number">9</span>; ++i) countBit[i] += countBit[i - <span class="hljs-number">1</span>];<br><br>    <span class="hljs-comment">// 辅助数组存储排序好的元素</span><br>    <span class="hljs-function">vector&lt;<span class="hljs-type">int</span>&gt; <span class="hljs-title">temp</span><span class="hljs-params">(nums.size(), <span class="hljs-number">0</span>)</span></span>;<br><br>    <span class="hljs-comment">// 需要倒叙保证稳定</span><br>    <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = nums.<span class="hljs-built_in">size</span>() - <span class="hljs-number">1</span>; i &gt;= <span class="hljs-number">0</span>; --i) &#123;<br>        <span class="hljs-type">int</span> x = (nums[i] / divisor) % <span class="hljs-number">10</span>;<br>        <span class="hljs-comment">// 该元素前面有 cnt 个当前数位比它小的元素，包括其自己；</span><br>        <span class="hljs-type">int</span> cnt = countBit[x];<br>        temp[cnt - <span class="hljs-number">1</span>] = nums[i];<br>        --countBit[x];<br>    &#125;<br>    <span class="hljs-built_in">swap</span>(nums, temp);<br>&#125;<br><br><span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">radixSort</span><span class="hljs-params">(vector&lt;<span class="hljs-type">int</span>&gt;&amp; nums)</span> </span>&#123;<br>    <span class="hljs-type">int</span> n = nums.<span class="hljs-built_in">size</span>();<br>    <span class="hljs-keyword">if</span> (n &lt;= <span class="hljs-number">1</span>) <span class="hljs-keyword">return</span>;<br><br>    <span class="hljs-type">int</span> maxBitLen = <span class="hljs-built_in">getBitNum</span>(nums);<br><br>    <span class="hljs-comment">// 基数排序，低位优先</span><br>    <span class="hljs-type">int</span> divisor = <span class="hljs-number">1</span>;<br>    <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">0</span>; i &lt; maxBitLen; ++i) &#123;<br>        <span class="hljs-built_in">radixSortCore</span>(nums, divisor);<br>        <span class="hljs-comment">// 不断提高位数</span><br>        divisor *= <span class="hljs-number">10</span>;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
 
-
-
 <hr>
 <p>【参考资料】力扣题解、<a target="_blank" rel="noopener" href="https://interviewguide.cn/notes/03-hunting_job/03-algorithm/01-basic-algorithm/02-%E5%BF%85%E5%A4%87%E7%AE%97%E6%B3%95%E5%9F%BA%E7%A1%80.html">阿秀笔记</a></p>
 
@@ -688,7 +686,7 @@
   <div class="license-box my-3">
     <div class="license-title">
       <div>排序算法总结</div>
-      <div>https://zyue2022.github.io/2022/07/31/排序算法总结/</div>
+      <div>https://zyue2022.github.io/2024/07/31/排序算法总结/</div>
     </div>
     <div class="license-meta">
       
@@ -700,13 +698,13 @@
       
         <div class="license-meta-item license-meta-date">
           <div>发布于</div>
-          <div>2022年7月31日</div>
+          <div>2024年7月31日</div>
         </div>
       
       
         <div class="license-meta-item license-meta-date">
           <div>更新于</div>
-          <div>2022年8月1日</div>
+          <div>2026年8月23日</div>
         </div>
       
       
@@ -737,9 +735,9 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2022/08/02/ACM%E8%BE%93%E5%85%A5%E6%A8%A1%E5%BC%8F/" title="ACM输入模式">
+                      <a href="/2025/08/20/Shell%E8%84%9A%E6%9C%AC%E7%AC%94%E8%AE%B0/" title="Shell脚本笔记">
                         <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">ACM输入模式</span>
+                        <span class="hidden-mobile">Shell脚本笔记</span>
                         <span class="visible-mobile">上一篇</span>
                       </a>
                     
@@ -747,8 +745,8 @@
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2022/07/31/%E6%95%B0%E7%BB%84%E5%AE%9E%E7%8E%B0%E7%BA%BF%E6%AE%B5%E6%A0%91/" title="数组实现线段树">
-                        <span class="hidden-mobile">数组实现线段树</span>
+                      <a href="/2024/07/01/C++%E5%90%8E%E7%AB%AF%E4%B8%AA%E4%BA%BA%E4%B9%A6%E5%8D%95/" title="C++后端个人书单">
+                        <span class="hidden-mobile">C++后端个人书单</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>

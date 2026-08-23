@@ -1,0 +1,1006 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+
+  <link rel="apple-touch-icon" sizes="76x76" href="/hexo_img/icon.jpg">
+  <link rel="icon" href="/hexo_img/icon.jpg">
+  
+    <link rel="canonical" href="https://zyue2022.github.io/2026/08/23/LFU算法/"/>
+  
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#0D3562">
+  <meta name="author" content="ZYUE">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="一、LFU 是什么LFU（Least Frequently Used，最不经常使用）是一种缓存淘汰策略：缓存满了要腾位置时，优先踢掉访问频率最低的 key。 它和更常见的 LRU（Least Recently Used，最近最少使用）区别在于判断视角：  LRU 看”最近有没有被用”——久没碰的先走。 LFU 看”总共被用了多少次”——用得少的先走。  所以 LFU 适合”热点数据稳定”的场景：某">
+<meta property="og:type" content="article">
+<meta property="og:title" content="LFU算法">
+<meta property="og:url" content="https://zyue2022.github.io/2026/08/23/LFU%E7%AE%97%E6%B3%95/index.html">
+<meta property="og:site_name" content="参天小树">
+<meta property="og:description" content="一、LFU 是什么LFU（Least Frequently Used，最不经常使用）是一种缓存淘汰策略：缓存满了要腾位置时，优先踢掉访问频率最低的 key。 它和更常见的 LRU（Least Recently Used，最近最少使用）区别在于判断视角：  LRU 看”最近有没有被用”——久没碰的先走。 LFU 看”总共被用了多少次”——用得少的先走。  所以 LFU 适合”热点数据稳定”的场景：某">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://zyue2022.github.io/post_img/43.jpg">
+<meta property="article:published_time" content="2026-08-23T04:10:40.000Z">
+<meta property="article:modified_time" content="2026-08-23T05:05:28.166Z">
+<meta property="article:author" content="ZYUE">
+<meta property="article:tag" content="LFU">
+<meta property="article:tag" content="数据结构">
+<meta property="article:tag" content="算法">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://zyue2022.github.io/post_img/43.jpg">
+  
+  
+  
+  <title>LFU算法 - 参天小树</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1749284_5i9bdhy70f8.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1736178_k526ubmyhba.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"zyue2022.github.io","root":"/","version":"1.9.9","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"expand_all":true,"placement":"left","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":3},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"follow_dnt":false,"baidu":"c03149260ee4667c7ea092624ddee2b5","google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false},"openkounter":{"server_url":"https://open-kounter.mintimate.cn","path":"window.location.pathname","ignore_local":false},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2024-01-01T00:00:00.000Z","token":null,"api_server":null}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+  
+    <!-- Baidu Analytics -->
+    <script async>
+      if (!Fluid.ctx.dnt) {
+        var _hmt = _hmt || [];
+        (function() {
+          var hm = document.createElement("script");
+          hm.src = "https://hm.baidu.com/hm.js?c03149260ee4667c7ea092624ddee2b5";
+          var s = document.getElementsByTagName("script")[0];
+          s.parentNode.insertBefore(hm, s);
+        })();
+      }
+    </script>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+  
+
+
+
+
+  
+<meta name="generator" content="Hexo 8.1.2"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong> </strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content (desktop) -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<!-- Mobile grid menu overlay -->
+<div id="mobile-grid-menu" class="d-lg-none">
+  <div class="mobile-grid-menu-inner">
+    <div class="container">
+      <div class="row">
+        
+          
+          
+          
+          
+            <div class="col-4 mobile-grid-cell">
+              <a href="/" target="_self">
+                <div class="mobile-grid-item">
+                  <i class="iconfont icon-home-fill"></i>
+                  <span>首页</span>
+                </div>
+              </a>
+            </div>
+          
+        
+          
+          
+          
+          
+            <div class="col-4 mobile-grid-cell">
+              <a href="/archives/" target="_self">
+                <div class="mobile-grid-item">
+                  <i class="iconfont icon-archive-fill"></i>
+                  <span>归档</span>
+                </div>
+              </a>
+            </div>
+          
+        
+          
+          
+          
+          
+            <div class="col-4 mobile-grid-cell">
+              <a href="/categories/" target="_self">
+                <div class="mobile-grid-item">
+                  <i class="iconfont icon-category-fill"></i>
+                  <span>分类</span>
+                </div>
+              </a>
+            </div>
+          
+        
+          
+          
+          
+          
+            <div class="col-4 mobile-grid-cell">
+              <a href="/tags/" target="_self">
+                <div class="mobile-grid-item">
+                  <i class="iconfont icon-tags-fill"></i>
+                  <span>标签</span>
+                </div>
+              </a>
+            </div>
+          
+        
+          
+          
+          
+          
+            <div class="col-4 mobile-grid-cell">
+              <a href="/about/" target="_self">
+                <div class="mobile-grid-item">
+                  <i class="iconfont icon-user-fill"></i>
+                  <span>关于</span>
+                </div>
+              </a>
+            </div>
+          
+        
+        
+          <div class="col-4 mobile-grid-cell" id="mobile-search-btn">
+            <a href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <div class="mobile-grid-item">
+                <i class="iconfont icon-search"></i>
+                <span>搜索</span>
+              </div>
+            </a>
+          </div>
+        
+        
+          <div class="col-4 mobile-grid-cell" id="mobile-color-toggle-btn"
+               data-label-light="开灯"
+               data-label-dark="关灯">
+            <a href="javascript:;" aria-label="Color Toggle">
+              <div class="mobile-grid-item">
+                <i class="iconfont icon-dark" id="mobile-color-toggle-icon"></i>
+                <span id="mobile-color-toggle-label">关灯</span>
+              </div>
+            </a>
+          </div>
+        
+      </div>
+    </div>
+  </div>
+</div>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/hexo_img/bk2.jpg') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="LFU算法"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-author" aria-hidden="true"></i>
+        ZYUE
+      </span>
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2026-08-23 12:10" pubdate>
+          2026年8月23日 中午
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          6.7k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          56 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="padding-left: 2rem; margin-right: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">LFU算法</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h2 id="一、LFU-是什么"><a href="#一、LFU-是什么" class="headerlink" title="一、LFU 是什么"></a>一、LFU 是什么</h2><p>LFU（Least Frequently Used，最不经常使用）是一种缓存淘汰策略：缓存满了要腾位置时，优先踢掉<strong>访问频率最低</strong>的 key。</p>
+<p>它和更常见的 LRU（Least Recently Used，最近最少使用）区别在于判断视角：</p>
+<ul>
+<li><strong>LRU</strong> 看”最近有没有被用”——久没碰的先走。</li>
+<li><strong>LFU</strong> 看”总共被用了多少次”——用得少的先走。</li>
+</ul>
+<p>所以 LFU 适合”热点数据稳定”的场景：某些 key 被反复高频访问，LFU 会一直把它们留在缓存里，不会被偶发的单次访问冲掉，实现比 LRU 复杂，这里给出两种LFU实现。</p>
+<hr>
+<h2 id="二、明确几个规则"><a href="#二、明确几个规则" class="headerlink" title="二、明确几个规则"></a>二、明确几个规则</h2><p>不管哪种实现，都要先定清楚淘汰的边界情况：</p>
+<ol>
+<li><strong>频率计数</strong>：每个 key 被 <code>get</code> 或 <code>put</code>（新插入算 1 次）访问一次，频率 +1。</li>
+<li><strong>淘汰谁</strong>：取当前所有 key 里频率最小的；如果<strong>多个 key 频率相同</strong>，按”最久没被访问”的先淘汰（同频内用 LRU 兜底）。</li>
+<li><strong>容量</strong>：构造函数传入 <code>capacity</code>，<code>capacity &lt;= 0</code> 时所有写操作直接忽略。</li>
+</ol>
+<p>两个实现的目标都是把 <code>get</code> &#x2F; <code>put</code> 做成高效的，差异主要在”怎么存频率、怎么快速找到要淘汰的 key”。</p>
+<hr>
+<h2 id="三、版本一：自定义双向链表-最小频率计数（O-1-）"><a href="#三、版本一：自定义双向链表-最小频率计数（O-1-）" class="headerlink" title="三、版本一：自定义双向链表 + 最小频率计数（O(1)）"></a>三、版本一：自定义双向链表 + 最小频率计数（O(1)）</h2><h3 id="3-1-数据结构"><a href="#3-1-数据结构" class="headerlink" title="3.1 数据结构"></a>3.1 数据结构</h3><p>维护三样东西：</p>
+<table>
+<thead>
+<tr>
+<th>字段</th>
+<th>类型</th>
+<th>作用</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>keyToNode</code></td>
+<td><code>HashMap&lt;Integer, Node&gt;</code></td>
+<td>key 直接定位到链表节点，避免扫描</td>
+</tr>
+<tr>
+<td><code>freqToLists</code></td>
+<td><code>HashMap&lt;Integer, FreqList&gt;</code></td>
+<td>频率 → 该频率下的双向链表</td>
+</tr>
+<tr>
+<td><code>minFreq</code></td>
+<td><code>int</code></td>
+<td>当前最小频率，淘汰时直接用它查链表</td>
+</tr>
+</tbody></table>
+<p>每条”频率链表”（<code>FreqList</code>）里挂的是<strong>该频率下所有 key 的节点</strong>，节点按访问时间排序（头新尾旧）。<code>FreqList</code> 内部用头尾两个<strong>哨兵节点</strong>，省掉大量空指针判断；判空直接用 <code>head.next == tail</code>，不额外维护 size。</p>
+<p><strong>节点字段说明</strong>：<code>Node</code> 保留 <code>key</code>、<code>value</code>、<code>freq</code> 三个字段。</p>
+<ul>
+<li><code>key</code> 必须留：淘汰时从频率链表尾部取出的是 <code>Node</code> 对象，得拿它的 <code>key</code> 去 <code>keyToNode</code> 表删对应条目，否则没法 O(1) 定位要清掉的 key。</li>
+<li><code>freq</code> 挂在节点上：让 <code>touch</code> 直接 <code>node.freq++</code> 拿到旧频率就是 O(1)。如果挪到一张 <code>keyToFreq</code> 表里，虽然 <code>Node</code> 能退化成只有 <code>key+value</code>，但 <code>touch</code> 得多查一次表、还得多维护一张表，并没有更简洁——所以 O(1) 双链表版习惯把 <code>freq</code> 挂在节点上。</li>
+</ul>
+<h3 id="3-2-操作拆解"><a href="#3-2-操作拆解" class="headerlink" title="3.2 操作拆解"></a>3.2 操作拆解</h3><ul>
+<li><strong>get(key)</strong>：没命中返回 -1；命中则把节点频率 +1（调 <code>touch</code>），返回 value。</li>
+<li><strong>put(key, value)</strong>：已存在就更新 value 并 <code>touch</code>；不存在且满了，从 <code>minFreq</code> 链表尾部淘汰一个；否则插入新节点（频率 1），并重置 <code>minFreq = 1</code>。</li>
+<li><strong>touch(node)</strong>（核心）：<code>int freq = node.freq++</code> 记下旧频率并把节点频率 +1；从旧频率链表摘除该节点，若摘除后链表空了、且旧频率正好等于 <code>minFreq</code>，说明最小频率档被抽空，<code>minFreq</code> 上移到 <code>freq + 1</code>；最后头插到新频率链表。</li>
+</ul>
+<p>关键点：<code>keyToNode</code> 直接持有节点引用，摘除&#x2F;插入都是指针操作，全程不扫描，所以任意步骤都是 O(1)。</p>
+<h3 id="3-3-完整代码"><a href="#3-3-完整代码" class="headerlink" title="3.3 完整代码"></a>3.3 完整代码</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">import</span> java.util.HashMap;<br><span class="hljs-keyword">import</span> java.util.Map;<br><br><span class="hljs-comment">/**</span><br><span class="hljs-comment"> * LFU 缓存 - 版本一：自定义双向链表 + 最小频率计数（O(1)）</span><br><span class="hljs-comment"> */</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">LFUCacheV1</span> &#123;<br><br>    <span class="hljs-keyword">private</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">Node</span> &#123;<br>        <span class="hljs-type">int</span> key, value, freq = <span class="hljs-number">1</span>;<br>        Node prev, next;<br>        Node(<span class="hljs-type">int</span> k, <span class="hljs-type">int</span> v) &#123; key = k; value = v; &#125;<br>    &#125;<br><br>    <span class="hljs-comment">// 每个频率对应一条双向链表：头尾哨兵节点</span><br>    <span class="hljs-keyword">private</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">FreqList</span> &#123;<br>        <span class="hljs-type">Node</span> <span class="hljs-variable">head</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">Node</span>(-<span class="hljs-number">1</span>, -<span class="hljs-number">1</span>), tail = <span class="hljs-keyword">new</span> <span class="hljs-title class_">Node</span>(-<span class="hljs-number">1</span>, -<span class="hljs-number">1</span>);<br>        FreqList() &#123; head.next = tail; tail.prev = head; &#125;<br>        <span class="hljs-type">boolean</span> <span class="hljs-title function_">isEmpty</span><span class="hljs-params">()</span> &#123; <span class="hljs-keyword">return</span> head.next == tail; &#125;<br>        <span class="hljs-keyword">void</span> <span class="hljs-title function_">addFirst</span><span class="hljs-params">(Node n)</span> &#123; n.prev = head; n.next = head.next; head.next.prev = n; head.next = n; &#125;<br>        <span class="hljs-keyword">void</span> <span class="hljs-title function_">remove</span><span class="hljs-params">(Node n)</span> &#123; n.prev.next = n.next; n.next.prev = n.prev; &#125;<br>        Node <span class="hljs-title function_">removeLast</span><span class="hljs-params">()</span> &#123; <span class="hljs-keyword">if</span> (isEmpty()) <span class="hljs-keyword">return</span> <span class="hljs-literal">null</span>; <span class="hljs-type">Node</span> <span class="hljs-variable">n</span> <span class="hljs-operator">=</span> tail.prev; remove(n); <span class="hljs-keyword">return</span> n; &#125;<br>    &#125;<br><br>    <span class="hljs-keyword">private</span> <span class="hljs-keyword">final</span> <span class="hljs-type">int</span> capacity;<br>    <span class="hljs-keyword">private</span> <span class="hljs-type">int</span> minFreq;<br>    <span class="hljs-keyword">private</span> <span class="hljs-keyword">final</span> Map&lt;Integer, Node&gt; keyToNode = <span class="hljs-keyword">new</span> <span class="hljs-title class_">HashMap</span>&lt;Integer, Node&gt;();<br>    <span class="hljs-keyword">private</span> <span class="hljs-keyword">final</span> Map&lt;Integer, FreqList&gt; freqToLists = <span class="hljs-keyword">new</span> <span class="hljs-title class_">HashMap</span>&lt;Integer, FreqList&gt;();<br><br>    <span class="hljs-keyword">public</span> <span class="hljs-title function_">LFUCacheV1</span><span class="hljs-params">(<span class="hljs-type">int</span> capacity)</span> &#123;<br>        <span class="hljs-built_in">this</span>.capacity = capacity;<br>    &#125;<br><br>    <span class="hljs-keyword">public</span> <span class="hljs-type">int</span> <span class="hljs-title function_">get</span><span class="hljs-params">(<span class="hljs-type">int</span> key)</span> &#123;<br>        <span class="hljs-type">Node</span> <span class="hljs-variable">node</span> <span class="hljs-operator">=</span> keyToNode.get(key);<br>        <span class="hljs-keyword">if</span> (node == <span class="hljs-literal">null</span>) &#123;<br>            <span class="hljs-keyword">return</span> -<span class="hljs-number">1</span>;<br>        &#125;<br>        touch(node);<br>        <span class="hljs-keyword">return</span> node.value;<br>    &#125;<br><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">put</span><span class="hljs-params">(<span class="hljs-type">int</span> key, <span class="hljs-type">int</span> value)</span> &#123;<br>        <span class="hljs-keyword">if</span> (capacity &lt;= <span class="hljs-number">0</span>) &#123;<br>            <span class="hljs-keyword">return</span>;<br>        &#125;<br>        <span class="hljs-type">Node</span> <span class="hljs-variable">node</span> <span class="hljs-operator">=</span> keyToNode.get(key);<br>        <span class="hljs-keyword">if</span> (node != <span class="hljs-literal">null</span>) &#123;<br>            node.value = value;<br>            touch(node);<br>            <span class="hljs-keyword">return</span>;<br>        &#125;<br>        <span class="hljs-keyword">if</span> (keyToNode.size() == capacity) &#123;<br>            <span class="hljs-type">FreqList</span> <span class="hljs-variable">bucket</span> <span class="hljs-operator">=</span> freqToLists.get(minFreq);<br>            <span class="hljs-type">Node</span> <span class="hljs-variable">evicted</span> <span class="hljs-operator">=</span> bucket.removeLast();<br>            keyToNode.remove(evicted.key);<br>            <span class="hljs-keyword">if</span> (bucket.isEmpty()) &#123;<br>                freqToLists.remove(minFreq);<br>            &#125;<br>        &#125;<br>        <span class="hljs-type">Node</span> <span class="hljs-variable">newNode</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">Node</span>(key, value);<br>        keyToNode.put(key, newNode);<br>        freqToLists.computeIfAbsent(<span class="hljs-number">1</span>, k -&gt; <span class="hljs-keyword">new</span> <span class="hljs-title class_">FreqList</span>()).addFirst(newNode);<br>        minFreq = <span class="hljs-number">1</span>;<br>    &#125;<br><br>    <span class="hljs-comment">// 频率 +1：从旧桶摘除，插入新桶头部，并维护 minFreq。</span><br>    <span class="hljs-keyword">private</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">touch</span><span class="hljs-params">(Node node)</span> &#123;<br>        <span class="hljs-type">int</span> <span class="hljs-variable">freq</span> <span class="hljs-operator">=</span> node.freq++;<br>        <span class="hljs-type">FreqList</span> <span class="hljs-variable">oldBucket</span> <span class="hljs-operator">=</span> freqToLists.get(freq);<br>        oldBucket.remove(node);<br>        <span class="hljs-keyword">if</span> (oldBucket.isEmpty()) &#123;<br>            freqToLists.remove(freq);<br>        &#125;<br>        <span class="hljs-keyword">if</span> (freq == minFreq &amp;&amp; oldBucket.isEmpty()) &#123;<br>            minFreq = freq + <span class="hljs-number">1</span>;<br>        &#125;<br>        freqToLists.computeIfAbsent(freq + <span class="hljs-number">1</span>, k -&gt; <span class="hljs-keyword">new</span> <span class="hljs-title class_">FreqList</span>()).addFirst(node);<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="四、版本二：TreeMap-LinkedHashSet（O-log-n-）"><a href="#四、版本二：TreeMap-LinkedHashSet（O-log-n-）" class="headerlink" title="四、版本二：TreeMap + LinkedHashSet（O(log n)）"></a>四、版本二：TreeMap + LinkedHashSet（O(log n)）</h2><p>如果你不在乎 O(1) 的极致，而想用 JDK 现成容器把代码写短，可以用 TreeMap + LinkedHashSet。思路更直白，复杂度 <strong>O(log n)</strong>（来自 TreeMap 的查找&#x2F;插入）。</p>
+<h3 id="4-1-数据结构"><a href="#4-1-数据结构" class="headerlink" title="4.1 数据结构"></a>4.1 数据结构</h3><table>
+<thead>
+<tr>
+<th>字段</th>
+<th>类型</th>
+<th>作用</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>keyToNode</code></td>
+<td><code>HashMap&lt;Integer, Node&gt;</code></td>
+<td>key → 自定义节点（节点里存 <code>value</code> + <code>freq</code>）</td>
+</tr>
+<tr>
+<td><code>freqToKeys</code></td>
+<td><code>TreeMap&lt;Integer, LinkedHashSet&lt;Integer&gt;&gt;</code></td>
+<td>频率 → 该频率下的所有 key</td>
+</tr>
+</tbody></table>
+<p>和版本一一样用自定义 <code>Node</code> 承载 <code>value</code> 和 <code>freq</code>，get<code>/</code>put<code>里直接</code>node.value<code>、</code>node.freq<code>取用即可。节点不存</code>key<code>，因为 key 就是 </code>keyToNode&#96; 的映射键，淘汰时拿它去删节点表就行。</p>
+<p>巧妙点：</p>
+<ul>
+<li><strong>TreeMap 的 <code>firstKey()</code> 天然就是最小频率</strong>，不用像版本一那样手动维护 <code>minFreq</code> 变量。</li>
+<li>每个频率下的 key 放进 <code>LinkedHashSet</code>，它保持<strong>插入顺序</strong>。淘汰时取该集合迭代器的第一个元素，也就是”同频中最先进入、最久没被访问”的 key。</li>
+</ul>
+<h3 id="4-2-操作拆解"><a href="#4-2-操作拆解" class="headerlink" title="4.2 操作拆解"></a>4.2 操作拆解</h3><ul>
+<li><strong>get(key)</strong>：命中则 <code>touch</code> 后返回 value，否则 -1。</li>
+<li><strong>put(key, val)</strong>：已存在就更新 value 并 <code>touch</code>；不存在且满了调用 <code>evict()</code>；否则新 key 频率置 1，塞进 <code>freqToKeys</code> 里频率 1 对应的集合。</li>
+<li><strong>touch(key)</strong>：从旧频率集合移除，加入新频率集合；若旧集合空了，从 TreeMap 里删掉这个频率档。</li>
+<li><strong>evict()</strong>：<code>freqToKeys.firstKey()</code> 拿最小频率 → 取对应集合第一个 key → 删除它，连带清掉 <code>keyToValue</code> &#x2F; <code>keyToFreq</code> 记录。</li>
+</ul>
+<p>“取或建频率桶”同样用 <code>computeIfAbsent</code> 一行搞定。</p>
+<h3 id="4-3-完整代码"><a href="#4-3-完整代码" class="headerlink" title="4.3 完整代码"></a>4.3 完整代码</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">import</span> java.util.LinkedHashSet;<br><span class="hljs-keyword">import</span> java.util.Map;<br><span class="hljs-keyword">import</span> java.util.TreeMap;<br><br><span class="hljs-comment">/**</span><br><span class="hljs-comment"> * LFU 缓存 - 版本二：TreeMap + LinkedHashSet（O(log n)）</span><br><span class="hljs-comment"> */</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">LFUCacheV2</span> &#123;<br><br>    <span class="hljs-keyword">private</span> <span class="hljs-keyword">final</span> <span class="hljs-type">int</span> capacity;<br>    <span class="hljs-keyword">private</span> <span class="hljs-keyword">final</span> Map&lt;Integer, Node&gt; keyToNode = <span class="hljs-keyword">new</span> <span class="hljs-title class_">java</span>.util.HashMap&lt;Integer, Node&gt;();<br>    <span class="hljs-keyword">private</span> <span class="hljs-keyword">final</span> TreeMap&lt;Integer, LinkedHashSet&lt;Integer&gt;&gt; freqToKeys =<br>            <span class="hljs-keyword">new</span> <span class="hljs-title class_">TreeMap</span>&lt;Integer, LinkedHashSet&lt;Integer&gt;&gt;();<br><br>    <span class="hljs-keyword">public</span> <span class="hljs-title function_">LFUCacheV2</span><span class="hljs-params">(<span class="hljs-type">int</span> capacity)</span> &#123;<br>        <span class="hljs-built_in">this</span>.capacity = capacity;<br>    &#125;<br><br>    <span class="hljs-keyword">public</span> <span class="hljs-type">int</span> <span class="hljs-title function_">get</span><span class="hljs-params">(<span class="hljs-type">int</span> key)</span> &#123;<br>        <span class="hljs-type">Node</span> <span class="hljs-variable">node</span> <span class="hljs-operator">=</span> keyToNode.get(key);<br>        <span class="hljs-keyword">if</span> (node == <span class="hljs-literal">null</span>) &#123;<br>            <span class="hljs-keyword">return</span> -<span class="hljs-number">1</span>;<br>        &#125;<br>        touch(key, node);<br>        <span class="hljs-keyword">return</span> node.value;<br>    &#125;<br><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">put</span><span class="hljs-params">(<span class="hljs-type">int</span> key, <span class="hljs-type">int</span> val)</span> &#123;<br>        <span class="hljs-keyword">if</span> (capacity &lt;= <span class="hljs-number">0</span>) &#123;<br>            <span class="hljs-keyword">return</span>;<br>        &#125;<br>        <span class="hljs-type">Node</span> <span class="hljs-variable">node</span> <span class="hljs-operator">=</span> keyToNode.get(key);<br>        <span class="hljs-keyword">if</span> (node != <span class="hljs-literal">null</span>) &#123;<br>            node.value = val;<br>            touch(key, node);<br>            <span class="hljs-keyword">return</span>;<br>        &#125;<br>        <span class="hljs-keyword">if</span> (keyToNode.size() == capacity) &#123;<br>            evict();<br>        &#125;<br>        <span class="hljs-type">Node</span> <span class="hljs-variable">newNode</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">Node</span>(val);<br>        keyToNode.put(key, newNode);<br>        freqToKeys.computeIfAbsent(<span class="hljs-number">1</span>, k -&gt; <span class="hljs-keyword">new</span> <span class="hljs-title class_">LinkedHashSet</span>&lt;Integer&gt;()).add(key);<br>    &#125;<br><br>    <span class="hljs-comment">// 把 key 从旧频率桶移到新频率桶（频率 +1），桶空则清理该频率档。</span><br>    <span class="hljs-keyword">private</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">touch</span><span class="hljs-params">(<span class="hljs-type">int</span> key, Node node)</span> &#123;<br>        <span class="hljs-type">int</span> <span class="hljs-variable">oldFreq</span> <span class="hljs-operator">=</span> node.freq;<br>        LinkedHashSet&lt;Integer&gt; oldKeys = freqToKeys.get(oldFreq);<br>        oldKeys.remove(key);<br>        <span class="hljs-keyword">if</span> (oldKeys.isEmpty()) &#123;<br>            freqToKeys.remove(oldFreq);<br>        &#125;<br>        node.freq = oldFreq + <span class="hljs-number">1</span>;<br>        freqToKeys.computeIfAbsent(node.freq, k -&gt; <span class="hljs-keyword">new</span> <span class="hljs-title class_">LinkedHashSet</span>&lt;Integer&gt;()).add(key);<br>    &#125;<br><br>    <span class="hljs-comment">// TreeMap.firstKey() 即最小频率；取该集合最早插入的 key 淘汰。</span><br>    <span class="hljs-keyword">private</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">evict</span><span class="hljs-params">()</span> &#123;<br>        <span class="hljs-type">int</span> <span class="hljs-variable">minFreq</span> <span class="hljs-operator">=</span> freqToKeys.firstKey();<br>        LinkedHashSet&lt;Integer&gt; keys = freqToKeys.get(minFreq);<br>        <span class="hljs-type">int</span> <span class="hljs-variable">evictedKey</span> <span class="hljs-operator">=</span> keys.iterator().next();<br>        keys.remove(evictedKey);<br>        <span class="hljs-keyword">if</span> (keys.isEmpty()) &#123;<br>            freqToKeys.remove(minFreq);<br>        &#125;<br>        keyToNode.remove(evictedKey);<br>    &#125;<br><br>    <span class="hljs-keyword">private</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">final</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">Node</span> &#123;<br>        <span class="hljs-type">int</span> value;<br>        <span class="hljs-type">int</span> <span class="hljs-variable">freq</span> <span class="hljs-operator">=</span> <span class="hljs-number">1</span>;<br><br>        Node(<span class="hljs-type">int</span> value) &#123;<br>            <span class="hljs-built_in">this</span>.value = value;<br>        &#125;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="五、两种实现对比"><a href="#五、两种实现对比" class="headerlink" title="五、两种实现对比"></a>五、两种实现对比</h2><table>
+<thead>
+<tr>
+<th>维度</th>
+<th>版本一（双向链表）</th>
+<th>版本二（TreeMap）</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>时间复杂度</td>
+<td>每次操作 O(1)</td>
+<td>每次操作 O(log n)</td>
+</tr>
+<tr>
+<td>空间复杂度</td>
+<td>O(n)</td>
+<td>O(n)</td>
+</tr>
+<tr>
+<td>核心容器</td>
+<td>HashMap + 自写双向链表</td>
+<td>HashMap + TreeMap + LinkedHashSet</td>
+</tr>
+<tr>
+<td>最小频率获取</td>
+<td>手动维护 <code>minFreq</code> 变量</td>
+<td><code>TreeMap.firstKey()</code> 直接取</td>
+</tr>
+<tr>
+<td>同频排序</td>
+<td>链表头尾顺序天然维护</td>
+<td>LinkedHashSet 插入顺序维护</td>
+</tr>
+<tr>
+<td>代码量</td>
+<td>中等（要写链表，但 computeIfAbsent + touch 已收敛）</td>
+<td>少（全靠现成容器，computeIfAbsent 收尾）</td>
+</tr>
+<tr>
+<td>适合场景</td>
+<td>高性能、面试手写、追求 O(1)</td>
+<td>业务代码快速实现、可读性优先</td>
+</tr>
+</tbody></table>
+<p>一个容易踩的坑：版本二里”同频内谁先淘汰”依赖 LinkedHashSet 的<strong>插入顺序</strong>。</p>
+<hr>
+<h2 id="六、小结"><a href="#六、小结" class="headerlink" title="六、小结"></a>六、小结</h2><ul>
+<li>LFU 的核心是”按累计访问频率淘汰，同频用 LRU 兜底”。</li>
+<li><strong>版本一</strong>靠自写双向链表（<code>FreqList</code>）+ <code>minFreq</code> 变量把复杂度压到 O(1)，是标准答法；频率提升收敛成一个 <code>touch</code>，取&#x2F;建频率桶用 <code>computeIfAbsent</code> 一行解决。节点保留 <code>key/value/freq</code> 三个字段，前两者是 O(1) 淘汰和 O(1) 频率读写的硬需求。</li>
+<li><strong>版本二</strong>用 TreeMap 的 <code>firstKey()</code> 替掉手动维护最小频率，LinkedHashSet 管同频顺序，代码最短，复杂度 O(log n)，工程里图省事够用。</li>
+</ul>
+<p>如果要在真实系统里用 LFU，记得补上<strong>频率衰减</strong>（比如定期把频率减半）来缓和新 key 一进来就被误杀的缓存污染问题——那是另一个话题了……</p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95/" class="category-chain-item">数据结构与算法</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" class="print-no-link">#数据结构</a>
+      
+        <a href="/tags/%E7%AE%97%E6%B3%95/" class="print-no-link">#算法</a>
+      
+        <a href="/tags/LFU/" class="print-no-link">#LFU</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>LFU算法</div>
+      <div>https://zyue2022.github.io/2026/08/23/LFU算法/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>ZYUE</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2026年8月23日</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>更新于</div>
+          <div>2026年8月23日</div>
+        </div>
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-cc-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2026/08/23/%E8%B7%B3%E8%A1%A8%E7%AE%80%E5%8D%95%E5%AE%9E%E7%8E%B0/" title="跳表实现（java版本）">
+                        <span class="hidden-mobile">跳表实现（java版本）</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a>
+<a target="_blank" rel="noopener" href="https://developer.hitokoto.cn/" id="hitokoto_text"><span style="color:#134769;"  id="hitokoto"></span></a> <script src="https://v1.hitokoto.cn/?encode=js&select=%23hitokoto" defer></script> 
+    </div>
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    function isExpandAllEnabled() {
+      return CONFIG.toc && CONFIG.toc.expand_all === true;
+    }
+    function expandAllToc() {
+      if (!isExpandAllEnabled()) { return; }
+      jQuery('#toc-body .tocbot-is-collapsed').removeClass('tocbot-is-collapsed');
+    }
+    function updateTocToggle($li, $childList) {
+      var $toggle = $li.children('.toc-toggle');
+      if ($toggle.length === 0) { return; }
+      var collapsed = $childList.hasClass('tocbot-is-collapsed');
+      $toggle
+        .toggleClass('toc-toggle-collapsed', collapsed)
+        .toggleClass('toc-toggle-expanded', !collapsed);
+    }
+    function bindTocToggle() {
+      if (!isExpandAllEnabled()) { return; }
+      jQuery('#toc-body .toc-list-item').each(function() {
+        var $li = jQuery(this);
+        var $childList = $li.children('ol');
+        if ($childList.length === 0) {
+          if ($li.children('.toc-toggle').length === 0) {
+            $li.prepend('<span class="toc-toggle toc-toggle-placeholder" aria-hidden="true">›</span>');
+          }
+          return;
+        }
+
+        if ($li.children('.toc-toggle').length === 0) {
+          $li.prepend('<span class="toc-toggle toc-toggle-expanded" aria-hidden="true">›</span>');
+        }
+        updateTocToggle($li, $childList);
+      });
+      jQuery('#toc-body').off('click.tocToggle').on('click.tocToggle', '.toc-toggle', function(e) {
+        e.preventDefault();
+        e.stopPropagation();
+        var $li = jQuery(this).parent('.toc-list-item');
+        var $childList = $li.children('ol');
+        if ($childList.length === 0) { return; }
+        $childList.toggleClass('tocbot-is-collapsed');
+        updateTocToggle($li, $childList);
+      });
+      if (!window.__tocToggleObserver) {
+        window.__tocToggleObserver = new MutationObserver(function(mutations) {
+          mutations.forEach(function(mutation) {
+            if (mutation.type !== 'attributes' || mutation.attributeName !== 'class') { return; }
+            var $list = jQuery(mutation.target);
+            var $li = $list.parent('.toc-list-item');
+            if ($li.length === 0) { return; }
+            updateTocToggle($li, $list);
+          });
+        });
+        jQuery('#toc-body ol').each(function() {
+          window.__tocToggleObserver.observe(this, { attributes: true });
+        });
+      }
+    }
+    var tocConfig = Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc);
+    if (isExpandAllEnabled()) {
+      tocConfig.collapseDepth = 6;
+    }
+    window.tocbot.init(tocConfig);
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+    expandAllToc();
+    bindTocToggle();
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+        expandAllToc();
+        bindTocToggle();
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/5.0.0/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script defer src="/js/openkounter.js" ></script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"log":false,"pluginJsPath":"lib/","pluginModelPath":"assets/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
+</html>

@@ -11,7 +11,7 @@
   <link rel="apple-touch-icon" sizes="76x76" href="/hexo_img/icon.jpg">
   <link rel="icon" href="/hexo_img/icon.jpg">
   
-    <link rel="canonical" href="https://zyue2022.github.io/2022/10/12/生产者消费者模型/"/>
+    <link rel="canonical" href="https://zyue2022.github.io/2023/07/23/Linux常用命令笔记/"/>
   
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
@@ -21,25 +21,25 @@
   <meta name="author" content="ZYUE">
   <meta name="keywords" content="">
   
-    <meta name="description" content="阻塞队列用C++简易实现生产者消费者模型，即实现一个阻塞队列； 之前Web服务器项中的异步日志系统也用到了该模型；   生产者生产数据到缓冲区中，消费者从缓冲区中取数据； 缓冲区满时，生产者线程阻塞，进入等待状态。 缓冲区空时，消费者线程阻塞，进入等待状态。 生产者生产资源后，会唤醒可能等待着的消费者； 消费者消耗资源后，会唤醒可能阻塞着的生产者；  12345678910111213141516">
+    <meta name="description" content="管理用户123456789101112131415161718# 按默认值添加用户useradd userName# 在root环境下，root帮userName设置密码passwd userName# 或echo &quot;密码&quot; | passwd --stdin userName# userName这个用户第一次登录时（默认密码是用户名），自己设置自己密码echo &quot;us">
 <meta property="og:type" content="article">
-<meta property="og:title" content="生产者消费者模型">
-<meta property="og:url" content="https://zyue2022.github.io/2022/10/12/%E7%94%9F%E4%BA%A7%E8%80%85%E6%B6%88%E8%B4%B9%E8%80%85%E6%A8%A1%E5%9E%8B/index.html">
+<meta property="og:title" content="Linux常用命令笔记">
+<meta property="og:url" content="https://zyue2022.github.io/2023/07/23/Linux%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4%E7%AC%94%E8%AE%B0/index.html">
 <meta property="og:site_name" content="参天小树">
-<meta property="og:description" content="阻塞队列用C++简易实现生产者消费者模型，即实现一个阻塞队列； 之前Web服务器项中的异步日志系统也用到了该模型；   生产者生产数据到缓冲区中，消费者从缓冲区中取数据； 缓冲区满时，生产者线程阻塞，进入等待状态。 缓冲区空时，消费者线程阻塞，进入等待状态。 生产者生产资源后，会唤醒可能等待着的消费者； 消费者消耗资源后，会唤醒可能阻塞着的生产者；  12345678910111213141516">
+<meta property="og:description" content="管理用户123456789101112131415161718# 按默认值添加用户useradd userName# 在root环境下，root帮userName设置密码passwd userName# 或echo &quot;密码&quot; | passwd --stdin userName# userName这个用户第一次登录时（默认密码是用户名），自己设置自己密码echo &quot;us">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://zyue2022.github.io/post_img/35.jpg">
-<meta property="article:published_time" content="2022-10-12T12:15:06.000Z">
-<meta property="article:modified_time" content="2022-10-12T12:24:59.531Z">
+<meta property="og:image" content="https://zyue2022.github.io/post_img/09.jpg">
+<meta property="article:published_time" content="2023-07-23T07:20:51.000Z">
+<meta property="article:modified_time" content="2026-08-23T04:25:07.466Z">
 <meta property="article:author" content="ZYUE">
-<meta property="article:tag" content="生产者消费者">
-<meta property="article:tag" content="阻塞队列">
+<meta property="article:tag" content="Linux">
+<meta property="article:tag" content="命令">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="https://zyue2022.github.io/post_img/35.jpg">
+<meta name="twitter:image" content="https://zyue2022.github.io/post_img/09.jpg">
   
   
   
-  <title>生产者消费者模型 - 参天小树</title>
+  <title>Linux常用命令笔记 - 参天小树</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -337,7 +337,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="生产者消费者模型"></span>
+            <span id="subtitle" data-typed-text="Linux常用命令笔记"></span>
           
         </div>
 
@@ -353,8 +353,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2022-10-12 20:15" pubdate>
-          2022年10月12日 晚上
+        <time datetime="2023-07-23 15:20" pubdate>
+          2023年7月23日 下午
         </time>
       </span>
     
@@ -365,7 +365,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          2k 字
+          2.8k 字
         
       </span>
     
@@ -376,7 +376,7 @@
         
         
         
-          17 分钟
+          24 分钟
         
       </span>
     
@@ -428,27 +428,26 @@
       <div class="container nopadding-x-md" id="board-ctn">
         <div id="board">
           <article class="post-content mx-auto">
-            <h1 id="seo-header">生产者消费者模型</h1>
+            <h1 id="seo-header">Linux常用命令笔记</h1>
             
             
               <div class="markdown-body">
                 
-                <h2 id="阻塞队列"><a href="#阻塞队列" class="headerlink" title="阻塞队列"></a>阻塞队列</h2><p>用C++简易实现生产者消费者模型，即实现一个阻塞队列；</p>
-<p>之前Web服务器项中的异步日志系统也用到了该模型；</p>
-<hr>
-<ul>
-<li>生产者生产数据到缓冲区中，消费者从缓冲区中取数据；</li>
-<li>缓冲区满时，生产者线程阻塞，进入等待状态。</li>
-<li>缓冲区空时，消费者线程阻塞，进入等待状态。</li>
-<li>生产者生产资源后，会唤醒可能等待着的消费者；</li>
-<li>消费者消耗资源后，会唤醒可能阻塞着的生产者；</li>
-</ul>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-comment">/*</span><br><span class="hljs-comment"> * @Description  : 封装生产者消费者模式</span><br><span class="hljs-comment"> * @Date         : 2022-10-12 19:29:22</span><br><span class="hljs-comment"> * @LastEditTime : 2022-10-12 20:10:32</span><br><span class="hljs-comment"> */</span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;bits/stdc++.h&gt;</span></span><br><br><span class="hljs-comment">/**</span><br><span class="hljs-comment"> * @description: 阻塞队列类</span><br><span class="hljs-comment"> */</span><br><span class="hljs-keyword">template</span> &lt;<span class="hljs-keyword">class</span> <span class="hljs-title class_">T</span>&gt;<br><span class="hljs-keyword">class</span> <span class="hljs-title class_">BlockQueue</span> &#123;<br><span class="hljs-keyword">private</span>:<br>    std::queue&lt;T&gt; que_;       <span class="hljs-comment">// 共享队列</span><br>    std::mutex    mtx_;       <span class="hljs-comment">// 互斥量</span><br>    <span class="hljs-type">size_t</span>        capacity_;  <span class="hljs-comment">// 最大容量</span><br><br>    std::condition_variable cv_consumer_;  <span class="hljs-comment">// 消费者条件变量</span><br>    std::condition_variable cv_producer_;  <span class="hljs-comment">// 生产者条件变量</span><br><br><span class="hljs-keyword">public</span>:<br>    <span class="hljs-function"><span class="hljs-keyword">explicit</span> <span class="hljs-title">BlockQueue</span><span class="hljs-params">(<span class="hljs-type">size_t</span> MaxCapacity = <span class="hljs-number">100</span>)</span> : capacity_(MaxCapacity) &#123;</span><br>        <span class="hljs-built_in">assert</span>(MaxCapacity &gt; <span class="hljs-number">0</span>);<br>    &#125;<br><br>    <span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">push</span><span class="hljs-params">(<span class="hljs-type">const</span> T &amp;item)</span></span>;<br>    <span class="hljs-function">T    <span class="hljs-title">pop</span><span class="hljs-params">()</span></span>;<br>&#125;;<br><br><span class="hljs-comment">/**</span><br><span class="hljs-comment"> * @description: 向队尾加入一个元素</span><br><span class="hljs-comment"> */</span><br><span class="hljs-keyword">template</span> &lt;<span class="hljs-keyword">typename</span> T&gt;<br><span class="hljs-type">void</span> BlockQueue&lt;T&gt;::<span class="hljs-built_in">push</span>(<span class="hljs-type">const</span> T &amp;item) &#123;<br>    <span class="hljs-function">std::unique_lock&lt;std::mutex&gt; <span class="hljs-title">locker</span><span class="hljs-params">(mtx_)</span></span>;<br><br>    <span class="hljs-comment">/*条件变量控制，如果元素超过了容量，需要阻塞等待消费者消费后才能加入*/</span><br>    <span class="hljs-keyword">while</span> (que_.<span class="hljs-built_in">size</span>() &gt;= capacity_) &#123;<br>        <span class="hljs-comment">/*生产者等待*/</span><br>        cv_producer_.<span class="hljs-built_in">wait</span>(locker);<br>    &#125;<br><br>    que_.<span class="hljs-built_in">push</span>(item);<br><br>    <span class="hljs-comment">/*唤醒一个消费者*/</span><br>    cv_consumer_.<span class="hljs-built_in">notify_one</span>();<br>&#125;<br><br><span class="hljs-comment">/**</span><br><span class="hljs-comment"> * @description: 在队头弹出一个元素</span><br><span class="hljs-comment"> */</span><br><span class="hljs-keyword">template</span> &lt;<span class="hljs-keyword">typename</span> T&gt;<br>T BlockQueue&lt;T&gt;::<span class="hljs-built_in">pop</span>() &#123;<br>    <span class="hljs-function">std::unique_lock&lt;std::mutex&gt; <span class="hljs-title">locker</span><span class="hljs-params">(mtx_)</span></span>;<br><br>    <span class="hljs-comment">/*如果队列为空，消费者条件变量等待*/</span><br>    <span class="hljs-keyword">while</span> (que_.<span class="hljs-built_in">empty</span>()) &#123;<br>        cv_consumer_.<span class="hljs-built_in">wait</span>(locker);<br>    &#125;<br><br>    T item = que_.<span class="hljs-built_in">front</span>();<br>    que_.<span class="hljs-built_in">pop</span>();<br><br>    <span class="hljs-comment">/*唤醒一个生产者*/</span><br>    cv_producer_.<span class="hljs-built_in">notify_one</span>();<br><br>    <span class="hljs-keyword">return</span> item;<br>&#125;<br><br><span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">producer</span><span class="hljs-params">(BlockQueue&lt;<span class="hljs-type">int</span>&gt; &amp;q)</span> </span>&#123;<br>    <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">0</span>; i &lt; <span class="hljs-number">10</span>; i++) &#123;<br>        q.<span class="hljs-built_in">push</span>(i);<br>        std::cout &lt;&lt; <span class="hljs-string">&quot;push: &quot;</span> &lt;&lt; i &lt;&lt; std::endl;<br>    &#125;<br>&#125;<br><br><span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">comsumer</span><span class="hljs-params">(BlockQueue&lt;<span class="hljs-type">int</span>&gt; &amp;q)</span> </span>&#123;<br>    <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">0</span>; i &lt; <span class="hljs-number">10</span>; i++) &#123;<br>        <span class="hljs-type">int</span> item = q.<span class="hljs-built_in">pop</span>();<br>        std::cout &lt;&lt; <span class="hljs-string">&quot;pop:&quot;</span> &lt;&lt; item &lt;&lt; std::endl;<br>    &#125;<br>&#125;<br><br><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span> </span>&#123;<br>    <span class="hljs-function">BlockQueue&lt;<span class="hljs-type">int</span>&gt; <span class="hljs-title">bq</span><span class="hljs-params">(<span class="hljs-number">5</span>)</span></span>;<br><br>    <span class="hljs-function">std::thread <span class="hljs-title">t1</span><span class="hljs-params">(producer, std::ref(bq))</span></span>;<br>    <span class="hljs-function">std::thread <span class="hljs-title">t2</span><span class="hljs-params">(comsumer, std::ref(bq))</span></span>;<br><br>    t<span class="hljs-number">1.</span><span class="hljs-built_in">join</span>();<br>    t<span class="hljs-number">2.</span><span class="hljs-built_in">join</span>();<br><br>    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+                <h2 id="管理用户"><a href="#管理用户" class="headerlink" title="管理用户"></a>管理用户</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># 按默认值添加用户</span><br>useradd userName<br><br><span class="hljs-comment"># 在root环境下，root帮userName设置密码</span><br>passwd userName<br><span class="hljs-comment"># 或</span><br><span class="hljs-built_in">echo</span> <span class="hljs-string">&quot;密码&quot;</span> | passwd --stdin userName<br><br><span class="hljs-comment"># userName这个用户第一次登录时（默认密码是用户名），自己设置自己密码</span><br><span class="hljs-built_in">echo</span> <span class="hljs-string">&quot;userName&quot;</span> | passwd --stdin userName<br>chage -d 0 userName<br>chage -l userName | <span class="hljs-built_in">head</span> -n 3<br><span class="hljs-comment"># 不过这一般还需改psaawd和shadow权限</span><br><br><span class="hljs-comment"># 删除用户</span><br>userdel -r userName<br><span class="hljs-comment"># 最好删除前找到属于要删用户的文件</span><br>find / -user userName<br></code></pre></td></tr></table></figure>
 
-<p>编译用：</p>
-<blockquote>
-<p>g++ BlockQueue.cpp -o bq -pthread</p>
-</blockquote>
+<h2 id="权限切换"><a href="#权限切换" class="headerlink" title="权限切换"></a>权限切换</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># 普通用户要想使用sudo，先用visudo编辑/etc/sudoers文件</span><br>visudo <span class="hljs-comment"># 会打开sudoers文件</span><br><span class="hljs-comment"># 或</span><br>vim /etc/sudoers<br><br><span class="hljs-comment"># 指定用户sudo，添加下行</span><br>userName ALL=(ALL) ALL<br><span class="hljs-comment"># 指定用户免密sudo，添加下行</span><br>userName ALL=(ALL) NOPASSWD:ALL<br><br><span class="hljs-comment"># 某用户组免密sudo，添加下行</span><br>%groupName ALL=(ALL) NOPASSWD:ALL<br><br><span class="hljs-comment"># 经由 sudo 所执行的指令就好像是 root 亲自执行</span><br><span class="hljs-built_in">sudo</span> 指令 <span class="hljs-comment"># 此处输入的密码是当前用户的密码，也可以设置成不输入密码执行sudo</span><br><br><span class="hljs-comment"># 系统第一次使用su切换至root权限时，先设置密码</span><br><span class="hljs-built_in">sudo</span> passwd root<br><br><span class="hljs-comment"># su 是最简单的用户切换命令</span><br>su - <span class="hljs-comment"># 环境和权限都切换到root</span><br><br><span class="hljs-comment"># 使用 exit 命令进行手动切换回原用户</span><br><span class="hljs-built_in">exit</span><br></code></pre></td></tr></table></figure>
+
+<h2 id="压缩-解压"><a href="#压缩-解压" class="headerlink" title="压缩&#x2F;解压"></a>压缩&#x2F;解压</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># 对于bzip2的解压缩</span><br><br><span class="hljs-comment"># 压缩</span><br>tar -jcv -f filename.tar.bz2 要被压缩的文件或目录<br><br><span class="hljs-comment"># 解压</span><br>tar -jxv -f filename.tar.bz2 -C 要解压在那个目录的位置<br><br><span class="hljs-comment"># -----------------------------------</span><br>-j <span class="hljs-comment"># bzip2，即*.tar.bz2</span><br>-J <span class="hljs-comment"># xz，即*.tar.xz</span><br>-z <span class="hljs-comment"># gzip，即*.tar.gz</span><br></code></pre></td></tr></table></figure>
+
+<h2 id="软件安装"><a href="#软件安装" class="headerlink" title="软件安装"></a>软件安装</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># 基于RPM</span><br><span class="hljs-comment"># 安装需root权限</span><br><br><span class="hljs-comment"># yum 在线安装</span><br>yum search appName <span class="hljs-comment"># 在yum服务器上找这个软件</span><br>yum install appName <span class="hljs-comment"># 安装软件</span><br>yum update appName <span class="hljs-comment"># 升级这个软件</span><br>yum remove appName <span class="hljs-comment"># 删除软件</span><br><br><span class="hljs-comment"># rpm 查询与效验，也可以使用.rpm文件安装</span><br>rpm -ivh packageName.rpm <span class="hljs-comment"># 安装</span><br>rpm -qa <span class="hljs-comment"># 查询已安装软件</span><br>rpm -q appName <span class="hljs-comment"># 查询是否安装appName这个软件</span><br>rpm -e appName <span class="hljs-comment"># 删除软件</span><br><br><span class="hljs-comment"># -----------------------------------------------</span><br><span class="hljs-comment"># dpkg系</span><br><span class="hljs-built_in">sudo</span> apt-get update   <span class="hljs-comment"># 取回更新的软件包列表信息</span><br><span class="hljs-built_in">sudo</span> apt-get upgrade    <span class="hljs-comment"># 升级所有软件包</span><br><br><span class="hljs-built_in">sudo</span> apt-get install packagename    <span class="hljs-comment"># 安装软件包</span><br><span class="hljs-built_in">sudo</span> apt-get remove packagename      <span class="hljs-comment"># 卸载软件包</span><br><span class="hljs-built_in">sudo</span> apt-get purge packagename      <span class="hljs-comment"># 卸载并清除软件包的配置</span><br><br><span class="hljs-built_in">sudo</span> dpkg -i filename.deb     <span class="hljs-comment"># 安装本地二进制deb包</span><br><span class="hljs-built_in">sudo</span> dpkg -r packagename     <span class="hljs-comment"># 卸载软件包</span><br><br><span class="hljs-built_in">sudo</span> apt-get clean                <span class="hljs-comment"># 删除所有已下载的包文件</span><br></code></pre></td></tr></table></figure>
+
+<h2 id="文件权限"><a href="#文件权限" class="headerlink" title="文件权限"></a>文件权限</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># 文件属性：</span><br><span class="hljs-comment"># 读        r 4</span><br><span class="hljs-comment"># 写        w 2</span><br><span class="hljs-comment"># 执行   x 1</span><br><span class="hljs-comment"># 目录      d</span><br><span class="hljs-comment"># 文件      -</span><br><span class="hljs-comment"># 链接文件   l</span><br><br><span class="hljs-comment"># 修改用户组，-R递归修改</span><br><span class="hljs-built_in">chgrp</span> 用户组名 文件或目录名<br><br><span class="hljs-comment"># 修改拥有者，-R递归修改</span><br><span class="hljs-built_in">chown</span> 用户名 文件或目录名<br><span class="hljs-built_in">chown</span> 用户名:用户组名 文件或目录名 <span class="hljs-comment"># 也可同时修改用户组</span><br><br><span class="hljs-comment"># 修改权限，-R递归修改</span><br><span class="hljs-built_in">chmod</span> 777 文件名<br><span class="hljs-comment"># u,g,o,这3种身份，a是全部</span><br><span class="hljs-built_in">chmod</span> u=rwx,g=rx,0=r 文件名 <span class="hljs-comment"># =是设置</span><br><span class="hljs-built_in">chmod</span> a+w 文件名 <span class="hljs-comment"># +是加入某权限</span><br><span class="hljs-built_in">chmod</span> g-x 文件名 <span class="hljs-comment"># -是取消某权限</span><br><br><span class="hljs-comment"># 文件隐藏属性</span><br><span class="hljs-comment"># 常用的是+i，+a</span><br>chattr +i 文件名 <span class="hljs-comment"># 使此文件无法被修改</span><br>chattr -i 文件名 <span class="hljs-comment"># 使此文件可修改</span><br><span class="hljs-comment"># a是只能添加，不能修改和删除</span><br></code></pre></td></tr></table></figure>
+
+<h2 id="变量设置"><a href="#变量设置" class="headerlink" title="变量设置"></a>变量设置</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># 查看变量，echo有显示打印的意思，$后接变量名</span><br><span class="hljs-built_in">echo</span> <span class="hljs-variable">$PATH</span><br><span class="hljs-comment"># 或</span><br><span class="hljs-built_in">echo</span> <span class="hljs-variable">$&#123;PATH&#125;</span><br><br><span class="hljs-comment"># 添加PATH路径</span><br>PATH=<span class="hljs-string">&quot;<span class="hljs-variable">$&#123;PATH&#125;</span>:/somedirpath&quot;</span><br><br><span class="hljs-comment"># 设置变量，=号两边无空格</span><br>var=something<br><span class="hljs-comment"># 变量内容有空格时</span><br>var=<span class="hljs-string">&quot;lang is <span class="hljs-variable">$LANG</span>&quot;</span> <span class="hljs-comment"># 双引号保留原有属性</span><br>var=<span class="hljs-string">&#x27;lang is $LANG&#x27;</span> <span class="hljs-comment"># 单引号不保留原有属性</span><br><br><span class="hljs-comment"># 扩为环境变量</span><br><span class="hljs-built_in">export</span> var<br><br><span class="hljs-comment"># 取消变量</span><br><span class="hljs-built_in">unset</span> var<br><br><span class="hljs-comment"># 查看环境变量</span><br><span class="hljs-built_in">env</span> <span class="hljs-comment"># 或export</span><br><br><span class="hljs-comment"># 查看环境变量与自定义变量</span><br><span class="hljs-built_in">set</span><br></code></pre></td></tr></table></figure>
+
+<h2 id="进程管理"><a href="#进程管理" class="headerlink" title="进程管理"></a>进程管理</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># 终端后台</span><br><br><span class="hljs-comment"># 在命令最后加上&amp;，表示后台执行</span><br>somecommand &amp; <br><span class="hljs-comment"># 如果命令有输出，可重定向数据流</span><br><br><span class="hljs-comment"># 将目前任务丢到后台中，暂停</span><br>ctrl-z<br><br><span class="hljs-comment"># 查看后台任务</span><br><span class="hljs-built_in">jobs</span> -l<br><br><span class="hljs-comment"># 将后台任务拿到前台，%可选</span><br><span class="hljs-built_in">fg</span> %jobnumber<br><br><span class="hljs-comment"># 将后台任务状态变成运行中</span><br><span class="hljs-built_in">bg</span> %jobnumber<br><br><span class="hljs-comment"># 删除任务</span><br><span class="hljs-built_in">kill</span> -9 %jobnumber <span class="hljs-comment"># 强制删除</span><br><span class="hljs-built_in">kill</span> -15 %jobnumber <span class="hljs-comment"># 正常删除</span><br><br><span class="hljs-comment"># -------------------------------------------------</span><br><br><span class="hljs-comment"># 系统后台</span><br><span class="hljs-built_in">nohup</span> somecommand &amp; <span class="hljs-comment"># 注销登录后也继续运行</span><br><br><span class="hljs-comment"># -------------------------------------------------</span><br><br><span class="hljs-comment"># 查看自己bash相关进程</span><br>ps -l<br><br><span class="hljs-comment"># 查看系统中所有运行进程</span><br>ps aux<br></code></pre></td></tr></table></figure>
+
+<h2 id="系统服务"><a href="#系统服务" class="headerlink" title="系统服务"></a>系统服务</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># 管理服务unit</span><br>systemctl <span class="hljs-built_in">command</span> unit<br><span class="hljs-comment"># command有(常用)：</span><br>status   <span class="hljs-comment"># 查看状态</span><br>start    <span class="hljs-comment"># 立即启动</span><br>stop     <span class="hljs-comment"># 立即关闭</span><br>restart  <span class="hljs-comment"># 重启</span><br>reload   <span class="hljs-comment"># 重新加载配置文件</span><br><span class="hljs-built_in">enable</span>   <span class="hljs-comment"># 开机自启</span><br><span class="hljs-built_in">disable</span>     <span class="hljs-comment"># 不开机自启</span><br></code></pre></td></tr></table></figure>
 
                 
               </div>
@@ -467,7 +466,7 @@
     
       <span class="category-chain">
         
-  <a href="/categories/C/" class="category-chain-item">C++</a>
+  <a href="/categories/Linux/" class="category-chain-item">Linux</a>
   
   
 
@@ -482,9 +481,9 @@
     <div class="post-meta">
       <i class="iconfont icon-tags"></i>
       
-        <a href="/tags/%E7%94%9F%E4%BA%A7%E8%80%85%E6%B6%88%E8%B4%B9%E8%80%85/" class="print-no-link">#生产者消费者</a>
+        <a href="/tags/Linux/" class="print-no-link">#Linux</a>
       
-        <a href="/tags/%E9%98%BB%E5%A1%9E%E9%98%9F%E5%88%97/" class="print-no-link">#阻塞队列</a>
+        <a href="/tags/%E5%91%BD%E4%BB%A4/" class="print-no-link">#命令</a>
       
     </div>
   
@@ -496,8 +495,8 @@
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>生产者消费者模型</div>
-      <div>https://zyue2022.github.io/2022/10/12/生产者消费者模型/</div>
+      <div>Linux常用命令笔记</div>
+      <div>https://zyue2022.github.io/2023/07/23/Linux常用命令笔记/</div>
     </div>
     <div class="license-meta">
       
@@ -509,13 +508,13 @@
       
         <div class="license-meta-item license-meta-date">
           <div>发布于</div>
-          <div>2022年10月12日</div>
+          <div>2023年7月23日</div>
         </div>
       
       
         <div class="license-meta-item license-meta-date">
           <div>更新于</div>
-          <div>2022年10月12日</div>
+          <div>2026年8月23日</div>
         </div>
       
       
@@ -546,9 +545,9 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2022/10/21/%E5%87%A0%E4%B8%AA%E7%BA%BF%E7%A8%8B%E4%BA%A4%E6%9B%BF%E6%89%93%E5%8D%B0/" title="几个线程交替打印">
+                      <a href="/2023/07/23/Git%E4%BD%BF%E7%94%A8%E5%92%8C%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/" title="Git使用和常用命令">
                         <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">几个线程交替打印</span>
+                        <span class="hidden-mobile">Git使用和常用命令</span>
                         <span class="visible-mobile">上一篇</span>
                       </a>
                     
@@ -556,8 +555,8 @@
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2022/09/30/CPP%E4%B8%AD%E8%99%9A%E6%9E%90%E6%9E%84%E5%87%BD%E6%95%B0/" title="CPP中虚析构函数">
-                        <span class="hidden-mobile">CPP中虚析构函数</span>
+                      <a href="/2023/07/01/hexo%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/" title="Hexo常用命令">
+                        <span class="hidden-mobile">Hexo常用命令</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>

@@ -11,7 +11,7 @@
   <link rel="apple-touch-icon" sizes="76x76" href="/hexo_img/icon.jpg">
   <link rel="icon" href="/hexo_img/icon.jpg">
   
-    <link rel="canonical" href="https://zyue2022.github.io/2022/08/20/Shell脚本笔记/"/>
+    <link rel="canonical" href="https://zyue2022.github.io/2025/08/20/Shell脚本笔记/"/>
   
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
@@ -21,16 +21,16 @@
   <meta name="author" content="ZYUE">
   <meta name="keywords" content="">
   
-    <meta name="description" content="前言查看当前窗口是什么shell 1echo $SHELL  shell脚本可以一次性执行多条命令，通常脚本文件以.sh结尾，这称为批处理。 注释用#表示，但注意第一行的#!&#x2F;bin&#x2F;bash表示以后面的解释器解释执行； 执行方式：  作为可执行文件 12chmod +x name.sh # 加上可执行权限.&#x2F;name.sh		 # 执行脚本  作为解释器参数 1&#x2F;bin&#x2F;bash name.sh">
+    <meta name="description" content="前言查看当前窗口是什么shell 1echo $SHELL  shell脚本可以一次性执行多条命令，通常脚本文件以.sh结尾，这称为批处理。 注释用#表示，但注意第一行的#!&#x2F;bin&#x2F;bash表示以后面的解释器解释执行； 执行方式：  作为可执行文件 12chmod +x name.sh # 加上可执行权限.&#x2F;name.sh         # 执行脚本  作为解释器参数 1&#x2F;bin&#x2F;bash n">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Shell脚本笔记">
-<meta property="og:url" content="https://zyue2022.github.io/2022/08/20/Shell%E8%84%9A%E6%9C%AC%E7%AC%94%E8%AE%B0/index.html">
+<meta property="og:url" content="https://zyue2022.github.io/2025/08/20/Shell%E8%84%9A%E6%9C%AC%E7%AC%94%E8%AE%B0/index.html">
 <meta property="og:site_name" content="参天小树">
-<meta property="og:description" content="前言查看当前窗口是什么shell 1echo $SHELL  shell脚本可以一次性执行多条命令，通常脚本文件以.sh结尾，这称为批处理。 注释用#表示，但注意第一行的#!&#x2F;bin&#x2F;bash表示以后面的解释器解释执行； 执行方式：  作为可执行文件 12chmod +x name.sh # 加上可执行权限.&#x2F;name.sh		 # 执行脚本  作为解释器参数 1&#x2F;bin&#x2F;bash name.sh">
+<meta property="og:description" content="前言查看当前窗口是什么shell 1echo $SHELL  shell脚本可以一次性执行多条命令，通常脚本文件以.sh结尾，这称为批处理。 注释用#表示，但注意第一行的#!&#x2F;bin&#x2F;bash表示以后面的解释器解释执行； 执行方式：  作为可执行文件 12chmod +x name.sh # 加上可执行权限.&#x2F;name.sh         # 执行脚本  作为解释器参数 1&#x2F;bin&#x2F;bash n">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://zyue2022.github.io/post_img/31.jpg">
-<meta property="article:published_time" content="2022-08-20T12:00:35.000Z">
-<meta property="article:modified_time" content="2022-09-07T16:30:52.782Z">
+<meta property="article:published_time" content="2025-08-20T12:00:35.000Z">
+<meta property="article:modified_time" content="2026-08-23T04:28:06.740Z">
 <meta property="article:author" content="ZYUE">
 <meta property="article:tag" content="Linux">
 <meta property="article:tag" content="Shell">
@@ -353,8 +353,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2022-08-20 20:00" pubdate>
-          2022年8月20日 晚上
+        <time datetime="2025-08-20 20:00" pubdate>
+          2025年8月20日 晚上
         </time>
       </span>
     
@@ -441,13 +441,13 @@
 <p>执行方式：</p>
 <ol>
 <li><p>作为可执行文件</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">chmod</span> +x name.sh <span class="hljs-comment"># 加上可执行权限</span><br>./name.sh		 <span class="hljs-comment"># 执行脚本</span><br></code></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">chmod</span> +x name.sh <span class="hljs-comment"># 加上可执行权限</span><br>./name.sh         <span class="hljs-comment"># 执行脚本</span><br></code></pre></td></tr></table></figure>
 </li>
 <li><p>作为解释器参数</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">/bin/bash name.sh<br></code></pre></td></tr></table></figure>
 </li>
 <li><p>其它，当前窗口执行，不产生子进程；</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">source</span> name.sh  <span class="hljs-comment"># source也常用于加载配置文件</span><br>. name.sh		<span class="hljs-comment"># 点号后面有个空格</span><br></code></pre></td></tr></table></figure></li>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">source</span> name.sh  <span class="hljs-comment"># source也常用于加载配置文件</span><br>. name.sh        <span class="hljs-comment"># 点号后面有个空格</span><br></code></pre></td></tr></table></figure></li>
 </ol>
 <p>一般使用第一种，作为可执行文件执行脚本。</p>
 <h2 id="语法"><a href="#语法" class="headerlink" title="语法"></a>语法</h2><h3 id="变量"><a href="#变量" class="headerlink" title="变量"></a>变量</h3><p>shell变量分为局部变量和环境变量，局部变量一般小写，环境变量是大写；局部变量只有在当前shell实例中有效，所以从shell启动的程序（子进程）不能访问到局部变量，环境变量都可以被访问；子进程修改环境变量也不会影响父进程；</p>
@@ -456,7 +456,7 @@
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">var_name=zyue<br></code></pre></td></tr></table></figure>
 </li>
 <li><p>使用变量，加上美元符合$；</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">echo</span> <span class="hljs-variable">$var_name</span>	 <span class="hljs-comment"># 输出：zyue</span><br><span class="hljs-built_in">echo</span> <span class="hljs-variable">$&#123;var_name&#125;</span> <span class="hljs-comment"># 加大括号，建议使用</span><br></code></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">echo</span> <span class="hljs-variable">$var_name</span>     <span class="hljs-comment"># 输出：zyue</span><br><span class="hljs-built_in">echo</span> <span class="hljs-variable">$&#123;var_name&#125;</span> <span class="hljs-comment"># 加大括号，建议使用</span><br></code></pre></td></tr></table></figure>
 </li>
 <li><p>变量值是字符串时；</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># 加引号来包含空格</span><br><br><span class="hljs-comment"># 单引号里面字符都会原样输出</span><br>var_info=<span class="hljs-string">&#x27;my name is $&#123;var_name&#125;&#x27;</span><br><span class="hljs-built_in">echo</span> var_info <span class="hljs-comment"># 输出：my name is $&#123;var_name&#125;</span><br><br><span class="hljs-comment"># 双引号里面可以有变量，还可以有转义字符</span><br>var_info=<span class="hljs-string">&quot;my name is <span class="hljs-variable">$&#123;var_name&#125;</span>&quot;</span><br><span class="hljs-built_in">echo</span> var_info <span class="hljs-comment"># 输出：my name is zyue</span><br><br><span class="hljs-comment"># 获取字符串长度</span><br>string=<span class="hljs-string">&quot;abcd&quot;</span><br><span class="hljs-built_in">echo</span> <span class="hljs-variable">$&#123;#string&#125;</span> <span class="hljs-comment">#输出：4</span><br></code></pre></td></tr></table></figure>
@@ -479,13 +479,13 @@
 </blockquote>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-keyword">if</span> [ 条件 ]<br><span class="hljs-keyword">then</span><br>   此处执行某操作<br><span class="hljs-keyword">fi</span><br><br><span class="hljs-comment"># ===============================</span><br><br><span class="hljs-keyword">if</span> [ 条件 ]<br><span class="hljs-keyword">then</span><br>   此处执行某操作<br><span class="hljs-keyword">else</span><br>   此处执行某操作<br><span class="hljs-keyword">fi</span><br><br><span class="hljs-comment"># ===============================</span><br><br><span class="hljs-keyword">if</span> [ 条件 ]<br><span class="hljs-keyword">then</span><br>   此处执行某操作<br><span class="hljs-keyword">elif</span> [ 条件 ]<br><span class="hljs-keyword">then</span><br>   此处执行某操作<br><span class="hljs-keyword">else</span><br>   此处执行某操作<br><span class="hljs-keyword">fi</span><br></code></pre></td></tr></table></figure>
 
-<h3 id="case分支"><a href="#case分支" class="headerlink" title="case分支"></a>case分支</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-meta">#!/bin/bash</span><br><br><span class="hljs-built_in">echo</span> <span class="hljs-string">&quot;is it morning?please answer yes or no&quot;</span><br><span class="hljs-built_in">read</span> YES_OR_NO<br><br><span class="hljs-keyword">case</span> <span class="hljs-string">&quot;<span class="hljs-variable">$YES_OR_NO</span>&quot;</span> <span class="hljs-keyword">in</span><br>	<span class="hljs-built_in">yes</span>|y|Yes|YES)<br>		<span class="hljs-built_in">echo</span> <span class="hljs-string">&quot;good morning&quot;</span><br>		;;					<span class="hljs-comment">#相当于break</span><br>	[nN][oO])<br>		<span class="hljs-built_in">echo</span> <span class="hljs-string">&quot;good afternoon&quot;</span><br>		;;<br>	*)<br>		<span class="hljs-built_in">echo</span> <span class="hljs-string">&quot;not recognized&quot;</span><br>		;;<br><span class="hljs-keyword">esac</span>						<span class="hljs-comment">#结束</span><br></code></pre></td></tr></table></figure>
+<h3 id="case分支"><a href="#case分支" class="headerlink" title="case分支"></a>case分支</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-meta">#!/bin/bash</span><br><br><span class="hljs-built_in">echo</span> <span class="hljs-string">&quot;is it morning?please answer yes or no&quot;</span><br><span class="hljs-built_in">read</span> YES_OR_NO<br><br><span class="hljs-keyword">case</span> <span class="hljs-string">&quot;<span class="hljs-variable">$YES_OR_NO</span>&quot;</span> <span class="hljs-keyword">in</span><br>    <span class="hljs-built_in">yes</span>|y|Yes|YES)<br>        <span class="hljs-built_in">echo</span> <span class="hljs-string">&quot;good morning&quot;</span><br>        ;;                    <span class="hljs-comment">#相当于break</span><br>    [nN][oO])<br>        <span class="hljs-built_in">echo</span> <span class="hljs-string">&quot;good afternoon&quot;</span><br>        ;;<br>    *)<br>        <span class="hljs-built_in">echo</span> <span class="hljs-string">&quot;not recognized&quot;</span><br>        ;;<br><span class="hljs-keyword">esac</span>                        <span class="hljs-comment">#结束</span><br></code></pre></td></tr></table></figure>
 
 <h3 id="循环语句"><a href="#循环语句" class="headerlink" title="循环语句"></a>循环语句</h3><p>例一：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-meta">#!/bin/bash</span><br><br><span class="hljs-keyword">for</span> fruit <span class="hljs-keyword">in</span> apple banana pear<br><span class="hljs-keyword">do</span><br>	<span class="hljs-built_in">echo</span> <span class="hljs-string">&quot;I like <span class="hljs-variable">$fruit</span>&quot;</span><br><span class="hljs-keyword">done</span><br></code></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-meta">#!/bin/bash</span><br><br><span class="hljs-keyword">for</span> fruit <span class="hljs-keyword">in</span> apple banana pear<br><span class="hljs-keyword">do</span><br>    <span class="hljs-built_in">echo</span> <span class="hljs-string">&quot;I like <span class="hljs-variable">$fruit</span>&quot;</span><br><span class="hljs-keyword">done</span><br></code></pre></td></tr></table></figure>
 
 <p>例二：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-meta">#!/bin/bash</span><br><br><span class="hljs-built_in">sum</span>=0<br><span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> &#123;1..100&#125;<br><span class="hljs-keyword">do</span><br>	<span class="hljs-built_in">sum</span>=$[<span class="hljs-built_in">sum</span>+i]<br><span class="hljs-keyword">done</span><br><span class="hljs-built_in">echo</span> <span class="hljs-variable">$sum</span><br></code></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-meta">#!/bin/bash</span><br><br><span class="hljs-built_in">sum</span>=0<br><span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> &#123;1..100&#125;<br><span class="hljs-keyword">do</span><br>    <span class="hljs-built_in">sum</span>=$[<span class="hljs-built_in">sum</span>+i]<br><span class="hljs-keyword">done</span><br><span class="hljs-built_in">echo</span> <span class="hljs-variable">$sum</span><br></code></pre></td></tr></table></figure>
 
 <h3 id="运算符"><a href="#运算符" class="headerlink" title="运算符"></a>运算符</h3><ol>
 <li><p>算术运算符，需要借助<code>expr</code>命令；</p>
@@ -617,7 +617,7 @@
 </li>
 </ol>
 <h3 id="函数"><a href="#函数" class="headerlink" title="函数"></a>函数</h3><p>只能返回int类型的值；</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-meta">#!/bin/bash		</span><br><br><span class="hljs-keyword">function</span> f()		<span class="hljs-comment">#function 或者 () 可以忽略其中一个，但不能同时不写</span><br>&#123;<br>	<span class="hljs-built_in">echo</span> <span class="hljs-string">&quot;hello, world&quot;</span><br>	<span class="hljs-built_in">return</span> 1<br>&#125;<br>f<br><span class="hljs-built_in">echo</span> $?<br></code></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-meta">#!/bin/bash        </span><br><br><span class="hljs-keyword">function</span> f()        <span class="hljs-comment">#function 或者 () 可以忽略其中一个，但不能同时不写</span><br>&#123;<br>    <span class="hljs-built_in">echo</span> <span class="hljs-string">&quot;hello, world&quot;</span><br>    <span class="hljs-built_in">return</span> 1<br>&#125;<br>f<br><span class="hljs-built_in">echo</span> $?<br></code></pre></td></tr></table></figure>
 
 <h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><p><a target="_blank" rel="noopener" href="http://note.alvinhtml.com/developer/shell.html">http://note.alvinhtml.com/developer/shell.html</a></p>
 <p><a target="_blank" rel="noopener" href="https://gerenblog.top/fhgfh/">https://gerenblog.top/fhgfh/</a></p>
@@ -669,7 +669,7 @@
   <div class="license-box my-3">
     <div class="license-title">
       <div>Shell脚本笔记</div>
-      <div>https://zyue2022.github.io/2022/08/20/Shell脚本笔记/</div>
+      <div>https://zyue2022.github.io/2025/08/20/Shell脚本笔记/</div>
     </div>
     <div class="license-meta">
       
@@ -681,13 +681,13 @@
       
         <div class="license-meta-item license-meta-date">
           <div>发布于</div>
-          <div>2022年8月20日</div>
+          <div>2025年8月20日</div>
         </div>
       
       
         <div class="license-meta-item license-meta-date">
           <div>更新于</div>
-          <div>2022年9月8日</div>
+          <div>2026年8月23日</div>
         </div>
       
       
@@ -718,9 +718,9 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2022/09/08/C%E8%AF%AD%E8%A8%80%E8%A1%A8%E7%A4%BA%E5%AD%97%E7%AC%A6%E4%B8%B2/" title="C语言表示字符串">
+                      <a href="/2026/08/08/Hexo%E5%8D%9A%E5%AE%A2%E6%8C%81%E7%BB%AD%E6%9B%B4%E6%96%B0/" title="Hexo博客持续更新指南">
                         <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">C语言表示字符串</span>
+                        <span class="hidden-mobile">Hexo博客持续更新指南</span>
                         <span class="visible-mobile">上一篇</span>
                       </a>
                     
@@ -728,8 +728,8 @@
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2022/08/13/CMU15-445%E6%95%B0%E6%8D%AE%E5%BA%93%E5%AE%9E%E9%AA%8C%E6%80%BB%E7%BB%93/" title="CMU15-445数据库实验总结">
-                        <span class="hidden-mobile">CMU15-445数据库实验总结</span>
+                      <a href="/2024/07/31/%E6%8E%92%E5%BA%8F%E7%AE%97%E6%B3%95%E6%80%BB%E7%BB%93/" title="排序算法总结">
+                        <span class="hidden-mobile">排序算法总结</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
