@@ -1,0 +1,1157 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+
+  <link rel="apple-touch-icon" sizes="76x76" href="/hexo_img/icon.jpg">
+  <link rel="icon" href="/hexo_img/icon.jpg">
+  
+    <link rel="canonical" href="https://zyue2022.github.io/2026/09/03/封装Java常用集合工具类-笔记/"/>
+  
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#0D3562">
+  <meta name="author" content="ZYUE">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="日常写代码时，集合转换大概长这样： 1234List&lt;Long&gt; ids &#x3D; userList.stream()        .filter(u -&gt; u.getAge() &gt;&#x3D; 20)        .map(User::getId)        .collect(Collectors.toList());  但每个调用点都要写一遍 .stream() ... .co">
+<meta property="og:type" content="article">
+<meta property="og:title" content="封装Java常用集合工具类-笔记">
+<meta property="og:url" content="https://zyue2022.github.io/2026/09/03/%E5%B0%81%E8%A3%85Java%E5%B8%B8%E7%94%A8%E9%9B%86%E5%90%88%E5%B7%A5%E5%85%B7%E7%B1%BB-%E7%AC%94%E8%AE%B0/index.html">
+<meta property="og:site_name" content="参天小树">
+<meta property="og:description" content="日常写代码时，集合转换大概长这样： 1234List&lt;Long&gt; ids &#x3D; userList.stream()        .filter(u -&gt; u.getAge() &gt;&#x3D; 20)        .map(User::getId)        .collect(Collectors.toList());  但每个调用点都要写一遍 .stream() ... .co">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://zyue2022.github.io/post_img/44.jpg">
+<meta property="article:published_time" content="2026-09-03T15:58:01.000Z">
+<meta property="article:modified_time" content="2026-09-03T16:25:19.375Z">
+<meta property="article:author" content="ZYUE">
+<meta property="article:tag" content="Java">
+<meta property="article:tag" content="工具类">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://zyue2022.github.io/post_img/44.jpg">
+  
+  
+  
+  <title>封装Java常用集合工具类-笔记 - 参天小树</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1749284_5i9bdhy70f8.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1736178_k526ubmyhba.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"zyue2022.github.io","root":"/","version":"1.9.9","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"expand_all":true,"placement":"left","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":3},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"follow_dnt":false,"baidu":"c03149260ee4667c7ea092624ddee2b5","google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false},"openkounter":{"server_url":"https://open-kounter.mintimate.cn","path":"window.location.pathname","ignore_local":false},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2024-01-01T00:00:00.000Z","token":null,"api_server":null}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+  
+    <!-- Baidu Analytics -->
+    <script async>
+      if (!Fluid.ctx.dnt) {
+        var _hmt = _hmt || [];
+        (function() {
+          var hm = document.createElement("script");
+          hm.src = "https://hm.baidu.com/hm.js?c03149260ee4667c7ea092624ddee2b5";
+          var s = document.getElementsByTagName("script")[0];
+          s.parentNode.insertBefore(hm, s);
+        })();
+      }
+    </script>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+  
+
+
+
+
+  
+<meta name="generator" content="Hexo 8.1.2"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong> </strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content (desktop) -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<!-- Mobile grid menu overlay -->
+<div id="mobile-grid-menu" class="d-lg-none">
+  <div class="mobile-grid-menu-inner">
+    <div class="container">
+      <div class="row">
+        
+          
+          
+          
+          
+            <div class="col-4 mobile-grid-cell">
+              <a href="/" target="_self">
+                <div class="mobile-grid-item">
+                  <i class="iconfont icon-home-fill"></i>
+                  <span>首页</span>
+                </div>
+              </a>
+            </div>
+          
+        
+          
+          
+          
+          
+            <div class="col-4 mobile-grid-cell">
+              <a href="/archives/" target="_self">
+                <div class="mobile-grid-item">
+                  <i class="iconfont icon-archive-fill"></i>
+                  <span>归档</span>
+                </div>
+              </a>
+            </div>
+          
+        
+          
+          
+          
+          
+            <div class="col-4 mobile-grid-cell">
+              <a href="/categories/" target="_self">
+                <div class="mobile-grid-item">
+                  <i class="iconfont icon-category-fill"></i>
+                  <span>分类</span>
+                </div>
+              </a>
+            </div>
+          
+        
+          
+          
+          
+          
+            <div class="col-4 mobile-grid-cell">
+              <a href="/tags/" target="_self">
+                <div class="mobile-grid-item">
+                  <i class="iconfont icon-tags-fill"></i>
+                  <span>标签</span>
+                </div>
+              </a>
+            </div>
+          
+        
+          
+          
+          
+          
+            <div class="col-4 mobile-grid-cell">
+              <a href="/about/" target="_self">
+                <div class="mobile-grid-item">
+                  <i class="iconfont icon-user-fill"></i>
+                  <span>关于</span>
+                </div>
+              </a>
+            </div>
+          
+        
+        
+          <div class="col-4 mobile-grid-cell" id="mobile-search-btn">
+            <a href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <div class="mobile-grid-item">
+                <i class="iconfont icon-search"></i>
+                <span>搜索</span>
+              </div>
+            </a>
+          </div>
+        
+        
+          <div class="col-4 mobile-grid-cell" id="mobile-color-toggle-btn"
+               data-label-light="开灯"
+               data-label-dark="关灯">
+            <a href="javascript:;" aria-label="Color Toggle">
+              <div class="mobile-grid-item">
+                <i class="iconfont icon-dark" id="mobile-color-toggle-icon"></i>
+                <span id="mobile-color-toggle-label">关灯</span>
+              </div>
+            </a>
+          </div>
+        
+      </div>
+    </div>
+  </div>
+</div>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/hexo_img/bk2.jpg') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="封装Java常用集合工具类-笔记"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-author" aria-hidden="true"></i>
+        ZYUE
+      </span>
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2026-09-03 23:58" pubdate>
+          2026年9月3日 晚上
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          6.7k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          56 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="padding-left: 2rem; margin-right: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">封装Java常用集合工具类-笔记</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <p>日常写代码时，集合转换大概长这样：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs java">List&lt;Long&gt; ids = userList.stream()<br>        .filter(u -&gt; u.getAge() &gt;= <span class="hljs-number">20</span>)<br>        .map(User::getId)<br>        .collect(Collectors.toList());<br></code></pre></td></tr></table></figure>
+
+<p>但每个调用点都要写一遍 <code>.stream() ... .collect(Collectors.toList())</code> 这串样板；<code>userList</code> 万一是 null，<code>stream()</code> 直接 NPE；list 转 map 时可能还需判空。所以一般都会沉淀一个自己的工具类，这里我的工具类叫 FunUtils。</p>
+<h1 id="完整代码"><a href="#完整代码" class="headerlink" title="完整代码"></a>完整代码</h1><p>先上全貌，后面逐个方法说：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">import</span> java.util.Collection;<br><span class="hljs-keyword">import</span> java.util.Collections;<br><span class="hljs-keyword">import</span> java.util.HashSet;<br><span class="hljs-keyword">import</span> java.util.List;<br><span class="hljs-keyword">import</span> java.util.Map;<br><span class="hljs-keyword">import</span> java.util.Objects;<br><span class="hljs-keyword">import</span> java.util.Optional;<br><span class="hljs-keyword">import</span> java.util.Set;<br><span class="hljs-keyword">import</span> java.util.function.BinaryOperator;<br><span class="hljs-keyword">import</span> java.util.function.Function;<br><span class="hljs-keyword">import</span> java.util.function.Predicate;<br><span class="hljs-keyword">import</span> java.util.stream.Collector;<br><span class="hljs-keyword">import</span> java.util.stream.Collectors;<br><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">final</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">FunUtils</span> &#123;<br><br>    <span class="hljs-keyword">private</span> <span class="hljs-title function_">FunUtils</span><span class="hljs-params">()</span> &#123;<br>    &#125;<br><br>    <span class="hljs-comment">// ---------- 元素类型转换 ----------</span><br><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> &lt;T, R&gt; List&lt;R&gt; <span class="hljs-title function_">toList</span><span class="hljs-params">(List&lt;T&gt; list, Function&lt;T, R&gt; mapper)</span> &#123;<br>        <span class="hljs-keyword">return</span> convert(list, mapper, Collectors.toList());<br>    &#125;<br><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> &lt;T, R&gt; Set&lt;R&gt; <span class="hljs-title function_">toSet</span><span class="hljs-params">(List&lt;T&gt; list, Function&lt;T, R&gt; mapper)</span> &#123;<br>        <span class="hljs-keyword">return</span> convert(list, mapper, Collectors.toSet());<br>    &#125;<br><br>    <span class="hljs-comment">/**</span><br><span class="hljs-comment">     * 转换主干：null 安全，返回类型由 collector 决定</span><br><span class="hljs-comment">     */</span><br>    <span class="hljs-keyword">private</span> <span class="hljs-keyword">static</span> &lt;T, R, C <span class="hljs-keyword">extends</span> <span class="hljs-title class_">Collection</span>&lt;R&gt;&gt; C <span class="hljs-title function_">convert</span><span class="hljs-params">(List&lt;T&gt; list,</span><br><span class="hljs-params">            Function&lt;T, R&gt; mapper, Collector&lt;R, ?, C&gt; collector)</span> &#123;<br>        <span class="hljs-keyword">return</span> emptyIfNull(list).stream().map(mapper).collect(collector);<br>    &#125;<br><br>    <span class="hljs-comment">// ---------- List 转 Map ----------</span><br><br>    <span class="hljs-comment">/** 严格版：value 为元素本身，key 重复直接抛 IllegalStateException */</span><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> &lt;K, V&gt; Map&lt;K, V&gt; <span class="hljs-title function_">toMap</span><span class="hljs-params">(List&lt;V&gt; list, Function&lt;V, K&gt; keyFunc)</span> &#123;<br>        <span class="hljs-keyword">return</span> toMap(list, keyFunc, v -&gt; v);<br>    &#125;<br><br>    <span class="hljs-comment">/** 严格版：key、value 都指定，key 重复直接抛 IllegalStateException */</span><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> &lt;T, K, V&gt; Map&lt;K, V&gt; <span class="hljs-title function_">toMap</span><span class="hljs-params">(List&lt;T&gt; list,</span><br><span class="hljs-params">            Function&lt;T, K&gt; keyFunc, Function&lt;T, V&gt; valFunc)</span> &#123;<br>        <span class="hljs-keyword">return</span> emptyIfNull(list).stream()<br>                .filter(Objects::nonNull)<br>                .collect(Collectors.toMap(keyFunc, valFunc));<br>    &#125;<br><br>    <span class="hljs-comment">/** 宽容版：value 为元素本身，key 重复时后者覆盖前者 */</span><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> &lt;K, V&gt; Map&lt;K, V&gt; <span class="hljs-title function_">toMapQuietly</span><span class="hljs-params">(List&lt;V&gt; list, Function&lt;V, K&gt; keyFunc)</span> &#123;<br>        <span class="hljs-keyword">return</span> toMapQuietly(list, keyFunc, v -&gt; v);<br>    &#125;<br><br>    <span class="hljs-comment">/** 宽容版：key、value 都指定，key 重复时后者覆盖前者 */</span><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> &lt;T, K, V&gt; Map&lt;K, V&gt; <span class="hljs-title function_">toMapQuietly</span><span class="hljs-params">(List&lt;T&gt; list,</span><br><span class="hljs-params">            Function&lt;T, K&gt; keyFunc, Function&lt;T, V&gt; valFunc)</span> &#123;<br>        <span class="hljs-keyword">return</span> emptyIfNull(list).stream()<br>                .filter(Objects::nonNull)<br>                .collect(Collectors.toMap(keyFunc, valFunc, (a, b) -&gt; b));<br>    &#125;<br><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> &lt;T, K&gt; Map&lt;K, List&lt;T&gt;&gt; <span class="hljs-title function_">groupBy</span><span class="hljs-params">(List&lt;T&gt; list, Function&lt;T, K&gt; keyFunc)</span> &#123;<br>        <span class="hljs-keyword">return</span> emptyIfNull(list).stream()<br>                .filter(Objects::nonNull)<br>                .collect(Collectors.groupingBy(keyFunc));<br>    &#125;<br><br>    <span class="hljs-comment">// ---------- 过滤 ----------</span><br><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> &lt;T&gt; List&lt;T&gt; <span class="hljs-title function_">filter</span><span class="hljs-params">(List&lt;T&gt; list, Predicate&lt;T&gt; pred)</span> &#123;<br>        <span class="hljs-keyword">return</span> emptyIfNull(list).stream().filter(pred).collect(Collectors.toList());<br>    &#125;<br><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> &lt;T&gt; List&lt;T&gt; <span class="hljs-title function_">filterNotNull</span><span class="hljs-params">(List&lt;T&gt; list)</span> &#123;<br>        <span class="hljs-keyword">return</span> filter(list, Objects::nonNull);<br>    &#125;<br><br>    <span class="hljs-comment">/** 按指定 key 去重，保留先出现的元素 */</span><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> &lt;T, K&gt; List&lt;T&gt; <span class="hljs-title function_">distinctByKey</span><span class="hljs-params">(List&lt;T&gt; list, Function&lt;T, K&gt; keyFunc)</span> &#123;<br>        Set&lt;K&gt; seen = <span class="hljs-keyword">new</span> <span class="hljs-title class_">HashSet</span>&lt;&gt;();<br>        <span class="hljs-keyword">return</span> filter(filterNotNull(list), t -&gt; seen.add(keyFunc.apply(t)));<br>    &#125;<br><br>    <span class="hljs-comment">// ---------- 其他 ----------</span><br><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> &lt;T&gt; List&lt;T&gt; <span class="hljs-title function_">emptyIfNull</span><span class="hljs-params">(List&lt;T&gt; list)</span> &#123;<br>        <span class="hljs-keyword">return</span> list == <span class="hljs-literal">null</span> ? Collections.emptyList() : list;<br>    &#125;<br><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> &lt;T&gt; Optional&lt;T&gt; <span class="hljs-title function_">findFirst</span><span class="hljs-params">(List&lt;T&gt; list, Predicate&lt;T&gt; pred)</span> &#123;<br>        <span class="hljs-keyword">return</span> emptyIfNull(list).stream().filter(pred).findFirst();<br>    &#125;<br><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> &lt;T&gt; Optional&lt;T&gt; <span class="hljs-title function_">findAny</span><span class="hljs-params">(List&lt;T&gt; list, Predicate&lt;T&gt; pred)</span> &#123;<br>        <span class="hljs-keyword">return</span> emptyIfNull(list).stream().filter(pred).findAny();<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h1 id="逐个方法说"><a href="#逐个方法说" class="headerlink" title="逐个方法说"></a>逐个方法说</h1><h2 id="1-元素类型转换"><a href="#1-元素类型转换" class="headerlink" title="1. 元素类型转换"></a>1. 元素类型转换</h2><h3 id="toList"><a href="#toList" class="headerlink" title="toList"></a>toList</h3><table>
+<thead>
+<tr>
+<th>项目</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>签名</td>
+<td><code>&lt;T, R&gt; List&lt;R&gt; toList(List&lt;T&gt; list, Function&lt;T, R&gt; mapper)</code></td>
+</tr>
+<tr>
+<td>作用</td>
+<td>每个元素经 mapper 转换后收集成 List</td>
+</tr>
+<tr>
+<td>null 处理</td>
+<td>list 为 null 时返回空 List</td>
+</tr>
+<tr>
+<td>示例</td>
+<td><code>FunUtils.toList(users, User::getName)</code></td>
+</tr>
+</tbody></table>
+<h3 id="toSet"><a href="#toSet" class="headerlink" title="toSet"></a>toSet</h3><table>
+<thead>
+<tr>
+<th>项目</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>签名</td>
+<td><code>&lt;T, R&gt; Set&lt;R&gt; toSet(List&lt;T&gt; list, Function&lt;T, R&gt; mapper)</code></td>
+</tr>
+<tr>
+<td>作用</td>
+<td>每个元素经 mapper 转换后收集成 Set，自动按 equals 去重</td>
+</tr>
+<tr>
+<td>null 处理</td>
+<td>list 为 null 时返回空 Set</td>
+</tr>
+<tr>
+<td>示例</td>
+<td><code>FunUtils.toSet(users, User::getId)</code></td>
+</tr>
+</tbody></table>
+<p>设计上只有私有的 <code>convert</code> 一个方法干实事，<code>toList</code>、<code>toSet</code> 只是往里传不同的 <code>Collector</code>。哪天想返回 <code>LinkedHashSet</code> 或别的容器，加几行新方法就行。</p>
+<h2 id="2-List-转-Map"><a href="#2-List-转-Map" class="headerlink" title="2. List 转 Map"></a>2. List 转 Map</h2><h3 id="toMap（严格版）"><a href="#toMap（严格版）" class="headerlink" title="toMap（严格版）"></a>toMap（严格版）</h3><table>
+<thead>
+<tr>
+<th>项目</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>签名①</td>
+<td><code>&lt;K, V&gt; Map&lt;K, V&gt; toMap(List&lt;V&gt; list, Function&lt;V, K&gt; keyFunc)</code></td>
+</tr>
+<tr>
+<td>签名②</td>
+<td><code>&lt;T, K, V&gt; Map&lt;K, V&gt; toMap(List&lt;T&gt; list, Function&lt;T, K&gt; keyFunc, Function&lt;T, V&gt; valFunc)</code></td>
+</tr>
+<tr>
+<td>作用</td>
+<td>签名① value 为元素本身；签名② key、value 都指定</td>
+</tr>
+<tr>
+<td>null 处理</td>
+<td>list 为 null 返回空 Map；null 元素会被先过滤掉</td>
+</tr>
+<tr>
+<td>示例</td>
+<td><code>FunUtils.toMap(users, User::getId)</code>、<code>FunUtils.toMap(users, User::getId, User::getName)</code></td>
+</tr>
+<tr>
+<td>重复 key</td>
+<td><strong>抛 <code>IllegalStateException</code></strong></td>
+</tr>
+</tbody></table>
+<p>重复 key 就炸，是有意为之。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-comment">// 列表里有两个 id=2 的用户 → IllegalStateException: Duplicate key</span><br>Map&lt;Long, User&gt; byId = FunUtils.toMap(users, User::getId);<br></code></pre></td></tr></table></figure>
+
+<h3 id="toMapQuietly（宽容版）"><a href="#toMapQuietly（宽容版）" class="headerlink" title="toMapQuietly（宽容版）"></a>toMapQuietly（宽容版）</h3><table>
+<thead>
+<tr>
+<th>项目</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>签名①</td>
+<td><code>&lt;K, V&gt; Map&lt;K, V&gt; toMapQuietly(List&lt;V&gt; list, Function&lt;V, K&gt; keyFunc)</code></td>
+</tr>
+<tr>
+<td>签名②</td>
+<td><code>&lt;T, K, V&gt; Map&lt;K, V&gt; toMapQuietly(List&lt;T&gt; list, Function&lt;T, K&gt; keyFunc, Function&lt;T, V&gt; valFunc)</code></td>
+</tr>
+<tr>
+<td>作用</td>
+<td>同 toMap 两个重载，仅重复 key 行为不同</td>
+</tr>
+<tr>
+<td>null 处理</td>
+<td>同 toMap</td>
+</tr>
+<tr>
+<td>示例</td>
+<td><code>FunUtils.toMapQuietly(users, User::getId, User::getName)</code></td>
+</tr>
+<tr>
+<td>重复 key</td>
+<td>后者覆盖前者，不抛异常</td>
+</tr>
+</tbody></table>
+<p>确认重复 key 无所谓（或者明确要”取最新”）时用这个，内部就是多传了一个 <code>(a, b) -&gt; b</code> 的 merge 函数。</p>
+<p>一个所有 toMap 系方法共用的提醒：<code>Collectors.toMap</code> 的 value 不能是 null（内部走 <code>HashMap.merge</code>）。</p>
+<h3 id="groupBy"><a href="#groupBy" class="headerlink" title="groupBy"></a>groupBy</h3><table>
+<thead>
+<tr>
+<th>项目</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>签名</td>
+<td><code>&lt;T, K&gt; Map&lt;K, List&lt;T&gt;&gt; groupBy(List&lt;T&gt; list, Function&lt;T, K&gt; keyFunc)</code></td>
+</tr>
+<tr>
+<td>作用</td>
+<td>按 key 分桶，value 是同 key 的元素列表</td>
+</tr>
+<tr>
+<td>null 处理</td>
+<td>list 为 null 返回空 Map；null 元素会被先过滤掉</td>
+</tr>
+<tr>
+<td>示例</td>
+<td><code>FunUtils.groupBy(users, u -&gt; u.getAge() / 10)</code>（按年龄段分桶）</td>
+</tr>
+</tbody></table>
+<h2 id="3-过滤"><a href="#3-过滤" class="headerlink" title="3. 过滤"></a>3. 过滤</h2><h3 id="filter"><a href="#filter" class="headerlink" title="filter"></a>filter</h3><table>
+<thead>
+<tr>
+<th>项目</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>签名</td>
+<td><code>&lt;T&gt; List&lt;T&gt; filter(List&lt;T&gt; list, Predicate&lt;T&gt; pred)</code></td>
+</tr>
+<tr>
+<td>作用</td>
+<td>保留满足条件的元素</td>
+</tr>
+<tr>
+<td>null 处理</td>
+<td>list 为 null 时返回空 List</td>
+</tr>
+<tr>
+<td>示例</td>
+<td><code>FunUtils.filter(users, u -&gt; u.getAge() &gt;= 18)</code></td>
+</tr>
+</tbody></table>
+<p>注意 <code>filter</code> 本身不过滤 null 元素。稳妥起见先 <code>filterNotNull</code> 再 filter。</p>
+<h3 id="filterNotNull"><a href="#filterNotNull" class="headerlink" title="filterNotNull"></a>filterNotNull</h3><table>
+<thead>
+<tr>
+<th>项目</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>签名</td>
+<td><code>&lt;T&gt; List&lt;T&gt; filterNotNull(List&lt;T&gt; list)</code></td>
+</tr>
+<tr>
+<td>作用</td>
+<td>去掉 null 元素</td>
+</tr>
+<tr>
+<td>null 处理</td>
+<td>list 为 null 时返回空 List</td>
+</tr>
+<tr>
+<td>示例</td>
+<td><code>FunUtils.filterNotNull(userList)</code></td>
+</tr>
+</tbody></table>
+<h3 id="distinctByKey"><a href="#distinctByKey" class="headerlink" title="distinctByKey"></a>distinctByKey</h3><table>
+<thead>
+<tr>
+<th>项目</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>签名</td>
+<td><code>&lt;T, K&gt; List&lt;T&gt; distinctByKey(List&lt;T&gt; list, Function&lt;T, K&gt; keyFunc)</code></td>
+</tr>
+<tr>
+<td>作用</td>
+<td>按指定 key 去重，保留先出现的元素</td>
+</tr>
+<tr>
+<td>null 处理</td>
+<td>list 为 null 时返回空 List；null 元素会被先过滤掉</td>
+</tr>
+<tr>
+<td>示例</td>
+<td><code>FunUtils.distinctByKey(users, User::getId)</code></td>
+</tr>
+</tbody></table>
+<p>JDK 自带的 <code>distinct()</code> 只能按 <code>equals</code> 去重，按字段去重得自己来。套路是拿一个 Set 记录出现过的 key，filter 里靠 <code>Set.add</code> 的返回值（false 表示已存在）把重复的挡掉。实现里先 <code>filterNotNull</code> 再去重，不然 null 元素在 <code>keyFunc.apply</code> 时就 NPE 了。</p>
+<h2 id="4-顺手的小工具"><a href="#4-顺手的小工具" class="headerlink" title="4. 顺手的小工具"></a>4. 顺手的小工具</h2><h3 id="emptyIfNull"><a href="#emptyIfNull" class="headerlink" title="emptyIfNull"></a>emptyIfNull</h3><table>
+<thead>
+<tr>
+<th>项目</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>签名</td>
+<td><code>&lt;T&gt; List&lt;T&gt; emptyIfNull(List&lt;T&gt; list)</code></td>
+</tr>
+<tr>
+<td>作用</td>
+<td>null 转空集合</td>
+</tr>
+<tr>
+<td>null 处理</td>
+<td>list 为 null 时返回空 List，否则原样返回</td>
+</tr>
+<tr>
+<td>示例</td>
+<td><code>for (User u : FunUtils.emptyIfNull(userList)) { ... }</code></td>
+</tr>
+</tbody></table>
+<p>它是整个类的地基——<code>convert</code>、<code>toMap</code>、<code>filter</code> 的 null 安全全靠它把 null 换成空集合。返回的空集合是 <code>Collections.emptyList()</code>，不可变，别往里 add。</p>
+<h3 id="findFirst"><a href="#findFirst" class="headerlink" title="findFirst"></a>findFirst</h3><table>
+<thead>
+<tr>
+<th>项目</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>签名</td>
+<td><code>&lt;T&gt; Optional&lt;T&gt; findFirst(List&lt;T&gt; list, Predicate&lt;T&gt; pred)</code></td>
+</tr>
+<tr>
+<td>作用</td>
+<td>取第一个满足条件的元素</td>
+</tr>
+<tr>
+<td>null 处理</td>
+<td>list 为 null 返回 <code>Optional.empty()</code></td>
+</tr>
+<tr>
+<td>示例</td>
+<td><code>FunUtils.findFirst(users, u -&gt; u.getAge() &gt;= 18)</code></td>
+</tr>
+</tbody></table>
+<h3 id="findAny"><a href="#findAny" class="headerlink" title="findAny"></a>findAny</h3><table>
+<thead>
+<tr>
+<th>项目</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>签名</td>
+<td><code>&lt;T&gt; Optional&lt;T&gt; findAny(List&lt;T&gt; list, Predicate&lt;T&gt; pred)</code></td>
+</tr>
+<tr>
+<td>作用</td>
+<td>取任意一个满足条件的元素</td>
+</tr>
+<tr>
+<td>null 处理</td>
+<td>list 为 null 返回 <code>Optional.empty()</code></td>
+</tr>
+<tr>
+<td>示例</td>
+<td><code>FunUtils.findAny(users, u -&gt; u.getAge() &gt;= 18)</code></td>
+</tr>
+</tbody></table>
+<p>两者在串行流里行为一致；<code>findAny</code> 的意义在并行流——不保证取第一个匹配的，随便挑一个，性能更好。一般用 <code>findFirst</code> 就够了，语义明确。</p>
+<h1 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h1><p>整个工具类就是：公共主干收敛成私有方法，公开方法全是薄入口，减少重复代码。</p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/Java/" class="category-chain-item">Java</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/Java/" class="print-no-link">#Java</a>
+      
+        <a href="/tags/%E5%B7%A5%E5%85%B7%E7%B1%BB/" class="print-no-link">#工具类</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>封装Java常用集合工具类-笔记</div>
+      <div>https://zyue2022.github.io/2026/09/03/封装Java常用集合工具类-笔记/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>ZYUE</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2026年9月3日</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>更新于</div>
+          <div>2026年9月4日</div>
+        </div>
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-cc-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2026/08/23/LFU%E7%AE%97%E6%B3%95/" title="LFU算法">
+                        <span class="hidden-mobile">LFU算法</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a>
+<a target="_blank" rel="noopener" href="https://developer.hitokoto.cn/" id="hitokoto_text"><span style="color:#134769;"  id="hitokoto"></span></a> <script src="https://v1.hitokoto.cn/?encode=js&select=%23hitokoto" defer></script> 
+    </div>
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    function isExpandAllEnabled() {
+      return CONFIG.toc && CONFIG.toc.expand_all === true;
+    }
+    function expandAllToc() {
+      if (!isExpandAllEnabled()) { return; }
+      jQuery('#toc-body .tocbot-is-collapsed').removeClass('tocbot-is-collapsed');
+    }
+    function updateTocToggle($li, $childList) {
+      var $toggle = $li.children('.toc-toggle');
+      if ($toggle.length === 0) { return; }
+      var collapsed = $childList.hasClass('tocbot-is-collapsed');
+      $toggle
+        .toggleClass('toc-toggle-collapsed', collapsed)
+        .toggleClass('toc-toggle-expanded', !collapsed);
+    }
+    function bindTocToggle() {
+      if (!isExpandAllEnabled()) { return; }
+      jQuery('#toc-body .toc-list-item').each(function() {
+        var $li = jQuery(this);
+        var $childList = $li.children('ol');
+        if ($childList.length === 0) {
+          if ($li.children('.toc-toggle').length === 0) {
+            $li.prepend('<span class="toc-toggle toc-toggle-placeholder" aria-hidden="true">›</span>');
+          }
+          return;
+        }
+
+        if ($li.children('.toc-toggle').length === 0) {
+          $li.prepend('<span class="toc-toggle toc-toggle-expanded" aria-hidden="true">›</span>');
+        }
+        updateTocToggle($li, $childList);
+      });
+      jQuery('#toc-body').off('click.tocToggle').on('click.tocToggle', '.toc-toggle', function(e) {
+        e.preventDefault();
+        e.stopPropagation();
+        var $li = jQuery(this).parent('.toc-list-item');
+        var $childList = $li.children('ol');
+        if ($childList.length === 0) { return; }
+        $childList.toggleClass('tocbot-is-collapsed');
+        updateTocToggle($li, $childList);
+      });
+      if (!window.__tocToggleObserver) {
+        window.__tocToggleObserver = new MutationObserver(function(mutations) {
+          mutations.forEach(function(mutation) {
+            if (mutation.type !== 'attributes' || mutation.attributeName !== 'class') { return; }
+            var $list = jQuery(mutation.target);
+            var $li = $list.parent('.toc-list-item');
+            if ($li.length === 0) { return; }
+            updateTocToggle($li, $list);
+          });
+        });
+        jQuery('#toc-body ol').each(function() {
+          window.__tocToggleObserver.observe(this, { attributes: true });
+        });
+      }
+    }
+    var tocConfig = Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc);
+    if (isExpandAllEnabled()) {
+      tocConfig.collapseDepth = 6;
+    }
+    window.tocbot.init(tocConfig);
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+    expandAllToc();
+    bindTocToggle();
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+        expandAllToc();
+        bindTocToggle();
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/5.0.0/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script defer src="/js/openkounter.js" ></script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"log":false,"pluginJsPath":"lib/","pluginModelPath":"assets/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
+</html>
