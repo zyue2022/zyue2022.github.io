@@ -11,7 +11,7 @@
   <link rel="apple-touch-icon" sizes="76x76" href="/hexo_img/icon.jpg">
   <link rel="icon" href="/hexo_img/icon.jpg">
   
-    <link rel="canonical" href="https://zyue2022.github.io/2022/09/30/CPP中虚析构函数/"/>
+    <link rel="canonical" href="https://zyue2022.github.io/2026/09/16/岛屿面积问题/"/>
   
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
@@ -21,24 +21,27 @@
   <meta name="author" content="ZYUE">
   <meta name="keywords" content="">
   
-    <meta name="description" content="析构函数我们都知道在C++的多类继承体系中的构造函数与析构函数执行顺序相反； 构造函数是从基类到派生类，析构函数是从派生类到基类； 123456789101112131415161718192021222324252627282930313233343536#include &lt;iostream&gt;using namespace std;class Base &#123;public:">
+    <meta name="description" content="岛屿面积问题1、求岛屿面积或最大面积一般解法是深度搜索，递归4个方向，统计每个岛的面积。 123456789101112131415161718192021222324252627282930313233343536class Solution &#123;    private static final int[][] DIRS &#x3D; &#123; &#123; 0, 1 &#125;, &amp;#12">
 <meta property="og:type" content="article">
-<meta property="og:title" content="CPP中虚析构函数">
-<meta property="og:url" content="https://zyue2022.github.io/2022/09/30/CPP%E4%B8%AD%E8%99%9A%E6%9E%90%E6%9E%84%E5%87%BD%E6%95%B0/index.html">
+<meta property="og:title" content="岛屿面积问题">
+<meta property="og:url" content="https://zyue2022.github.io/2026/09/16/%E5%B2%9B%E5%B1%BF%E9%9D%A2%E7%A7%AF%E9%97%AE%E9%A2%98/index.html">
 <meta property="og:site_name" content="参天小树">
-<meta property="og:description" content="析构函数我们都知道在C++的多类继承体系中的构造函数与析构函数执行顺序相反； 构造函数是从基类到派生类，析构函数是从派生类到基类； 123456789101112131415161718192021222324252627282930313233343536#include &lt;iostream&gt;using namespace std;class Base &#123;public:">
+<meta property="og:description" content="岛屿面积问题1、求岛屿面积或最大面积一般解法是深度搜索，递归4个方向，统计每个岛的面积。 123456789101112131415161718192021222324252627282930313233343536class Solution &#123;    private static final int[][] DIRS &#x3D; &#123; &#123; 0, 1 &#125;, &amp;#12">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://zyue2022.github.io/post_img/34.jpg">
-<meta property="article:published_time" content="2022-09-30T08:44:30.000Z">
-<meta property="article:modified_time" content="2022-09-30T09:21:48.860Z">
+<meta property="og:image" content="https://zyue2022.github.io/post_img/45.jpg">
+<meta property="article:published_time" content="2026-09-16T13:26:43.000Z">
+<meta property="article:modified_time" content="2026-09-16T13:36:46.075Z">
 <meta property="article:author" content="ZYUE">
-<meta property="article:tag" content="C++">
+<meta property="article:tag" content="DFS">
+<meta property="article:tag" content="刷题">
+<meta property="article:tag" content="数据结构">
+<meta property="article:tag" content="算法">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="https://zyue2022.github.io/post_img/34.jpg">
+<meta name="twitter:image" content="https://zyue2022.github.io/post_img/45.jpg">
   
   
   
-  <title>CPP中虚析构函数 - 参天小树</title>
+  <title>岛屿面积问题 - 参天小树</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -336,7 +339,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="CPP中虚析构函数"></span>
+            <span id="subtitle" data-typed-text="岛屿面积问题"></span>
           
         </div>
 
@@ -352,8 +355,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2022-09-30 16:44" pubdate>
-          2022年9月30日 下午
+        <time datetime="2026-09-16 21:26" pubdate>
+          2026年9月16日 晚上
         </time>
       </span>
     
@@ -364,7 +367,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          2k 字
+          2.5k 字
         
       </span>
     
@@ -375,7 +378,7 @@
         
         
         
-          17 分钟
+          22 分钟
         
       </span>
     
@@ -427,32 +430,23 @@
       <div class="container nopadding-x-md" id="board-ctn">
         <div id="board">
           <article class="post-content mx-auto">
-            <h1 id="seo-header">CPP中虚析构函数</h1>
+            <h1 id="seo-header">岛屿面积问题</h1>
             
             
               <div class="markdown-body">
                 
-                <h2 id="析构函数"><a href="#析构函数" class="headerlink" title="析构函数"></a>析构函数</h2><p>我们都知道在C++的多类继承体系中的构造函数与析构函数执行顺序相反；</p>
-<p>构造函数是从基类到派生类，析构函数是从派生类到基类；</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;iostream&gt;</span></span><br><span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> std;<br><br><span class="hljs-keyword">class</span> <span class="hljs-title class_">Base</span> &#123;<br><span class="hljs-keyword">public</span>:<br>    <span class="hljs-built_in">Base</span>() &#123;<br>        cout &lt;&lt; <span class="hljs-string">&quot;bsae&quot;</span> &lt;&lt; endl;<br>    &#125;<br>    ~<span class="hljs-built_in">Base</span>() &#123;<br>        cout &lt;&lt; <span class="hljs-string">&quot;~bsae&quot;</span> &lt;&lt; endl;<br>    &#125;<br>&#125;;<br><br><span class="hljs-keyword">class</span> <span class="hljs-title class_">Derived</span> : <span class="hljs-keyword">public</span> Base &#123;<br><span class="hljs-keyword">public</span>:<br>    <span class="hljs-built_in">Derived</span>() &#123;<br>        cout &lt;&lt; <span class="hljs-string">&quot;Derived&quot;</span> &lt;&lt; endl;<br>    &#125;<br>    ~<span class="hljs-built_in">Derived</span>() &#123;<br>        cout &lt;&lt; <span class="hljs-string">&quot;~Derived&quot;</span> &lt;&lt; endl;<br>    &#125;<br>&#125;;<br><br><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span> </span>&#123;<br>    Derived* p = <span class="hljs-keyword">new</span> <span class="hljs-built_in">Derived</span>();<br>    <span class="hljs-keyword">delete</span> p;<br>    <span class="hljs-built_in">system</span>(<span class="hljs-string">&quot;pause&quot;</span>);<br>    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br><br><span class="hljs-comment">/************************************/</span><br>输出：<br>    bsae<br>    Derived<br>    ~Derived<br>    ~bsae<br></code></pre></td></tr></table></figure>
+                <h2 id="岛屿面积问题"><a href="#岛屿面积问题" class="headerlink" title="岛屿面积问题"></a>岛屿面积问题</h2><h3 id="1、求岛屿面积或最大面积"><a href="#1、求岛屿面积或最大面积" class="headerlink" title="1、求岛屿面积或最大面积"></a>1、求岛屿面积或最大面积</h3><p>一般解法是深度搜索，递归4个方向，统计每个岛的面积。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span> &#123;<br>    <span class="hljs-keyword">private</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">final</span> <span class="hljs-type">int</span>[][] DIRS = &#123; &#123; <span class="hljs-number">0</span>, <span class="hljs-number">1</span> &#125;, &#123; <span class="hljs-number">0</span>, -<span class="hljs-number">1</span> &#125;, &#123; <span class="hljs-number">1</span>, <span class="hljs-number">0</span> &#125;, &#123; -<span class="hljs-number">1</span>, <span class="hljs-number">0</span> &#125; &#125;;<br><br>    <span class="hljs-keyword">private</span> <span class="hljs-type">int</span> <span class="hljs-title function_">dfs</span><span class="hljs-params">(<span class="hljs-type">int</span>[][] grid, <span class="hljs-type">int</span> i, <span class="hljs-type">int</span> j)</span> &#123;<br>        <span class="hljs-type">int</span> <span class="hljs-variable">area</span> <span class="hljs-operator">=</span> <span class="hljs-number">0</span>;<br>        <span class="hljs-type">int</span> <span class="hljs-variable">m</span> <span class="hljs-operator">=</span> grid.length;<br>        <span class="hljs-type">int</span> <span class="hljs-variable">n</span> <span class="hljs-operator">=</span> grid[<span class="hljs-number">0</span>].length;<br>        <span class="hljs-keyword">if</span> (i &lt; <span class="hljs-number">0</span> || i &gt;= m || j &lt; <span class="hljs-number">0</span> || j &gt;= n) &#123;<br>            <span class="hljs-keyword">return</span> area;<br>        &#125;<br>        <span class="hljs-keyword">if</span> (grid[i][j] != <span class="hljs-number">1</span>) &#123;<br>            <span class="hljs-keyword">return</span> area;<br>        &#125;<br>        grid[i][j] = <span class="hljs-number">2</span>;<br>        <span class="hljs-comment">// 当前是土地格子，面积+1</span><br>        ++area;<br>        <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span>[] d : DIRS) &#123;<br>            area += dfs(grid, i + d[<span class="hljs-number">0</span>], j + d[<span class="hljs-number">1</span>]);<br>        &#125;<br>        <span class="hljs-keyword">return</span> area;<br>    &#125;<br><br>    <span class="hljs-keyword">public</span> <span class="hljs-type">int</span> <span class="hljs-title function_">maxAreaOfIsland</span><span class="hljs-params">(<span class="hljs-type">int</span>[][] grid)</span> &#123;<br>        <span class="hljs-type">int</span> <span class="hljs-variable">ans</span> <span class="hljs-operator">=</span> <span class="hljs-number">0</span>;<br>        <span class="hljs-type">int</span> <span class="hljs-variable">m</span> <span class="hljs-operator">=</span> grid.length;<br>        <span class="hljs-type">int</span> <span class="hljs-variable">n</span> <span class="hljs-operator">=</span> grid[<span class="hljs-number">0</span>].length;<br>        <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> <span class="hljs-variable">i</span> <span class="hljs-operator">=</span> <span class="hljs-number">0</span>; i &lt; m; ++i) &#123;<br>            <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> <span class="hljs-variable">j</span> <span class="hljs-operator">=</span> <span class="hljs-number">0</span>; j &lt; n; ++j) &#123;<br>                <span class="hljs-keyword">if</span> (<span class="hljs-number">1</span> == grid[i][j]) &#123;<br>                    ans = Math.max(ans, dfs(grid, i, j));<br>                &#125;<br>            &#125;<br>        &#125;<br>        <span class="hljs-keyword">return</span> ans;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
 
-<h2 id="虚析构函数"><a href="#虚析构函数" class="headerlink" title="虚析构函数"></a>虚析构函数</h2><p>然而<strong>在使用多态时</strong>，如果不将基类的析构函数置为虚函数，可能会出现内存泄漏情况；</p>
-<p>例如，delete指向派生类的基类指针只会调用基类的析构函数，而不会调用到派生类的析构函数，导致派生类资源没有释放干净；</p>
-<p>这种情况下不再是动态绑定，变成静态绑定；</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;iostream&gt;</span></span><br><span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> std;<br><br><span class="hljs-keyword">class</span> <span class="hljs-title class_">Base</span> &#123;<br><span class="hljs-keyword">public</span>:<br>    <span class="hljs-built_in">Base</span>() &#123;<br>        cout &lt;&lt; <span class="hljs-string">&quot;bsae&quot;</span> &lt;&lt; endl;<br>    &#125;<br>    ~<span class="hljs-built_in">Base</span>() &#123;<br>        cout &lt;&lt; <span class="hljs-string">&quot;~bsae&quot;</span> &lt;&lt; endl;<br>    &#125;<br>    <span class="hljs-comment">// virtual ~Base() &#123;</span><br>    <span class="hljs-comment">//     cout &lt;&lt; &quot;~bsae&quot; &lt;&lt; endl;</span><br>    <span class="hljs-comment">// &#125;</span><br>&#125;;<br><br><span class="hljs-keyword">class</span> <span class="hljs-title class_">Derived</span> : <span class="hljs-keyword">public</span> Base &#123;<br><span class="hljs-keyword">public</span>:<br>    <span class="hljs-built_in">Derived</span>() &#123;<br>        cout &lt;&lt; <span class="hljs-string">&quot;Derived&quot;</span> &lt;&lt; endl;<br>    &#125;<br>    ~<span class="hljs-built_in">Derived</span>() &#123;<br>        cout &lt;&lt; <span class="hljs-string">&quot;~Derived&quot;</span> &lt;&lt; endl;<br>    &#125;<br>&#125;;<br><br><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span> </span>&#123;<br>    Base* p = <span class="hljs-keyword">new</span> <span class="hljs-built_in">Derived</span>();<br>    <span class="hljs-keyword">delete</span> p;<br>    <span class="hljs-built_in">system</span>(<span class="hljs-string">&quot;pause&quot;</span>);<br>    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br><br><span class="hljs-comment">/************************************/</span><br>输出：<br>    bsae<br>    Derived<br>    ~bsae<br>加上<span class="hljs-keyword">virtual</span>后输出：<br>    bsae<br>    Derived<br>    ~Derived<br>    ~bsae<br></code></pre></td></tr></table></figure>
 
-<h2 id="小扩展"><a href="#小扩展" class="headerlink" title="小扩展"></a>小扩展</h2><p>如果是使用派生类指针指向基类实例呐？当然是不行的；</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span> </span>&#123;<br>    <span class="hljs-comment">//语法错误： Base* 类型的值不能用于初始化 Derived* 类型的实体</span><br>    Derived* p = <span class="hljs-keyword">new</span> <span class="hljs-built_in">Base</span>();<br>    <span class="hljs-keyword">delete</span> p;<br>    <span class="hljs-built_in">system</span>(<span class="hljs-string">&quot;pause&quot;</span>);<br>    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
 
+<h3 id="2、最大人工岛屿"><a href="#2、最大人工岛屿" class="headerlink" title="2、最大人工岛屿"></a>2、最大人工岛屿</h3><p>就是有一次机会将一个格子填充土地，再判断最大岛屿面积。</p>
 <blockquote>
-<p>error: invalid conversion from ‘Base’ to ‘Derived’</p>
+<p>leetcode题目：<a target="_blank" rel="noopener" href="https://leetcode.cn/problems/making-a-large-island/description/">https://leetcode.cn/problems/making-a-large-island/description/</a></p>
 </blockquote>
-<h2 id="其它总结"><a href="#其它总结" class="headerlink" title="其它总结"></a>其它总结</h2><p>其实上面这个知识点很简单，也是今天面试的一个问题，当时我说基类如果不是虚析构函数会导致调用不到派生类的析构函数。（我是对的 &#x3D;_&#x3D;）</p>
-<p>但面试官却说是<del>调用不到基类的析构函数</del>，这让我一下慌了，难道自己记错了。(还好没有）</p>
-<p>后面想了想，一方面是自己没有回答好，回答问题时没有仔细想好每种分类，脱口就说，估计面试官是想问构造和析构函数的执行顺序的问题的，我应该按照使用多态和不使用多态两个方面分别回答；</p>
-<p>另一方面就是以后觉得自己还是要自信点，也不要每次听到“你确定吗”就怀疑自己错了，然后小紧张；</p>
-<p>当然，前提还是得把基础知识掌握牢固。</p>
-<p>如果错了也就错了，吸取经验，印象还更加深刻。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span> &#123;<br>    <span class="hljs-keyword">private</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">final</span> <span class="hljs-type">int</span>[][] DIRS = &#123; &#123; <span class="hljs-number">0</span>, <span class="hljs-number">1</span> &#125;, &#123; <span class="hljs-number">0</span>, -<span class="hljs-number">1</span> &#125;, &#123; <span class="hljs-number">1</span>, <span class="hljs-number">0</span> &#125;, &#123; -<span class="hljs-number">1</span>, <span class="hljs-number">0</span> &#125; &#125;;<br><br>    <span class="hljs-keyword">private</span> Map&lt;Integer, Integer&gt; idToAreaMap = <span class="hljs-keyword">new</span> <span class="hljs-title class_">HashMap</span>&lt;&gt;();<br><br>    <span class="hljs-keyword">public</span> <span class="hljs-type">int</span> <span class="hljs-title function_">largestIsland</span><span class="hljs-params">(<span class="hljs-type">int</span>[][] grid)</span> &#123;<br>        <span class="hljs-type">int</span> <span class="hljs-variable">ans</span> <span class="hljs-operator">=</span> <span class="hljs-number">0</span>;<br>        <span class="hljs-type">int</span> <span class="hljs-variable">m</span> <span class="hljs-operator">=</span> grid.length;<br>        <span class="hljs-type">int</span> <span class="hljs-variable">n</span> <span class="hljs-operator">=</span> grid[<span class="hljs-number">0</span>].length;<br><br>        <span class="hljs-comment">// 先初始化</span><br>        init(grid);<br><br>        <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> <span class="hljs-variable">i</span> <span class="hljs-operator">=</span> <span class="hljs-number">0</span>; i &lt; m; ++i) &#123;<br>            <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> <span class="hljs-variable">j</span> <span class="hljs-operator">=</span> <span class="hljs-number">0</span>; j &lt; n; ++j) &#123;<br>                <span class="hljs-comment">// 遍历每个水域格子，尝试变成土地</span><br>                <span class="hljs-keyword">if</span> (<span class="hljs-number">0</span> == grid[i][j]) &#123;<br>                    List&lt;Integer&gt; islandIds = <span class="hljs-keyword">new</span> <span class="hljs-title class_">ArrayList</span>&lt;&gt;();<br>                    <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span>[] d : DIRS) &#123;<br>                        <span class="hljs-type">int</span> <span class="hljs-variable">x</span> <span class="hljs-operator">=</span> i + d[<span class="hljs-number">0</span>];<br>                        <span class="hljs-type">int</span> <span class="hljs-variable">y</span> <span class="hljs-operator">=</span> j + d[<span class="hljs-number">1</span>];<br>                        <span class="hljs-keyword">if</span> (isValidIdx(m, n, x, y) &amp;&amp; grid[x][y] &gt;= <span class="hljs-number">2</span>) &#123;<br>                            islandIds.add(grid[x][y]);<br>                        &#125;<br>                    &#125;<br>                    <span class="hljs-type">int</span> <span class="hljs-variable">sum</span> <span class="hljs-operator">=</span> islandIds.stream()<br>                            .distinct()<br>                            .map(idToAreaMap::get)<br>                            .mapToInt(Integer::intValue)<br>                            .sum();<br>                    <span class="hljs-comment">// sum+1就是变化后的总面积</span><br>                    ans = Math.max(ans, sum + <span class="hljs-number">1</span>);<br>                &#125;<br>            &#125;<br>        &#125;<br>        <span class="hljs-comment">// 如果ans为0，说明全是陆地</span><br>        <span class="hljs-keyword">return</span> ans == <span class="hljs-number">0</span> ? m * n : ans;<br>    &#125;<br><br>    <span class="hljs-keyword">private</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">init</span><span class="hljs-params">(<span class="hljs-type">int</span>[][] grid)</span> &#123;<br>        <span class="hljs-type">int</span> <span class="hljs-variable">m</span> <span class="hljs-operator">=</span> grid.length;<br>        <span class="hljs-type">int</span> <span class="hljs-variable">n</span> <span class="hljs-operator">=</span> grid[<span class="hljs-number">0</span>].length;<br>        <span class="hljs-comment">// 岛屿编码从2开始</span><br>        <span class="hljs-type">int</span> <span class="hljs-variable">id</span> <span class="hljs-operator">=</span> <span class="hljs-number">2</span>;<br>        <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> <span class="hljs-variable">i</span> <span class="hljs-operator">=</span> <span class="hljs-number">0</span>; i &lt; m; ++i) &#123;<br>            <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> <span class="hljs-variable">j</span> <span class="hljs-operator">=</span> <span class="hljs-number">0</span>; j &lt; n; ++j) &#123;<br>                <span class="hljs-keyword">if</span> (<span class="hljs-number">1</span> == grid[i][j]) &#123;<br>                    <span class="hljs-type">int</span> <span class="hljs-variable">area</span> <span class="hljs-operator">=</span> dfs(grid, i, j, id);<br>                    idToAreaMap.put(id, area);<br>                    ++id;<br>                &#125;<br>            &#125;<br>        &#125;<br>    &#125;<br><br>    <span class="hljs-keyword">private</span> <span class="hljs-type">int</span> <span class="hljs-title function_">dfs</span><span class="hljs-params">(<span class="hljs-type">int</span>[][] grid, <span class="hljs-type">int</span> i, <span class="hljs-type">int</span> j, <span class="hljs-type">int</span> id)</span> &#123;<br>        <span class="hljs-type">int</span> <span class="hljs-variable">area</span> <span class="hljs-operator">=</span> <span class="hljs-number">0</span>;<br>        <span class="hljs-type">int</span> <span class="hljs-variable">m</span> <span class="hljs-operator">=</span> grid.length;<br>        <span class="hljs-type">int</span> <span class="hljs-variable">n</span> <span class="hljs-operator">=</span> grid[<span class="hljs-number">0</span>].length;<br>        <span class="hljs-keyword">if</span> (!isValidIdx(m, n, i, j)) &#123;<br>            <span class="hljs-keyword">return</span> area;<br>        &#125;<br>        <span class="hljs-keyword">if</span> (grid[i][j] != <span class="hljs-number">1</span>) &#123;<br>            <span class="hljs-keyword">return</span> area;<br>        &#125;<br>        <span class="hljs-comment">// id表示当前岛屿的编号</span><br>        grid[i][j] = id;<br>        <span class="hljs-comment">// 当前是土地格子，面积+1</span><br>        ++area;<br>        <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span>[] d : DIRS) &#123;<br>            area += dfs(grid, i + d[<span class="hljs-number">0</span>], j + d[<span class="hljs-number">1</span>], id);<br>        &#125;<br>        <span class="hljs-keyword">return</span> area;<br>    &#125;<br><br>    <span class="hljs-keyword">private</span> <span class="hljs-type">boolean</span> <span class="hljs-title function_">isValidIdx</span><span class="hljs-params">(<span class="hljs-type">int</span> m, <span class="hljs-type">int</span> n, <span class="hljs-type">int</span> i, <span class="hljs-type">int</span> j)</span> &#123;<br>        <span class="hljs-keyword">return</span> i &gt;= <span class="hljs-number">0</span> &amp;&amp; i &lt; m &amp;&amp; j &gt;= <span class="hljs-number">0</span> &amp;&amp; j &lt; n;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h3 id="3、总结"><a href="#3、总结" class="headerlink" title="3、总结"></a>3、总结</h3><p>基本就是DFS的讨论，但是注意边界、避免重复访问、<strong>环形岛屿</strong>这些。。。</p>
 
                 
               </div>
@@ -471,7 +465,7 @@
     
       <span class="category-chain">
         
-  <a href="/categories/C/" class="category-chain-item">C++</a>
+  <a href="/categories/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95/" class="category-chain-item">数据结构与算法</a>
   
   
 
@@ -486,7 +480,13 @@
     <div class="post-meta">
       <i class="iconfont icon-tags"></i>
       
-        <a href="/tags/C/" class="print-no-link">#C++</a>
+        <a href="/tags/%E5%88%B7%E9%A2%98/" class="print-no-link">#刷题</a>
+      
+        <a href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" class="print-no-link">#数据结构</a>
+      
+        <a href="/tags/%E7%AE%97%E6%B3%95/" class="print-no-link">#算法</a>
+      
+        <a href="/tags/DFS/" class="print-no-link">#DFS</a>
       
     </div>
   
@@ -498,8 +498,8 @@
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>CPP中虚析构函数</div>
-      <div>https://zyue2022.github.io/2022/09/30/CPP中虚析构函数/</div>
+      <div>岛屿面积问题</div>
+      <div>https://zyue2022.github.io/2026/09/16/岛屿面积问题/</div>
     </div>
     <div class="license-meta">
       
@@ -511,13 +511,13 @@
       
         <div class="license-meta-item license-meta-date">
           <div>发布于</div>
-          <div>2022年9月30日</div>
+          <div>2026年9月16日</div>
         </div>
       
       
         <div class="license-meta-item license-meta-date">
           <div>更新于</div>
-          <div>2022年9月30日</div>
+          <div>2026年9月16日</div>
         </div>
       
       
@@ -548,18 +548,12 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2022/10/21/%E5%87%A0%E4%B8%AA%E7%BA%BF%E7%A8%8B%E4%BA%A4%E6%9B%BF%E6%89%93%E5%8D%B0/" title="几个线程交替打印">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">几个线程交替打印</span>
-                        <span class="visible-mobile">上一篇</span>
-                      </a>
-                    
                   </article>
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2022/09/16/%E5%B2%9B%E5%B1%BF%E9%97%AE%E9%A2%98/" title="岛屿周长问题">
-                        <span class="hidden-mobile">岛屿周长问题</span>
+                      <a href="/2026/09/03/%E5%B0%81%E8%A3%85Java%E5%B8%B8%E7%94%A8%E9%9B%86%E5%90%88%E5%B7%A5%E5%85%B7%E7%B1%BB-%E7%AC%94%E8%AE%B0/" title="封装Java常用集合工具类">
+                        <span class="hidden-mobile">封装Java常用集合工具类</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
