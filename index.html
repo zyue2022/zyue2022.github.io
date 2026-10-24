@@ -362,6 +362,79 @@
     
     
       <div class="col-12 col-md-4 m-auto index-img">
+        <a href="/2026/10/24/Nacos%E9%85%8D%E7%BD%AE%E4%B8%AD%E5%BF%83%E5%8E%9F%E7%90%86%E4%B8%8E%E4%BD%BF%E7%94%A8%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A1%B9/" target="_self">
+          <img src="/post_img/47.jpg" srcset="/img/loading.gif" lazyload alt="Nacos配置中心原理与使用注意事项">
+        </a>
+      </div>
+    
+    <article class="col-12 col-md-8 mx-auto index-info">
+      <h2 class="index-header">
+        
+        <a href="/2026/10/24/Nacos%E9%85%8D%E7%BD%AE%E4%B8%AD%E5%BF%83%E5%8E%9F%E7%90%86%E4%B8%8E%E4%BD%BF%E7%94%A8%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A1%B9/" target="_self">
+          Nacos配置中心原理与使用注意事项
+        </a>
+      </h2>
+
+      
+      <a class="index-excerpt " href="/2026/10/24/Nacos%E9%85%8D%E7%BD%AE%E4%B8%AD%E5%BF%83%E5%8E%9F%E7%90%86%E4%B8%8E%E4%BD%BF%E7%94%A8%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A1%B9/" target="_self">
+        <div>
+          配置这个事，项目小的时候没人当回事：往 application.yml 里一堆，写完收工。等服务上了几十台机器，改一个限流阈值要逐台登机器改文件、再一台台重启，就知道配置中心是干嘛用的了。这篇文章聊聊 Nacos 配置中心的原理，以及实际使用中踩过或提前防住的坑。 先说结论：Nacos 配置中心的核心就两件事——集中存配置、变更时让客户端尽快知道。 围绕这两件事，它的设计取舍很清晰：写入要强一致，
+        </div>
+      </a>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2026-10-24 12:14" pubdate>
+              2026-10-24
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3 d-flex align-items-center">
+            <i class="iconfont icon-category"></i>
+            
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/%E4%B8%AD%E9%97%B4%E4%BB%B6/" class="category-chain-item">中间件</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/Nacos/">#Nacos</a>
+            
+              <a href="/tags/%E5%BE%AE%E6%9C%8D%E5%8A%A1/">#微服务</a>
+            
+              <a href="/tags/%E9%85%8D%E7%BD%AE%E4%B8%AD%E5%BF%83/">#配置中心</a>
+            
+              <a href="/tags/%E5%88%86%E5%B8%83%E5%BC%8F/">#分布式</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+      <div class="col-12 col-md-4 m-auto index-img">
         <a href="/2026/10/18/Python%E7%AC%94%E8%AE%B0/" target="_self">
           <img src="/post_img/46.png" srcset="/img/loading.gif" lazyload alt="Python笔记">
         </a>
@@ -986,75 +1059,6 @@
               <a href="/tags/%E7%AE%97%E6%B3%95/">#算法</a>
             
               <a href="/tags/Java/">#Java</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-      <div class="col-12 col-md-4 m-auto index-img">
-        <a href="/2026/08/06/Hexo%E5%8D%9A%E5%AE%A2%E6%8C%81%E7%BB%AD%E6%9B%B4%E6%96%B0/" target="_self">
-          <img src="/post_img/37.png" srcset="/img/loading.gif" lazyload alt="Hexo博客持续更新指南">
-        </a>
-      </div>
-    
-    <article class="col-12 col-md-8 mx-auto index-info">
-      <h2 class="index-header">
-        
-        <a href="/2026/08/06/Hexo%E5%8D%9A%E5%AE%A2%E6%8C%81%E7%BB%AD%E6%9B%B4%E6%96%B0/" target="_self">
-          Hexo博客持续更新指南
-        </a>
-      </h2>
-
-      
-      <a class="index-excerpt " href="/2026/08/06/Hexo%E5%8D%9A%E5%AE%A2%E6%8C%81%E7%BB%AD%E6%9B%B4%E6%96%B0/" target="_self">
-        <div>
-          Hexo博客持续更新与双仓库备份指南  适用对象：已搭好 Hexo 博客、希望在新电脑 &#x2F; 新环境下继续发布文章，并用两个 GitHub 仓库做「源码」与「站点」分离备份的用户。环境前提：本机已安装 Node.js 与 Git（本文不展开 Node &#x2F; Git 的安装步骤）。   一、核心概念：源码 vs 站点（为何要两个仓库）一个 Hexo 博客天然包含两份不同的东西：  源
-        </div>
-      </a>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2026-08-06 19:25" pubdate>
-              2026-08-06
-            </time>
-          </div>
-        
-        
-          <div class="post-meta mr-3 d-flex align-items-center">
-            <i class="iconfont icon-category"></i>
-            
-
-<span class="category-chains">
-  
-  
-    
-      <span class="category-chain">
-        
-  <a href="/categories/%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA/" class="category-chain-item">博客搭建</a>
-  
-  
-
-      </span>
-    
-  
-</span>
-
-          </div>
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/Hexo/">#Hexo</a>
-            
-              <a href="/tags/%E5%8D%9A%E5%AE%A2/">#博客</a>
             
           </div>
         
